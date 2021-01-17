@@ -1,0 +1,21 @@
+.home-page-content{
+    text-align: center;
+    h1{
+        font-size: 43px;
+        font-weight: 400;
+        margin-top: 50px;
+    }
+    h2{
+        font-size: 22px;
+        font-weight: 300;
+
+    }
+    .home-illustration-container{
+        padding-top: 50px;
+        width: 60%;
+        max-width: 400px;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+    }
+}

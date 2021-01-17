@@ -1,0 +1,19 @@
+.nav-bar {
+  border-bottom: 1px solid rgb(228, 228, 228);
+
+  .nav-bar-content {
+    height: 60px;
+    width: 80%;
+    max-width: 1300px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .right {
+      display: flex;
+      a {
+          margin: 10px;
+      }
+    }
+  }
+}
