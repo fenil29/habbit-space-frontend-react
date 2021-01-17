@@ -1,7 +1,16 @@
 .login{
+    width: 70%;
+    max-width: 500px;
+    margin:50px auto;
+    border-width: 1px;
+    padding: 20px;
     h1{
         font-size: 40px;
         font-weight: 500;
-        margin-top: 50px;
+        // margin-top: 20px;
+        margin: 15px;
+    }
+    .google-login-button{
+        margin: 30px;
     }
 }
