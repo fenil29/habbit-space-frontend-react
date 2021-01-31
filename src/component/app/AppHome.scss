@@ -1,0 +1,20 @@
+@import "../../Variables.scss";
+
+.app-home {
+  display: flex;
+  width: 80%;
+  max-width: 1300px;
+  margin: auto;
+  height: calc(100vh - 61px);
+  // border-radius: $border-radius;
+  // margin-top: 15px;
+  // border-width: 1px;
+  border-right-width: 1px ;
+
+}
+
+.app-content,.app-option {
+  // border-width: 1px;
+  // border-radius: $border-radius;
+  height: 100%;
+}
