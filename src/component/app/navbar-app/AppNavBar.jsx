@@ -7,17 +7,14 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuIcon,
-  MenuCommand,
   MenuDivider,
   Button,
+  useColorMode,
 } from "@chakra-ui/react";
-import { ChevronDownIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 function AppNavBar() {
+  const { colorMode, toggleColorMode } = useColorMode();
   return (
     <div className="nav-bar">
       <div className="nav-bar-content">
@@ -25,12 +22,15 @@ function AppNavBar() {
           <Logo />
         </Link>
         <div className="right">
+          <Button size="md" margin="5px" onClick={toggleColorMode}>
+            {colorMode === "light" ? (
+              <MoonIcon onClick={toggleColorMode} />
+            ) : (
+              <SunIcon onClick={toggleColorMode} />
+            )}
+          </Button>
           <Menu>
-            <MenuButton
-              as={Button}
-              rightIcon={<ChevronDownIcon />}
-              _focus={{ boxShadow: "none" }}
-            >
+            <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
               Fenil Kaneria
             </MenuButton>
             <MenuList>

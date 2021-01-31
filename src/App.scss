@@ -1,8 +1,32 @@
-$primary-color:rgb(68, 125, 190);
-$border-radius:5px;
+$primary-color: rgb(68, 125, 190);
+$border-radius: 5px;
 * {
-    padding: 0;
-    margin: 0;
-    border: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+button:focus{
+    box-shadow: none !important;
+}
+// nab-bar
+.nav-bar {
+  border-bottom-width: 1px;
+
+  .nav-bar-content {
+    height: 60px;
+    width: 80%;
+    max-width: 1300px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .right {
+      display: flex;
+      align-items: center;
+      a {
+        margin: 10px;
+      }
+    }
+  }
 }
