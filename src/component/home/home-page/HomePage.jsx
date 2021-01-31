@@ -1,6 +1,6 @@
 import React from 'react'
-import "./HomeContent.scss"
-import HomeIllustration from "../../assets/HomeIllustration.svg";
+import "./HomePage.scss"
+import HomeIllustration from "../../../assets/HomeIllustration.svg";
 
 
 function HomeContent() {

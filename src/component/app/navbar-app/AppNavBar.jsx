@@ -1,10 +1,9 @@
 import React from "react";
-import Logo from "../Logo";
-import "./NavBar.scss";
-import { Container, Center } from "@chakra-ui/react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Logo from "../../Logo";
+import "./HomeNavBar.scss";
+import { Link } from "react-router-dom";
 
-function NavBar() {
+function HomeNavBar() {
   return (
     <div className="nav-bar">
       <div className="nav-bar-content">
@@ -24,4 +23,4 @@ function NavBar() {
   );
 }
 
-export default NavBar;
+export default HomeNavBar;

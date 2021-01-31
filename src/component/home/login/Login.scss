@@ -1,14 +1,15 @@
 .login{
+    padding-bottom: 20px;
     width: 70%;
-    max-width: 500px;
     margin:50px auto;
+    max-width: 400px;
     border-width: 1px;
-    padding: 20px;
+    border-radius: 5px;
     h1{
-        font-size: 40px;
-        font-weight: 500;
+        font-size: 35px;
+        font-weight: 400;
         // margin-top: 20px;
-        margin: 15px;
+        margin: 20px;
     }
     .google-login-button{
         margin: 30px;
