@@ -1,16 +1,14 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import dayjs from "dayjs";
-import "./Calendar.scss"
+import "./Calendar.scss";
+import { ChevronLeftIcon,ChevronRightIcon,RepeatIcon } from '@chakra-ui/icons'
+
 const weekday = require("dayjs/plugin/weekday");
 const weekOfYear = require("dayjs/plugin/weekOfYear");
 
 dayjs.extend(weekday);
 dayjs.extend(weekOfYear);
-
-function Calendar() {
-    useEffect(() => {
-        // effect
-        const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const TODAY = dayjs().format("YYYY-MM-DD");
 
 const INITIAL_YEAR = dayjs().format("YYYY");
@@ -20,17 +18,6 @@ let selectedMonth = dayjs(new Date(INITIAL_YEAR, INITIAL_MONTH - 1, 1));
 let currentMonthDays;
 let previousMonthDays;
 let nextMonthDays;
-
-const daysOfWeekElement = document.getElementById("days-of-week");
-
-WEEKDAYS.forEach((weekday) => {
-  const weekDayElement = document.createElement("li");
-  daysOfWeekElement.appendChild(weekDayElement);
-  weekDayElement.innerText = weekday;
-});
-
-createCalendar();
-initMonthSelectors();
 
 function createCalendar(year = INITIAL_YEAR, month = INITIAL_MONTH) {
   const calendarDaysElement = document.getElementById("calendar-days");
@@ -94,7 +81,7 @@ function createDaysForCurrentMonth(year, month) {
     return {
       date: dayjs(`${year}-${month}-${index + 1}`).format("YYYY-MM-DD"),
       dayOfMonth: index + 1,
-      isCurrentMonth: true
+      isCurrentMonth: true,
     };
   });
 }
@@ -121,7 +108,7 @@ function createDaysForPreviousMonth(year, month) {
         }`
       ).format("YYYY-MM-DD"),
       dayOfMonth: previousMonthLastMondayDayOfMonth + index,
-      isCurrentMonth: false
+      isCurrentMonth: false,
     };
   });
 }
@@ -143,7 +130,7 @@ function createDaysForNextMonth(year, month) {
         `${nextMonth.year()}-${nextMonth.month() + 1}-${index + 1}`
       ).format("YYYY-MM-DD"),
       dayOfMonth: index + 1,
-      isCurrentMonth: false
+      isCurrentMonth: false,
     };
   });
 }
@@ -175,10 +162,25 @@ function initMonthSelectors() {
     });
 }
 
-        return () => {
-            // cleanup
-        }
-    }, [])
+function Calendar() {
+  useEffect(() => {
+    // effect
+
+    const daysOfWeekElement = document.getElementById("days-of-week");
+
+    WEEKDAYS.forEach((weekday) => {
+      const weekDayElement = document.createElement("li");
+      daysOfWeekElement.appendChild(weekDayElement);
+      weekDayElement.innerText = weekday;
+    });
+
+    createCalendar();
+    initMonthSelectors();
+
+    return () => {
+      // cleanup
+    };
+  }, []);
   return (
     <div class="calendar-month">
       <section class="calendar-month-header">
@@ -187,9 +189,10 @@ function initMonthSelectors() {
           class="calendar-month-header-selected-month"
         ></div>
         <section class="calendar-month-header-selectors">
-          <span id="previous-month-selector">{"<"}</span>
-          <span id="present-month-selector">Today</span>
-          <span id="next-month-selector">{">"}</span>
+          {/* <span id="present-month-selector">Today</span> */}
+          <span id="present-month-selector"><RepeatIcon /></span>
+          <span id="previous-month-selector"><ChevronLeftIcon /></span>
+          <span id="next-month-selector"><ChevronRightIcon /></span>
         </section>
       </section>
 
@@ -199,6 +202,5 @@ function initMonthSelectors() {
     </div>
   );
 }
-
 
 export default Calendar;
