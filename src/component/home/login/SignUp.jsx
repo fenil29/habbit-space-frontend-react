@@ -1,6 +1,6 @@
 import React from "react";
-import { Center, Box, Divider, Button, Icon } from "@chakra-ui/react";
 import { GoogleLogin } from "react-google-login";
+import { Center, Box, Divider, Button, Icon } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
 
 const responseGoogle = (response) => {

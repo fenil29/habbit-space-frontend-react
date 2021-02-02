@@ -1,6 +1,6 @@
-import React, { useState }  from "react";
-import "./AppContent.scss";
+import React from "react";
 import { Box } from "@chakra-ui/react";
+import "./AppContent.scss";
 import Calendar from './calendar/Calendar';
 
 

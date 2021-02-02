@@ -1,6 +1,6 @@
 import React from "react";
-import "./AppHome.scss";
 import { Box } from "@chakra-ui/react";
+import "./AppHome.scss";
 
 
 import AppOption from "./AppOption";

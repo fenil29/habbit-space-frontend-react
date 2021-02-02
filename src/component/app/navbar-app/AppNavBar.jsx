@@ -9,11 +9,10 @@ import {
   MenuItem,
   MenuDivider,
   Button,
-  useColorMode,
 } from "@chakra-ui/react";
-import { ChevronDownIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
-
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import DarkModeButton from './DarkModeButton'
+
 
 function AppNavBar() {
 

@@ -1,14 +1,9 @@
 import React from "react";
 import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
   Button,
   useColorMode,
 } from "@chakra-ui/react";
-import { ChevronDownIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import {  MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 let colorList = [
   // "--primary-color",

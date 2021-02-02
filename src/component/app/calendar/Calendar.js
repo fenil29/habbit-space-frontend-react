@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import dayjs from "dayjs";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  RepeatIcon,
+} from "@chakra-ui/icons";
 import "./Calendar.scss";
-import { ChevronLeftIcon,ChevronRightIcon,RepeatIcon } from '@chakra-ui/icons'
 
 const weekday = require("dayjs/plugin/weekday");
 const weekOfYear = require("dayjs/plugin/weekOfYear");
@@ -190,9 +194,15 @@ function Calendar() {
         ></div>
         <section class="calendar-month-header-selectors">
           {/* <span id="present-month-selector">Today</span> */}
-          <span id="present-month-selector"><RepeatIcon /></span>
-          <span id="previous-month-selector"><ChevronLeftIcon /></span>
-          <span id="next-month-selector"><ChevronRightIcon /></span>
+          <span id="present-month-selector">
+            <RepeatIcon />
+          </span>
+          <span id="previous-month-selector">
+            <ChevronLeftIcon />
+          </span>
+          <span id="next-month-selector">
+            <ChevronRightIcon />
+          </span>
         </section>
       </section>
 

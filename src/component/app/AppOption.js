@@ -2,19 +2,12 @@ import React from "react";
 import "./AppOption.scss";
 import {
   Box,
-  useColorMode,
-  Divider,
   Center,
   List,
   ListItem,
-  ListIcon,
-  OrderedList,
-  UnorderedList,
 } from "@chakra-ui/react";
-import { CheckIcon } from "@chakra-ui/icons";
 
 function AppOption() {
-  const { colorMode } = useColorMode();
   return (
     <>
       <Box className="app-option">
