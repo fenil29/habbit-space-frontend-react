@@ -10,14 +10,14 @@ const config = {
 };
 
 const colors = {
-  mode: {
-    light: {
-      backgroundSecondary: "#EDF2F7",
-    },
-    dark: {
-      backgroundSecondary: "rgba(255, 255, 255, 0.08)",
-    },
-  },
+  // mode: {
+  //   light: {
+  //     backgroundSecondary: "#EDF2F7",
+  //   },
+  //   dark: {
+  //     backgroundSecondary: "rgba(255, 255, 255, 0.08)",
+  //   },
+  // },
 };
 // 3. extend the theme
 const theme = extendTheme({ config, colors });

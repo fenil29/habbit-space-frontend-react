@@ -13,8 +13,10 @@ import {
 } from "@chakra-ui/react";
 import { ChevronDownIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 
+import DarkModeButton from './DarkModeButton'
+
 function AppNavBar() {
-  const { colorMode, toggleColorMode } = useColorMode();
+
   return (
     <div className="nav-bar">
       <div className="nav-bar-content">
@@ -22,13 +24,7 @@ function AppNavBar() {
           <Logo />
         </Link>
         <div className="right">
-          <Button size="md" margin="5px" onClick={toggleColorMode}>
-            {colorMode === "light" ? (
-              <MoonIcon onClick={toggleColorMode} />
-            ) : (
-              <SunIcon onClick={toggleColorMode} />
-            )}
-          </Button>
+          <DarkModeButton/>
           <Menu>
             <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
               Fenil Kaneria

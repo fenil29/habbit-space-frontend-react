@@ -17,10 +17,7 @@ function AppOption() {
   const { colorMode } = useColorMode();
   return (
     <>
-      <Box
-        className="app-option"
-        backgroundColor={`mode.${colorMode}.backgroundSecondary`}
-      >
+      <Box className="app-option">
         <Center className="title">
           <h2>Habits</h2>
         </Center>
@@ -30,21 +27,9 @@ function AppOption() {
             <ListIcon as={CheckIcon} />
             Lorem ipsum dolor sit amet
           </ListItem> */}
-          <ListItem
-            _hover={{ bg: colorMode === "light" ? "gray.300" : "gray.600" }}
-          >
-            Reading
-          </ListItem>
-          <ListItem
-            _hover={{ bg: colorMode === "light" ? "gray.300" : "gray.600" }}
-          >
-            Learn Code
-          </ListItem>
-          <ListItem
-            _hover={{ bg: colorMode === "light" ? "gray.300" : "gray.600" }}
-          >
-            System Design
-          </ListItem>
+          <ListItem>Reading</ListItem>
+          <ListItem>Learn Code</ListItem>
+          <ListItem>System Design</ListItem>
         </List>
       </Box>
     </>
