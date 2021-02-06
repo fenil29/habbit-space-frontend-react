@@ -18,6 +18,9 @@ const colors = {
   //     backgroundSecondary: "rgba(255, 255, 255, 0.08)",
   //   },
   // },
+  blue: {
+    200: "#3182CE",
+  },
 };
 // 3. extend the theme
 const theme = extendTheme({ config, colors });
