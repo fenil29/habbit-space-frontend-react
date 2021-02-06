@@ -5,15 +5,40 @@ import {
   Center,
   List,
   ListItem,
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  FormControl,
+  FormLabel,
+  Input,
 } from "@chakra-ui/react";
+import { PhoneIcon, AddIcon, WarningIcon } from "@chakra-ui/icons";
+
+import AddHabitModel from "./AddHabitModel";
 
 function AppOption() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <>
       <Box className="app-option">
-        <Center className="title">
+        <Box className="title">
+          <h2>All Habits</h2>
+        </Box>
+        <List>
+          <ListItem>Today</ListItem>
+        </List>
+        <br />
+
+        <Box className="title">
           <h2>Habits</h2>
-        </Center>
+        </Box>
         {/* <Divider /> */}
         <List>
           {/* <ListItem>
@@ -24,6 +49,18 @@ function AppOption() {
           <ListItem>Learn Code</ListItem>
           <ListItem>System Design</ListItem>
         </List>
+        <Center className="add-habit-button-container">
+          <Button
+            colorScheme="blue"
+            // variant="outline"
+            size="sm"
+            onClick={onOpen}
+          >
+            Add Habit
+          </Button>
+        </Center>
+        {/* add habit model */}
+        <AddHabitModel isOpen={isOpen} onClose={onClose} />
       </Box>
     </>
   );
