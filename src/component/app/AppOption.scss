@@ -1,11 +1,15 @@
 .app-option {
   width: 250px;
-  background-color: var(--secondary-background-color);
+  // background-color: var(--secondary-background-color);
   border-right-width: 1px;
+  border-left-width: 1px;
+  padding: 5px;
+
 
   .title {
     border-bottom-width: 1px;
     padding: 0px 10px;
+    margin-bottom: 10px;
 
   }
   h2 {
@@ -17,8 +21,11 @@
     // margin: 5px;
     font-size: 14px;
     font-weight: 400;
-    padding: 10px 25px;
-    border-bottom-width: 1px;
+    padding: 10px 20px;
+    background-color: var(--secondary-background-color);
+    margin: 5px;
+    border-radius: 5px;
+    // border-bottom-width: 1px;
   }
   .add-habit-button-container {
     margin-top: 10px;
