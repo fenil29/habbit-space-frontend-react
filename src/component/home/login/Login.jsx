@@ -1,29 +1,66 @@
-import React, { useEffect } from "react";
-import { Center, Box, Divider, Button, Icon } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import {
+  Center,
+  Box,
+  Divider,
+  Button,
+  Icon,
+  useToast,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+} from "@chakra-ui/react";
 import { GoogleLogin } from "react-google-login";
 import { FcGoogle } from "react-icons/fc";
-import {API_URL} from '../../../Constants'
+import { API_URL } from "../../../Constants";
 import axios from "axios";
 import "./Login.scss";
 
-const responseGoogle = (response) => {
-  console.log(response);
-  axios.post(API_URL+"/api/login-with-google", {
-    token: response.tokenId,
-  }).then((response) => {
-    console.log(response);
-  }, (error) => {
-    console.log(error);
-  });;
-};
-
 function Login() {
+  const [noAccountFoundError, setNoAccountFoundError] = useState(true);
+  const toast = useToast();
   useEffect(() => {
     // effect
     return () => {
       // cleanup
     };
   }, []);
+
+  const responseGoogle = (response) => {
+    // console.log(response);
+    axios
+      .post(API_URL + "/api/login-with-google", {
+        token: response.tokenId,
+      })
+      .then(
+        (response) => {
+          console.log(response.data);
+        },
+        (error) => {
+          console.log(
+            error.response.status === 404 &&
+              error.response.data === "User not found"
+          );
+          if (
+            error.response.status === 404 &&
+            error.response.data === "User not found"
+          ) {
+            setNoAccountFoundError(true);
+          } else {
+            toast({
+              title: "An error occurred.",
+              description: "Please try again!",
+              status: "error",
+              position: "bottom-left",
+              duration: 3000,
+              isClosable: true,
+            });
+          }
+        }
+      );
+  };
+
   return (
     <Box className="login">
       <Center>
@@ -50,6 +87,17 @@ function Login() {
           )}
         />
       </Center>
+      {noAccountFoundError && (
+        <Alert status="warning" alignItems="center">
+          <AlertIcon />
+          <Box flex="1">
+            <AlertTitle>Could not find your Account.</AlertTitle>
+            <AlertDescription display="block">
+              If you are new, Please consider Sign Up.
+            </AlertDescription>
+          </Box>
+        </Alert>
+      )}
     </Box>
   );
 }
