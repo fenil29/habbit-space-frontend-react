@@ -2,9 +2,19 @@ import React from "react";
 import { GoogleLogin } from "react-google-login";
 import { Center, Box, Divider, Button, Icon } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
+import {API_URL} from '../../../Constants'
+import axios from "axios";
+
 
 const responseGoogle = (response) => {
   console.log(response);
+  axios.post(API_URL+"/api/signup-with-google", {
+    token: response.tokenId,
+  }).then((response) => {
+    console.log(response);
+  }, (error) => {
+    console.log(error);
+  });;
 };
 function SignUp() {
   return (

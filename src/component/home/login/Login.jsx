@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import { Center, Box, Divider, Button, Icon } from "@chakra-ui/react";
-import "./Login.scss";
 import { GoogleLogin } from "react-google-login";
 import { FcGoogle } from "react-icons/fc";
+import {API_URL} from '../../../Constants'
 import axios from "axios";
+import "./Login.scss";
+
 const responseGoogle = (response) => {
   console.log(response);
-  axios.post("http://localhost:5555/api/login-with-google", {
+  axios.post(API_URL+"/api/login-with-google", {
     token: response.tokenId,
   }).then((response) => {
     console.log(response);
@@ -14,6 +16,7 @@ const responseGoogle = (response) => {
     console.log(error);
   });;
 };
+
 function Login() {
   useEffect(() => {
     // effect
