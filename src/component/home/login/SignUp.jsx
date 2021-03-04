@@ -1,22 +1,63 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { GoogleLogin } from "react-google-login";
-import { Center, Box, Divider, Button, Icon } from "@chakra-ui/react";
+import {
+  Center,
+  Box,
+  Divider,
+  Button,
+  Icon,
+  useToast,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+} from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
-import {API_URL} from '../../../Constants'
+import { API_URL } from "../../../Constants";
 import axios from "axios";
 
-
-const responseGoogle = (response) => {
-  console.log(response);
-  axios.post(API_URL+"/api/signup-with-google", {
-    token: response.tokenId,
-  }).then((response) => {
-    console.log(response);
-  }, (error) => {
-    console.log(error);
-  });;
-};
 function SignUp() {
+  const [userAlreadyExistsError, setUserAlreadyExistsError] = useState(false);
+  const toast = useToast();
+  useEffect(() => {
+    // effect
+    return () => {
+      // cleanup
+    };
+  }, []);
+  const responseGoogle = (response) => {
+    console.log(response);
+    axios
+      .post(API_URL + "/api/signup-with-google", {
+        token: response.tokenId,
+      })
+      .then(
+        (response) => {
+          console.log(response);
+        },
+        (error) => {
+          console.log(
+            error.response.status === 409 &&
+              error.response.data === "User already exists"
+          );
+          if (
+            error.response.status === 409 &&
+            error.response.data === "User already exists"
+          ) {
+            setUserAlreadyExistsError(true);
+          } else {
+            toast({
+              title: "An error occurred.",
+              description: "Please try again!",
+              status: "error",
+              position: "bottom-left",
+              duration: 3000,
+              isClosable: true,
+            });
+          }
+        }
+      );
+  };
   return (
     <Box className="login">
       <Center>
@@ -43,6 +84,17 @@ function SignUp() {
           )}
         />
       </Center>
+      {userAlreadyExistsError && (
+        <Alert status="warning" alignItems="center">
+          <AlertIcon />
+          <Box flex="1">
+            <AlertTitle>You Already have an account</AlertTitle>
+            <AlertDescription display="block">
+              Please use Login.
+            </AlertDescription>
+          </Box>
+        </Alert>
+      )}
     </Box>
   );
 }

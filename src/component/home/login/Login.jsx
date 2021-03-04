@@ -18,7 +18,7 @@ import axios from "axios";
 import "./Login.scss";
 
 function Login() {
-  const [noAccountFoundError, setNoAccountFoundError] = useState(true);
+  const [noAccountFoundError, setNoAccountFoundError] = useState(false);
   const toast = useToast();
   useEffect(() => {
     // effect
