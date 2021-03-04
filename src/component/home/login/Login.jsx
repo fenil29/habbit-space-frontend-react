@@ -1,4 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import {
+  Link,
+  useHistory,
+} from "react-router-dom";
 import {
   Center,
   Box,
@@ -13,11 +17,16 @@ import {
 } from "@chakra-ui/react";
 import { GoogleLogin } from "react-google-login";
 import { FcGoogle } from "react-icons/fc";
-import { API_URL } from "../../../Constants";
+import { API_URL,GOOGLE_AUTH_CLIENT_ID } from "../../../Constants";
+import { GlobalContext } from "../../../context/GlobalState";
 import axios from "axios";
+
 import "./Login.scss";
 
 function Login() {
+  let history = useHistory();
+  const contextData = useContext(GlobalContext);
+
   const [noAccountFoundError, setNoAccountFoundError] = useState(false);
   const toast = useToast();
   useEffect(() => {
@@ -36,6 +45,8 @@ function Login() {
       .then(
         (response) => {
           console.log(response.data);
+          contextData.setLoginData(response.data);
+          history.push("/app");
         },
         (error) => {
           console.log(
@@ -70,7 +81,7 @@ function Login() {
       <Center>
         <GoogleLogin
           className="google-login-button"
-          clientId="973934553610-iph5uagr02rc6rgkcee7jloq3q7qpdpa.apps.googleusercontent.com"
+          clientId={GOOGLE_AUTH_CLIENT_ID}
           onSuccess={responseGoogle}
           onFailure={responseGoogle}
           cookiePolicy={"single_host_origin"}
