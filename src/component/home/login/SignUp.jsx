@@ -12,6 +12,7 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
+  Spinner,
 } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
 import { API_URL, GOOGLE_AUTH_CLIENT_ID } from "../../../Constants";
@@ -23,6 +24,8 @@ function SignUp() {
   let history = useHistory();
   const contextData = useContext(GlobalContext);
   const [userAlreadyExistsError, setUserAlreadyExistsError] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const toast = useToast();
   useEffect(() => {
     // effect
@@ -32,17 +35,23 @@ function SignUp() {
   }, []);
   const responseGoogle = (response) => {
     console.log(response);
+    setLoading(true);
+
     axios
       .post(API_URL + "/api/signup-with-google", {
         token: response.tokenId,
       })
       .then(
         (response) => {
+          setLoading(false);
+
           console.log(response.data);
           contextData.setLoginData(response.data);
           history.push("/app");
         },
         (error) => {
+          setLoading(false);
+
           console.log(
             error.response.status === 409 &&
               error.response.data === "User already exists"
@@ -87,6 +96,7 @@ function SignUp() {
               onClick={renderProps.onClick}
             >
               SignUp with Google
+              {loading && <Spinner size="sm" ml={3} />}
             </Button>
           )}
         />
