@@ -40,7 +40,8 @@ function AppOption() {
         </List>
         <Center className="add-habit-button-container">
           <Button
-            colorScheme="blue"
+            // colorScheme="blue"
+            className="primary"
             // variant="outline"
             size="sm"
             onClick={onOpen}

@@ -33,7 +33,10 @@ function AddHabitModel(props) {
           </FormControl>
         </ModalBody>
         <ModalFooter>
-          <Button colorScheme="blue" mr={3}>
+          <Button 
+          // colorScheme="blue"
+          className="primary"
+           mr={3}>
             Add
           </Button>
           <Button onClick={props.onClose}>Cancel</Button>

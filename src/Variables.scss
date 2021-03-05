@@ -2,23 +2,29 @@ $primary-color: rgb(68, 125, 190);
 $border-radius: 5px;
 
 :root {
-    // --light-mode-primary-color: #4582d8;
+    --light-mode-primary-color: #3182ce;
+    --light-mode-primary-color-hover: #2b6cb0;
     // --light-mode-primary-background-color: #f1f3f7;
     --light-mode-secondary-background-color: #EDF2F7;
+    --light-mode-secondary-background-color-hover: #FFFFFF;
     --light-mode-primary-font-color: #1a202c;
     // --light-mode-secondary-font-color: #000000;
 
-    // --dark-mode-primary-color: #1965c7;
+    --dark-mode-primary-color: #3182CE;
+    --dark-mode-primary-color-hover: #63b3ed;
     // --dark-mode-primary-background-color: #0a192f;
-    --dark-mode-secondary-background-color: #ffffff14;
+    --dark-mode-secondary-background-color: #2C313D;
+    --dark-mode-secondary-background-color-hover: #1A202C;
     --dark-mode-primary-font-color: #ffffffeb;
     // --dark-mode-secondary-font-color: #ffffff;
   
 
   
-    // --primary-color: var(--dark-mode-primary-color);
+    --primary-color: var(--light-mode-primary-color);
+    --primary-color-hover: var(--light-mode-primary-color-hover);
     // --primary-background-color: var(--dark-mode-primary-background-color);
     --secondary-background-color: var(--light-mode-secondary-background-color);
+    --secondary-background-color-hover: var(--light-mode-secondary-background-color-hover);
     --primary-font-color: var(--light-mode-primary-font-color);
     // --secondary-font-color: var(--dark-mode-secondary-font-color);
   }

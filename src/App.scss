@@ -4,9 +4,23 @@
   margin: 0;
   border: 0;
   box-sizing: border-box;
+  transition: 0.25s background-color !important;
 }
 button:focus{
     box-shadow: none !important;
+}
+button{
+  background-color:var(--secondary-background-color) !important;
+}
+button:hover{
+  background-color:var(--secondary-background-color-hover) !important;
+}
+button[class~="primary"]{
+  background-color:var(--light-mode-primary-color) !important;
+  color: white;
+}
+button[class~="primary"]:hover{
+  background-color:var(--light-mode-primary-color-hover) !important;
 }
 // nab-bar
 .nav-bar {
