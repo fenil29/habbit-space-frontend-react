@@ -6,27 +6,52 @@ import Login from "./component/home/login/Login";
 import SignUp from "./component/home/login/SignUp";
 import AppNavBar from "./component/app/navbar-app/AppNavBar";
 import AppHome from "./component/app/AppHome";
+import DefaultRoute from "./authentication/DefaultRoute";
+import AppRoute from "./authentication/AppRoute";
 
 function App() {
   return (
     <div>
       <Switch>
-        <Route path="/" exact>
-          <HomeNavBar />
-          <Home />
-        </Route>
-        <Route path="/login">
-          <HomeNavBar />
-          <Login />
-        </Route>
-        <Route path="/signup">
-          <HomeNavBar />
-          <SignUp />
-        </Route>
-        <Route path="/app">
-          <AppNavBar />
-          <AppHome />
-        </Route>
+        <DefaultRoute
+          path="/"
+          exact
+          component={() => (
+            <>
+              <HomeNavBar />
+              <Home />
+            </>
+          )}
+        />
+        <DefaultRoute
+          path="/login"
+          component={() => (
+            <>
+              <HomeNavBar />
+              <Login />
+            </>
+          )}
+        />
+
+        <DefaultRoute
+          path="/signup"
+          component={() => (
+            <>
+              <HomeNavBar />
+              <SignUp />
+            </>
+          )}
+        />
+
+        <AppRoute
+          path="/app"
+          component={() => (
+            <>
+              <AppNavBar />
+              <AppHome />
+            </>
+          )}
+        />
       </Switch>
     </div>
   );

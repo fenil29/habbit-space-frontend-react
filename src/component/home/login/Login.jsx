@@ -1,8 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import {
-  Link,
-  useHistory,
-} from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   Center,
   Box,
@@ -14,10 +11,11 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
+  Spinner,
 } from "@chakra-ui/react";
 import { GoogleLogin } from "react-google-login";
 import { FcGoogle } from "react-icons/fc";
-import { API_URL,GOOGLE_AUTH_CLIENT_ID } from "../../../Constants";
+import { API_URL, GOOGLE_AUTH_CLIENT_ID } from "../../../Constants";
 import { GlobalContext } from "../../../context/GlobalState";
 import axios from "axios";
 
@@ -28,6 +26,7 @@ function Login() {
   const contextData = useContext(GlobalContext);
 
   const [noAccountFoundError, setNoAccountFoundError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const toast = useToast();
   useEffect(() => {
     // effect
@@ -38,17 +37,21 @@ function Login() {
 
   const responseGoogle = (response) => {
     // console.log(response);
+    setLoading(true)
     axios
       .post(API_URL + "/api/login-with-google", {
         token: response.tokenId,
       })
       .then(
         (response) => {
+          setLoading(false)
           console.log(response.data);
           contextData.setLoginData(response.data);
           history.push("/app");
         },
         (error) => {
+          setLoading(false)
+
           console.log(
             error.response.status === 404 &&
               error.response.data === "User not found"
@@ -94,6 +97,7 @@ function Login() {
               onClick={renderProps.onClick}
             >
               Login with Google
+              {loading && <Spinner size="sm" ml={3}/>}
             </Button>
           )}
         />
