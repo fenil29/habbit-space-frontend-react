@@ -35,7 +35,8 @@ function AddHabitModel(props) {
         <ModalFooter>
           <Button 
           // colorScheme="blue"
-          className="primary"
+          customColor="blue"
+
            mr={3}>
             Add
           </Button>

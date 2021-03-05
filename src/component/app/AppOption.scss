@@ -26,6 +26,13 @@
     margin: 5px;
     border-radius: 5px;
     // border-bottom-width: 1px;
+    &:hover{
+    // background-color: var(--secondary-background-color-hover);
+    cursor: pointer;
+    background-color: var(--primary-color-hover);
+    color: white;
+
+    }
   }
   .add-habit-button-container {
     margin-top: 10px;

@@ -41,7 +41,12 @@ function DarkModeButton() {
     };
   }, []);
   return (
-    <Button size="md" margin="5px" onClick={toggleColorModeCustom}>
+    <Button
+      size="md"
+      margin="5px"
+      onClick={toggleColorModeCustom}
+      customColor="light-blue"
+    >
       {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
     </Button>
   );

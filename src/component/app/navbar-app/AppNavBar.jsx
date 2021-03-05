@@ -25,7 +25,7 @@ function AppNavBar() {
         <div className="right">
           <DarkModeButton/>
           <Menu>
-            <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+            <MenuButton as={Button} rightIcon={<ChevronDownIcon />} customColor="light-blue">
               Fenil Kaneria
             </MenuButton>
             <MenuList>

@@ -131,10 +131,16 @@ li {
         // background-color: #edf2f7;
         background-color: var(--secondary-background-color);
         color: var(--primary-font-color);
-
+        font-weight: 400;
         width: 60px;
         height: 60px;
         border-radius: 5px;
+        &:hover{
+          cursor: pointer;
+        background-color: var(--primary-color-hover);
+        color: white;
+
+        }
       }
       display: flex;
       align-items: center;
