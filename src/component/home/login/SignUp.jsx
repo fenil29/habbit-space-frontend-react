@@ -46,6 +46,7 @@ function SignUp() {
           setLoading(false);
 
           console.log(response.data);
+          response.data.isLoggedIn = true;
           contextData.setLoginData(response.data);
           history.push("/app");
         },

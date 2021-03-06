@@ -16,7 +16,7 @@ const AppRoute = ({ component: Component, ...rest }) => {
         return (
           <Redirect
             to={{
-              pathname: "/",
+              pathname: "/login",
             }}
           />
         );

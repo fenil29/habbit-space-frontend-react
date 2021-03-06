@@ -9,6 +9,9 @@ import AppHome from "./component/app/AppHome";
 import DefaultRoute from "./authentication/DefaultRoute";
 import AppRoute from "./authentication/AppRoute";
 
+import axios from "axios";
+axios.defaults.withCredentials = true
+
 function App() {
   return (
     <div>

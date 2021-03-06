@@ -37,42 +37,41 @@ function Login() {
 
   const responseGoogle = (response) => {
     // console.log(response);
-    setLoading(true)
+    setLoading(true);
     axios
       .post(API_URL + "/api/login-with-google", {
         token: response.tokenId,
       })
-      .then(
-        (response) => {
-          setLoading(false)
-          console.log(response.data);
-          contextData.setLoginData(response.data);
-          history.push("/app");
-        },
-        (error) => {
-          setLoading(false)
+      .then((response) => {
+        setLoading(false);
+        console.log(response.data);
+        response.data.isLoggedIn = true;
+        contextData.setLoginData(response.data);
+        history.push("/app");
+      })
+      .catch((error) => {
+        setLoading(false);
 
-          console.log(
-            error.response.status === 404 &&
-              error.response.data === "User not found"
-          );
-          if (
-            error.response.status === 404 &&
+        console.log(
+          error.response.status === 404 &&
             error.response.data === "User not found"
-          ) {
-            setNoAccountFoundError(true);
-          } else {
-            toast({
-              title: "An error occurred.",
-              description: "Please try again!",
-              status: "error",
-              position: "bottom-left",
-              duration: 3000,
-              isClosable: true,
-            });
-          }
+        );
+        if (
+          error.response.status === 404 &&
+          error.response.data === "User not found"
+        ) {
+          setNoAccountFoundError(true);
+        } else {
+          toast({
+            title: "An error occurred.",
+            description: "Please try again!",
+            status: "error",
+            position: "bottom-left",
+            duration: 3000,
+            isClosable: true,
+          });
         }
-      );
+      });
   };
 
   return (
@@ -97,7 +96,7 @@ function Login() {
               onClick={renderProps.onClick}
             >
               Login with Google
-              {loading && <Spinner size="sm" ml={3}/>}
+              {loading && <Spinner size="sm" ml={3} />}
             </Button>
           )}
         />

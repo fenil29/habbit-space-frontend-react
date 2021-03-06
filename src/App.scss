@@ -16,10 +16,10 @@ button[customColor="light-blue"] {
 }
 
 button[customColor="blue"] {
-  background-color: var(--light-mode-primary-color) !important;
+  background-color: var(--primary-color) !important;
   color: white;
   &:hover {
-    background-color: var(--light-mode-primary-color-hover) !important;
+    background-color: var(--primary-color-hover) !important;
   }
 }
 // nab-bar

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
+import { Link, useHistory } from "react-router-dom";
 import "./AppOption.scss";
 import {
   Box,
@@ -6,14 +7,49 @@ import {
   List,
   ListItem,
   Button,
-  useDisclosure
+  useDisclosure,
 } from "@chakra-ui/react";
 
 import AddHabitModel from "./AddHabitModel";
+import { API_URL } from "../../Constants";
+import { GlobalContext } from "../../context/GlobalState";
+
+import axios from "axios";
 
 function AppOption() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const contextData = useContext(GlobalContext);
 
+  const {
+    isOpen: isOpenAddHabitModel,
+    onOpen: onOpenAddHabitModel,
+    onClose: onCloseAddHabitModel,
+  } = useDisclosure();
+  let getHabit = () => {
+    axios
+      .get(API_URL + "/api/habit")
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+        if (
+          error.response.status === 401 &&
+          error.response.data === "Unauthorized"
+        ) {
+          // contextData.setLoginData({ isLoggedIn: false })
+          // history.push("/login");
+          // console.log(error.response)
+          contextData.clearLoginDataAndRedirectToLogin();
+        }
+      });
+  };
+  useEffect(() => {
+    // effect
+    getHabit();
+    return () => {
+      // cleanup
+    };
+  }, []);
   return (
     <>
       <Box className="app-option">
@@ -40,17 +76,20 @@ function AppOption() {
         </List>
         <Center className="add-habit-button-container">
           <Button
-            colorScheme="blue"
+            // colorScheme="blue"
             customColor="blue"
             // variant="outline"
             size="sm"
-            onClick={onOpen}
+            onClick={onOpenAddHabitModel}
           >
             Add Habit
           </Button>
         </Center>
         {/* add habit model */}
-        <AddHabitModel isOpen={isOpen} onClose={onClose} />
+        <AddHabitModel
+          isOpen={isOpenAddHabitModel}
+          onClose={onCloseAddHabitModel}
+        />
       </Box>
     </>
   );
