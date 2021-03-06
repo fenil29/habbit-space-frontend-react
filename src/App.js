@@ -10,7 +10,7 @@ import DefaultRoute from "./authentication/DefaultRoute";
 import AppRoute from "./authentication/AppRoute";
 
 import axios from "axios";
-axios.defaults.withCredentials = true
+axios.defaults.withCredentials = true;
 
 function App() {
   return (
@@ -27,6 +27,7 @@ function App() {
           )}
         />
         <DefaultRoute
+          exact
           path="/login"
           component={() => (
             <>
@@ -37,6 +38,7 @@ function App() {
         />
 
         <DefaultRoute
+          exact
           path="/signup"
           component={() => (
             <>

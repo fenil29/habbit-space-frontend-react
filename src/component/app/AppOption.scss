@@ -5,12 +5,10 @@
   border-left-width: 1px;
   padding: 5px;
 
-
   .title {
     border-bottom-width: 1px;
     padding: 0px 10px;
     margin-bottom: 10px;
-
   }
   h2 {
     margin: 5px;
@@ -26,15 +24,22 @@
     margin: 5px;
     border-radius: 5px;
     // border-bottom-width: 1px;
-    &:hover{
-    // background-color: var(--secondary-background-color-hover);
-    cursor: pointer;
-    background-color: var(--primary-color-hover);
-    color: white;
-
+    &:hover {
+      // background-color: var(--secondary-background-color-hover);
+      cursor: pointer;
+      background-color: var(--primary-color-hover);
+      color: white;
     }
   }
   .add-habit-button-container {
     margin-top: 10px;
+  }
+  .is-active-habit {
+    li {
+      // background-color: var(--secondary-background-color-hover);
+      cursor: pointer;
+      background-color: var(--primary-color-hover);
+      color: white;
+    }
   }
 }

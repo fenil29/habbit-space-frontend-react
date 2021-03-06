@@ -1,17 +1,18 @@
 import React from "react";
+import { Switch, Route } from "react-router-dom";
+
 import { Box } from "@chakra-ui/react";
 import "./AppHome.scss";
 
-
 import AppOption from "./AppOption";
-import AppContent from "./AppContent";
+import HabitView from "./HabitView";
 function AppHome() {
   return (
-    <Box className="app-home"
-     boxShadow="xl" 
-     >
+    <Box className="app-home" boxShadow="xl">
       <AppOption />
-      <AppContent />
+      <Switch>
+        <Route path="/app/habit/:habit_id" exact component={() => <HabitView />} />
+      </Switch>
     </Box>
   );
 }

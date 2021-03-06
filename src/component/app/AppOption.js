@@ -1,5 +1,5 @@
-import React, { useEffect, useContext,useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useEffect, useContext, useState } from "react";
+import { NavLink, useHistory } from "react-router-dom";
 import "./AppOption.scss";
 import {
   Box,
@@ -8,7 +8,9 @@ import {
   ListItem,
   Button,
   useDisclosure,
+  Stack
 } from "@chakra-ui/react";
+import { Skeleton, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
 
 import AddHabitModel from "./AddHabitModel";
 import { API_URL } from "../../Constants";
@@ -18,7 +20,9 @@ import axios from "axios";
 
 function AppOption() {
   const contextStore = useContext(GlobalContext);
-  const [addHabitLoading, setAddHabitLoading] = useState(false)
+  const [habitList, setHabitList] = useState([]);
+  const [getHabitLoading, setGetHabitLoading] = useState(false);
+  const [addHabitLoading, setAddHabitLoading] = useState(false);
 
   const {
     isOpen: isOpenAddHabitModel,
@@ -27,12 +31,16 @@ function AppOption() {
   } = useDisclosure();
 
   let getHabit = () => {
+    setGetHabitLoading(true);
     axios
       .get(API_URL + "/api/habit")
       .then((response) => {
-        console.log(response);
+        setGetHabitLoading(false);
+        console.log(response.data);
+        setHabitList(response.data);
       })
       .catch((error) => {
+        setGetHabitLoading(false);
         console.log(error);
         if (
           error.response.status === 401 &&
@@ -45,18 +53,19 @@ function AppOption() {
       });
   };
   let addHabit = (habitName) => {
-    setAddHabitLoading(true)
+    setAddHabitLoading(true);
     axios
-      .post(API_URL + "/api/habit",{
-        habitName:habitName
+      .post(API_URL + "/api/habit", {
+        habitName: habitName,
       })
       .then((response) => {
-        setAddHabitLoading(false)
-        onCloseAddHabitModel()
+        setAddHabitLoading(false);
+        onCloseAddHabitModel();
         console.log(response);
+        setHabitList(response.data);
       })
       .catch((error) => {
-        setAddHabitLoading(false)
+        setAddHabitLoading(false);
         console.log(error);
         if (
           error.response.status === 401 &&
@@ -95,9 +104,23 @@ function AppOption() {
             <ListIcon as={CheckIcon} />
             Lorem ipsum dolor sit amet
           </ListItem> */}
-          <ListItem>Reading</ListItem>
-          <ListItem>Learn Code</ListItem>
-          <ListItem>System Design</ListItem>
+          {getHabitLoading ? (
+            <Stack m={2}>
+              <Skeleton height="20px" />
+              <Skeleton height="20px" />
+              <Skeleton height="20px" />
+            </Stack>
+          ) : (
+            habitList.map((item) => (
+              <NavLink
+                to={"/app/habit/" + item.habit_id}
+                key={item.habit_id}
+                activeClassName="is-active-habit"
+              >
+                <ListItem>{item.name}</ListItem>
+              </NavLink>
+            ))
+          )}
         </List>
         <Center className="add-habit-button-container">
           <Button
