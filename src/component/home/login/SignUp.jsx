@@ -22,7 +22,7 @@ import axios from "axios";
 
 function SignUp() {
   let history = useHistory();
-  const contextData = useContext(GlobalContext);
+  const contextStore = useContext(GlobalContext);
   const [userAlreadyExistsError, setUserAlreadyExistsError] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -47,7 +47,7 @@ function SignUp() {
 
           console.log(response.data);
           response.data.isLoggedIn = true;
-          contextData.setLoginData(response.data);
+          contextStore.setLoginData(response.data);
           history.push("/app");
         },
         (error) => {
@@ -63,14 +63,8 @@ function SignUp() {
           ) {
             setUserAlreadyExistsError(true);
           } else {
-            toast({
-              title: "An error occurred.",
-              description: "Please try again!",
-              status: "error",
-              position: "bottom-left",
-              duration: 3000,
-              isClosable: true,
-            });
+            contextStore.showUnexpectedError();
+
           }
         }
       );

@@ -4,13 +4,13 @@ import { Route, Redirect } from "react-router-dom";
 import { GlobalContext } from "../context/GlobalState";
 
 const DefaultRoute = ({ component: Component, ...rest }) => {
-  const contextData = useContext(GlobalContext);
-  console.log("from default authintiacation",contextData)
+  const contextStore = useContext(GlobalContext);
+  console.log("from default authintiacation",contextStore)
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (contextData.loginData.isLoggedIn) {
+        if (contextStore.loginData.isLoggedIn) {
           return (
             <Redirect
               to={{

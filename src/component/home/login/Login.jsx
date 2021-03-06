@@ -23,11 +23,10 @@ import "./Login.scss";
 
 function Login() {
   let history = useHistory();
-  const contextData = useContext(GlobalContext);
+  const contextStore = useContext(GlobalContext);
 
   const [noAccountFoundError, setNoAccountFoundError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const toast = useToast();
   useEffect(() => {
     // effect
     return () => {
@@ -46,7 +45,7 @@ function Login() {
         setLoading(false);
         console.log(response.data);
         response.data.isLoggedIn = true;
-        contextData.setLoginData(response.data);
+        contextStore.setLoginData(response.data);
         history.push("/app");
       })
       .catch((error) => {
@@ -62,14 +61,7 @@ function Login() {
         ) {
           setNoAccountFoundError(true);
         } else {
-          toast({
-            title: "An error occurred.",
-            description: "Please try again!",
-            status: "error",
-            position: "bottom-left",
-            duration: 3000,
-            isClosable: true,
-          });
+          contextStore.showUnexpectedError();
         }
       });
   };

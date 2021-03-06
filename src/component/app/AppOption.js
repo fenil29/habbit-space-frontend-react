@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext,useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import "./AppOption.scss";
 import {
@@ -17,13 +17,15 @@ import { GlobalContext } from "../../context/GlobalState";
 import axios from "axios";
 
 function AppOption() {
-  const contextData = useContext(GlobalContext);
+  const contextStore = useContext(GlobalContext);
+  const [addHabitLoading, setAddHabitLoading] = useState(false)
 
   const {
     isOpen: isOpenAddHabitModel,
     onOpen: onOpenAddHabitModel,
     onClose: onCloseAddHabitModel,
   } = useDisclosure();
+
   let getHabit = () => {
     axios
       .get(API_URL + "/api/habit")
@@ -36,10 +38,33 @@ function AppOption() {
           error.response.status === 401 &&
           error.response.data === "Unauthorized"
         ) {
-          // contextData.setLoginData({ isLoggedIn: false })
-          // history.push("/login");
-          // console.log(error.response)
-          contextData.clearLoginDataAndRedirectToLogin();
+          contextStore.clearLoginDataAndRedirectToLogin();
+        } else {
+          contextStore.showUnexpectedError();
+        }
+      });
+  };
+  let addHabit = (habitName) => {
+    setAddHabitLoading(true)
+    axios
+      .post(API_URL + "/api/habit",{
+        habitName:habitName
+      })
+      .then((response) => {
+        setAddHabitLoading(false)
+        onCloseAddHabitModel()
+        console.log(response);
+      })
+      .catch((error) => {
+        setAddHabitLoading(false)
+        console.log(error);
+        if (
+          error.response.status === 401 &&
+          error.response.data === "Unauthorized"
+        ) {
+          contextStore.clearLoginDataAndRedirectToLogin();
+        } else {
+          contextStore.showUnexpectedError();
         }
       });
   };
@@ -89,6 +114,8 @@ function AppOption() {
         <AddHabitModel
           isOpen={isOpenAddHabitModel}
           onClose={onCloseAddHabitModel}
+          onAddHabit={addHabit}
+          addHabitLoading={addHabitLoading}
         />
       </Box>
     </>

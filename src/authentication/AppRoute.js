@@ -6,13 +6,12 @@ import { GlobalContext } from "../context/GlobalState";
 
 const AppRoute = ({ component: Component, ...rest }) => {
   // console.log(window.location);
-  const contextData = useContext(GlobalContext);
-  // console.log("from business authintiacation", contextData);
+  const contextStore = useContext(GlobalContext);
   return (
     <Route
     {...rest}
     render={(props) => {
-      if (!contextData.loginData.isLoggedIn) {
+      if (!contextStore.loginData.isLoggedIn) {
         return (
           <Redirect
             to={{

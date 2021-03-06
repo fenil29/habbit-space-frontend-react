@@ -186,13 +186,13 @@ function Calendar() {
     };
   }, []);
   return (
-    <div class="calendar-month">
-      <section class="calendar-month-header">
+    <div className="calendar-month">
+      <section className="calendar-month-header">
         <div
           id="selected-month"
-          class="calendar-month-header-selected-month"
+          className="calendar-month-header-selected-month"
         ></div>
-        <section class="calendar-month-header-selectors">
+        <section className="calendar-month-header-selectors">
           {/* <span id="present-month-selector">Today</span> */}
           <span id="present-month-selector">
             <RepeatIcon />
@@ -206,9 +206,9 @@ function Calendar() {
         </section>
       </section>
 
-      <ol id="days-of-week" class="day-of-week"></ol>
+      <ol id="days-of-week" className="day-of-week"></ol>
 
-      <ol id="calendar-days" class="days-grid"></ol>
+      <ol id="calendar-days" className="days-grid"></ol>
     </div>
   );
 }
