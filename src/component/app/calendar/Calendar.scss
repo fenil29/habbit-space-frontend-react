@@ -128,7 +128,7 @@ li {
   &:hover {
     // cursor: pointer;
     // background-color: var(--primary-color-hover);
-    background-color: blue !important;
+    // background-color: blue !important;
     // color: white;
   }
 }
@@ -169,13 +169,30 @@ li {
         &:hover {
           cursor: pointer;
           // background-color: var(--primary-color-hover);
-          background-color: blue;
-          color: white;
+          // background-color: blue;
+          // color: white;
         }
       }
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+  }
+}
+@media only screen and (max-width: 465px) {
+  .calendar-day {
+    min-height: 50px;
+  }
+  .calendar-month {
+    min-width: 300px;
+    .days-grid {
+      li {
+        span {
+          width: 40px;
+          height: 40px;
+          border-radius: 5px;
+        }
+      }
     }
   }
 }

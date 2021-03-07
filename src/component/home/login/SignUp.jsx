@@ -53,11 +53,11 @@ function SignUp() {
         (error) => {
           setLoading(false);
 
-          console.log(
+          console.log(error.response &&
             error.response.status === 409 &&
               error.response.data === "User already exists"
           );
-          if (
+          if (error.response &&
             error.response.status === 409 &&
             error.response.data === "User already exists"
           ) {

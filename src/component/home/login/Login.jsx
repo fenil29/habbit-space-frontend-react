@@ -51,11 +51,11 @@ function Login() {
       .catch((error) => {
         setLoading(false);
 
-        console.log(
+        console.log(error.response &&
           error.response.status === 404 &&
             error.response.data === "User not found"
         );
-        if (
+        if (error.response &&
           error.response.status === 404 &&
           error.response.data === "User not found"
         ) {

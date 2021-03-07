@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 
-import { Box, Stack, Skeleton,Button } from "@chakra-ui/react";
+import { Box, Stack, Skeleton, Button } from "@chakra-ui/react";
 import "./HabitView.scss";
 import Calendar from "./calendar/Calendar";
 
@@ -9,6 +9,8 @@ import { API_URL } from "../../Constants";
 import { GlobalContext } from "../../context/GlobalState";
 
 import axios from "axios";
+
+import { HamburgerIcon } from "@chakra-ui/icons";
 
 function HabitView(props) {
   const contextStore = useContext(GlobalContext);
@@ -124,12 +126,12 @@ function HabitView(props) {
         </Stack>
       ) : (
         <>
-        
-        <Button
-          colorScheme="teal"
-          onClick={props.onSideDrawerOpen}
-        ></Button>
-          <h2>{currentHabitDate.habit_name}</h2>
+          <h2>
+            {/* <Button onClick={props.onSideDrawerOpen} size="sm" mr={2}> */}
+              <HamburgerIcon onClick={props.onSideDrawerOpen} mr={2} className="side-drawer-menu" />
+            {/* </Button> */}
+            {currentHabitDate.habit_name}
+          </h2>
           <Calendar
             selectedDate={currentHabitDate.dates}
             addSelectedDate={addSelectedDate}
