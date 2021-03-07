@@ -26,7 +26,6 @@ import { GlobalContext } from "../../context/GlobalState";
 import axios from "axios";
 
 function AppOption(props) {
-  const [size, setSize] = useState([0, 0]);
   const contextStore = useContext(GlobalContext);
   const [habitList, setHabitList] = useState([]);
   const [getHabitListLoading, setGetHabitListLoading] = useState(false);
@@ -85,18 +84,13 @@ function AppOption(props) {
         }
       });
   };
-  function updateSize() {
-    setSize([window.innerWidth, window.innerHeight]);
-    console.log(window.innerWidth);
-  }
+
   useEffect(() => {
     // effect
     getHabit();
-    window.addEventListener("resize", updateSize);
 
     return () => {
       // cleanup
-      window.removeEventListener("resize", updateSize);
     };
   }, []);
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import {
   ChevronLeftIcon,
@@ -13,18 +13,19 @@ const weekOfYear = require("dayjs/plugin/weekOfYear");
 dayjs.extend(weekday);
 dayjs.extend(weekOfYear);
 
-const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-const TODAY = dayjs().format("YYYY-MM-DD");
-
-const INITIAL_YEAR = dayjs().format("YYYY");
-const INITIAL_MONTH = dayjs().format("M");
-
-let selectedMonth = dayjs(new Date(INITIAL_YEAR, INITIAL_MONTH - 1, 1));
-let currentMonthDays;
-let previousMonthDays;
-let nextMonthDays;
-
 function Calendar(props) {
+  const [selectedDate, setSelectedDate] = useState(props.selectedDate.dates);
+  const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const TODAY = dayjs().format("YYYY-MM-DD");
+
+  const INITIAL_YEAR = dayjs().format("YYYY");
+  const INITIAL_MONTH = dayjs().format("M");
+
+  let selectedMonth = dayjs(new Date(INITIAL_YEAR, INITIAL_MONTH - 1, 1));
+  let currentMonthDays;
+  let previousMonthDays;
+  let nextMonthDays;
+
   useEffect(() => {
     // effect
 
@@ -46,24 +47,30 @@ function Calendar(props) {
     };
   }, []);
 
-  // useEffect(() => {
-  //   document.querySelectorAll(".calendar-day span").forEach((ele) => {
-  //     if (ele.getAttribute("value") in props.selectedDate) {
-  //       ele.parentNode.classList.add("calendar-day--selected");
-  //     }
-  //   });
-  //   return () => {};
-  // }, [props.selectedDate]);
+  useEffect(() => {
+    console.log("changedsdfgdf");
+
+    document.querySelectorAll(".calendar-day span").forEach((ele) => {
+      if (ele.getAttribute("value") in props.selectedDate.dates) {
+        ele.parentNode.classList.add("calendar-day--selected");
+      } else {
+        ele.parentNode.classList.remove("calendar-day--selected");
+        // console.log()
+      }
+    });
+    setSelectedDate(props.selectedDate.dates);
+    return () => {};
+  }, [props.selectedDate]);
   function onDateClick() {
     let clickedDate = this.getAttribute("value");
     // console.log(this.parentNode);
     console.log(clickedDate);
-    if (clickedDate in props.selectedDate) {
-      this.parentNode.classList.remove("calendar-day--selected");
-      props.removeSelectedDate(clickedDate,this.parentNode);
+    if (clickedDate in selectedDate) {
+      // this.parentNode.classList.remove("calendar-day--selected");
+      props.removeSelectedDate(clickedDate, this.parentNode);
     } else {
-      this.parentNode.classList.add("calendar-day--selected");
-      props.addSelectedDate(clickedDate,this.parentNode);
+      // this.parentNode.classList.add("calendar-day--selected");
+      props.addSelectedDate(clickedDate, this.parentNode);
     }
   }
   function createCalendar(year = INITIAL_YEAR, month = INITIAL_MONTH) {
@@ -110,7 +117,7 @@ function Calendar(props) {
     if (day.date === TODAY) {
       dayElementClassList.add("calendar-day--today");
     }
-    if (day.date in props.selectedDate) {
+    if (day.date in selectedDate) {
       dayElementClassList.add("calendar-day--selected");
     }
     // console.log(props.selectedDate)
@@ -227,14 +234,23 @@ function Calendar(props) {
         ></div>
         <section className="calendar-month-header-selectors">
           {/* <span id="present-month-selector">Today</span> */}
-          <span id="present-month-selector" className="calendar-change-month-button">
+          <span
+            id="present-month-selector"
+            className="calendar-change-month-button"
+          >
             <RepeatIcon />
           </span>
-          <span id="previous-month-selector" className="calendar-change-month-button">
-            <ChevronLeftIcon   w={6} h={6}/>
+          <span
+            id="previous-month-selector"
+            className="calendar-change-month-button"
+          >
+            <ChevronLeftIcon w={6} h={6} />
           </span>
-          <span id="next-month-selector" className="calendar-change-month-button">
-            <ChevronRightIcon   w={6} h={6}/>
+          <span
+            id="next-month-selector"
+            className="calendar-change-month-button"
+          >
+            <ChevronRightIcon w={6} h={6} />
           </span>
         </section>
       </section>
