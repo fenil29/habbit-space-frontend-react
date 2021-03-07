@@ -9,20 +9,24 @@
   // border-radius: $border-radius;
   // margin-top: 15px;
   // border-width: 1px;
-  border-right-width: 1px ;
+  border-right-width: 1px;
   // box-shadow: 0px 0px 29px -8px rgba(0,0,0,0.75);
-
-
 }
 
-.app-content,.app-option {
+.app-content,
+.app-option {
   // border-width: 1px;
   // border-radius: $border-radius;
   height: 100%;
 }
+.side-drawer-menu {
+  display: none !important;
+}
 @media only screen and (max-width: 800px) {
-  .app-option-main{
+  .app-option-main {
     display: none;
   }
+  .side-drawer-menu {
+    display: inline-block !important;
+  }
 }
-
