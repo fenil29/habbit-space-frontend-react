@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useLayoutEffect } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import "./AppOption.scss";
 import {
@@ -9,6 +9,13 @@ import {
   Button,
   useDisclosure,
   Stack,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
 } from "@chakra-ui/react";
 import { Skeleton, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
 
@@ -19,6 +26,7 @@ import { GlobalContext } from "../../context/GlobalState";
 import axios from "axios";
 
 function AppOption(props) {
+  const [size, setSize] = useState([0, 0]);
   const contextStore = useContext(GlobalContext);
   const [habitList, setHabitList] = useState([]);
   const [getHabitListLoading, setGetHabitListLoading] = useState(false);
@@ -77,16 +85,30 @@ function AppOption(props) {
         }
       });
   };
+  function updateSize() {
+    setSize([window.innerWidth, window.innerHeight]);
+    console.log(window.innerWidth);
+  }
   useEffect(() => {
     // effect
     getHabit();
+    window.addEventListener("resize", updateSize);
+
     return () => {
       // cleanup
+      window.removeEventListener("resize", updateSize);
     };
   }, []);
-  return (
+
+  const OptionComponent = (localProps) => (
     <>
-      <Box className="app-option">
+      <Box
+        className={
+          localProps.type === "drawer"
+            ? "app-option app-option-drawer"
+            : "app-option app-option-main"
+        }
+      >
         <Box className="title">
           <h2>Dashboard</h2>
         </Box>
@@ -112,7 +134,7 @@ function AppOption(props) {
             </Stack>
           ) : (
             <>
-                 {/* <NavLink
+              {/* <NavLink
                 to={"/app/habit/04a13a79-3109-4ed2-b11d-c3619dd8e2c6"}
                 activeClassName="is-active-habit"
               >
@@ -124,7 +146,7 @@ function AppOption(props) {
               >
                 <ListItem>list2</ListItem>
               </NavLink> */}
-         {     habitList.map((item) => (
+              {habitList.map((item) => (
                 <NavLink
                   to={"/app/habit/" + item.habit_id}
                   key={item.habit_id}
@@ -132,11 +154,8 @@ function AppOption(props) {
                 >
                   <ListItem>{item.habit_name}</ListItem>
                 </NavLink>
-              ))
-             }  
+              ))}
             </>
-         
-     
           )}
         </List>
         <Center className="add-habit-button-container">
@@ -145,7 +164,10 @@ function AppOption(props) {
             customColor="blue"
             // variant="outline"
             size="sm"
-            onClick={onOpenAddHabitModel}
+            onClick={() => {
+              onOpenAddHabitModel();
+              props.onSideDrawerClose();
+            }}
           >
             Add Habit
           </Button>
@@ -158,6 +180,37 @@ function AppOption(props) {
           addHabitLoading={addHabitLoading}
         />
       </Box>
+    </>
+  );
+  const OptionComponentMain = () => (
+    <>
+      <OptionComponent type="main" />
+    </>
+  );
+  // console.log("contextStore.isSideDrawerOpen",contextStore)
+  const OptionComponentDrawer = () => (
+    <>
+      <Drawer
+        isOpen={props.isSideDrawerOpen}
+        onClose={props.onSideDrawerClose}
+        placement="left"
+      >
+        <DrawerOverlay>
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader borderBottomWidth="1px">Habit Tracker</DrawerHeader>
+
+            <DrawerBody p={0}>
+              <OptionComponent type="drawer" />
+            </DrawerBody>
+          </DrawerContent>
+        </DrawerOverlay>
+      </Drawer>
+    </>
+  );
+  return (
+    <>
+      <OptionComponentDrawer /> <OptionComponentMain />
     </>
   );
 }

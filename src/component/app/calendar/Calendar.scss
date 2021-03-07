@@ -22,6 +22,7 @@ li {
   //   background-color: var(--grey-200);
   // border: solid 1px var(--grey-200);
   max-width: 550px;
+  min-width: 450px;
   // width: 80%;
   margin: auto;
 }
@@ -34,7 +35,7 @@ li {
 }
 
 .calendar-month-header-selected-month {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 600;
 }
 
@@ -42,7 +43,7 @@ li {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 80px;
+  // width: 80px;
 }
 
 .calendar-month-header-selectors > * {
@@ -131,7 +132,23 @@ li {
     // color: white;
   }
 }
+.calendar-change-month-button{
+  // background-color: red;
+  // height: 100%;
+  // margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 36px;
+  // padding: 5px;
+  // margin-right: 5px;
 
+  &:hover{
+    background-color: var(--secondary-background-color);
+
+  }
+}
 //
 .calendar-month {
   .day-of-week {

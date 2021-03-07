@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Logo from "../../Logo";
 import "./AppNavBar.scss";
 import { Link } from "react-router-dom";
@@ -11,7 +11,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import DarkModeButton from './DarkModeButton'
+import DarkModeButton from "./DarkModeButton";
 
 
 function AppNavBar() {
@@ -23,9 +23,13 @@ function AppNavBar() {
           <Logo />
         </Link>
         <div className="right">
-          <DarkModeButton/>
+          <DarkModeButton />
           <Menu>
-            <MenuButton as={Button} rightIcon={<ChevronDownIcon />} customColor="light-blue">
+            <MenuButton
+              as={Button}
+              rightIcon={<ChevronDownIcon />}
+              customColor="light-blue"
+            >
               Fenil Kaneria
             </MenuButton>
             <MenuList>

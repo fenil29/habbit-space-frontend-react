@@ -227,14 +227,14 @@ function Calendar(props) {
         ></div>
         <section className="calendar-month-header-selectors">
           {/* <span id="present-month-selector">Today</span> */}
-          <span id="present-month-selector">
+          <span id="present-month-selector" className="calendar-change-month-button">
             <RepeatIcon />
           </span>
-          <span id="previous-month-selector">
-            <ChevronLeftIcon />
+          <span id="previous-month-selector" className="calendar-change-month-button">
+            <ChevronLeftIcon   w={6} h={6}/>
           </span>
-          <span id="next-month-selector">
-            <ChevronRightIcon />
+          <span id="next-month-selector" className="calendar-change-month-button">
+            <ChevronRightIcon   w={6} h={6}/>
           </span>
         </section>
       </section>

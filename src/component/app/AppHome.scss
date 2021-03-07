@@ -2,8 +2,8 @@
 
 .app-home {
   display: flex;
-  width: 80%;
-  max-width: 1000px;
+  width: 100%;
+  max-width: 900px;
   margin: auto;
   height: calc(100vh - 61px);
   // border-radius: $border-radius;
@@ -20,3 +20,9 @@
   // border-radius: $border-radius;
   height: 100%;
 }
+@media only screen and (max-width: 800px) {
+  .app-option-main{
+    display: none;
+  }
+}
+

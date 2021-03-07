@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { useToast, Box } from "@chakra-ui/react";
+import { useToast, Box,useDisclosure } from "@chakra-ui/react";
 
 export const GlobalContext = createContext();
 

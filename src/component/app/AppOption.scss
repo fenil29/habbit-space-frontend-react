@@ -17,8 +17,8 @@
   }
   li {
     // margin: 5px;
-    font-size: 14px;
-    font-weight: 400;
+    font-size: 15px;
+    font-weight: 500;
     padding: 10px 20px;
     background-color: var(--secondary-background-color);
     margin: 5px;
@@ -43,4 +43,9 @@
       color: white;
     }
   }
+}
+.app-option-drawer {
+  width: 100%;
+  border-right-width: 0px;
+  border-left-width: 0px;
 }
