@@ -5,7 +5,7 @@ import { GlobalContext } from "../context/GlobalState";
 
 const DefaultRoute = ({ component: Component, ...rest }) => {
   const contextStore = useContext(GlobalContext);
-  console.log("from default authintiacation",contextStore)
+  // console.log("from default authintiacation",contextStore)
   return (
     <Route
       {...rest}

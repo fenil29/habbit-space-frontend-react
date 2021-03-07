@@ -8,7 +8,7 @@ import {
   ListItem,
   Button,
   useDisclosure,
-  Stack
+  Stack,
 } from "@chakra-ui/react";
 import { Skeleton, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
 
@@ -18,10 +18,10 @@ import { GlobalContext } from "../../context/GlobalState";
 
 import axios from "axios";
 
-function AppOption() {
+function AppOption(props) {
   const contextStore = useContext(GlobalContext);
   const [habitList, setHabitList] = useState([]);
-  const [getHabitLoading, setGetHabitLoading] = useState(false);
+  const [getHabitListLoading, setGetHabitListLoading] = useState(false);
   const [addHabitLoading, setAddHabitLoading] = useState(false);
 
   const {
@@ -31,17 +31,17 @@ function AppOption() {
   } = useDisclosure();
 
   let getHabit = () => {
-    setGetHabitLoading(true);
+    setGetHabitListLoading(true);
     axios
       .get(API_URL + "/api/habit")
       .then((response) => {
-        setGetHabitLoading(false);
-        console.log(response.data);
+        setGetHabitListLoading(false);
+        // console.log(response.data);
         setHabitList(response.data);
       })
       .catch((error) => {
-        setGetHabitLoading(false);
-        console.log(error);
+        setGetHabitListLoading(false);
+        // console.log(error);
         if (
           error.response.status === 401 &&
           error.response.data === "Unauthorized"
@@ -56,17 +56,17 @@ function AppOption() {
     setAddHabitLoading(true);
     axios
       .post(API_URL + "/api/habit", {
-        habitName: habitName,
+        habit_name: habitName,
       })
       .then((response) => {
         setAddHabitLoading(false);
         onCloseAddHabitModel();
-        console.log(response);
+        // console.log(response);
         setHabitList(response.data);
       })
       .catch((error) => {
         setAddHabitLoading(false);
-        console.log(error);
+        // console.log(error);
         if (
           error.response.status === 401 &&
           error.response.data === "Unauthorized"
@@ -88,10 +88,10 @@ function AppOption() {
     <>
       <Box className="app-option">
         <Box className="title">
-          <h2>All Habits</h2>
+          <h2>Dashboard</h2>
         </Box>
         <List>
-          <ListItem>Today</ListItem>
+          <ListItem>Activity</ListItem>
         </List>
         <br />
 
@@ -104,22 +104,39 @@ function AppOption() {
             <ListIcon as={CheckIcon} />
             Lorem ipsum dolor sit amet
           </ListItem> */}
-          {getHabitLoading ? (
+          {getHabitListLoading ? (
             <Stack m={2}>
               <Skeleton height="20px" />
               <Skeleton height="20px" />
               <Skeleton height="20px" />
             </Stack>
           ) : (
-            habitList.map((item) => (
-              <NavLink
-                to={"/app/habit/" + item.habit_id}
-                key={item.habit_id}
+            <>
+                 {/* <NavLink
+                to={"/app/habit/04a13a79-3109-4ed2-b11d-c3619dd8e2c6"}
                 activeClassName="is-active-habit"
               >
-                <ListItem>{item.name}</ListItem>
+                <ListItem>list</ListItem>
               </NavLink>
-            ))
+              <NavLink
+                to={"/app/habit/b23332da-463e-404e-a49f-e4152c82e334"}
+                activeClassName="is-active-habit"
+              >
+                <ListItem>list2</ListItem>
+              </NavLink> */}
+         {     habitList.map((item) => (
+                <NavLink
+                  to={"/app/habit/" + item.habit_id}
+                  key={item.habit_id}
+                  activeClassName="is-active-habit"
+                >
+                  <ListItem>{item.habit_name}</ListItem>
+                </NavLink>
+              ))
+             }  
+            </>
+         
+     
           )}
         </List>
         <Center className="add-habit-button-container">
