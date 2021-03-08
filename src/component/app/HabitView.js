@@ -103,6 +103,13 @@ function HabitView(props) {
         }
       });
   };
+  let onDateClick = (clickedDate) => {
+    if (clickedDate in props.habitsDateInfo[habit_id].dates) {
+      removeSelectedDate(clickedDate);
+    } else {
+      addSelectedDate(clickedDate);
+    }
+  };
   let getHabitDate = () => {
     if (true) {
       // if (!currentHabitDate) {
@@ -185,6 +192,7 @@ function HabitView(props) {
             selectedDate={currentHabitDate}
             addSelectedDate={addSelectedDate}
             removeSelectedDate={removeSelectedDate}
+            onDateClick={onDateClick}
           />
         </>
       )}
