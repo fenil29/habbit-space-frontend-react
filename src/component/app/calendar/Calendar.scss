@@ -27,7 +27,7 @@ li {
   // width: 80%;
   margin: auto;
   // border-width: 1px;
-  padding: 5px;
+  padding: 8px;
 }
 
 .calendar-month-header {
@@ -166,8 +166,9 @@ li {
         background-color: var(--secondary-background-color);
         color: var(--primary-font-color);
         font-weight: 400;
-        width: 60px;
-        height: 60px;
+        width: 65px;
+        height: 65px;
+      
         border-radius: 5px;
         &:hover {
           cursor: pointer;
@@ -182,17 +183,51 @@ li {
     }
   }
 }
-@media only screen and (max-width: 475px) {
+@media only screen and (max-width: 530px) and (min-width: 460px) {
   .calendar-day {
-    min-height: 50px;
+    min-height: 64px;
   }
   .calendar-month {
     min-width: 300px;
     .days-grid {
       li {
         span {
-          width: 42px;
-          height: 42px;
+          width: 55px;
+          height: 55px;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 460px) and (min-width: 405px) {
+  .calendar-day {
+    min-height: 58px;
+  }
+  .calendar-month {
+    min-width: 300px;
+    .days-grid {
+      li {
+        span {
+          width: 50px;
+          height: 50px;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 405px) {
+  .calendar-day {
+    min-height: 52px;
+  }
+  .calendar-month {
+    min-width: 300px;
+    .days-grid {
+      li {
+        span {
+          width: 45px;
+          height: 45px;
           border-radius: 5px;
         }
       }
