@@ -239,7 +239,7 @@ function Calendar(props) {
       <ol id="calendar-days" className="days-grid">       {currentDates.map((day, index) => (
           <li
             className={
-              props.selectedDate.dates[day.date]
+              props.selectedDate[day.date]
                 ? "calendar-day calendar-day--selected"
                 : "calendar-day"
             }

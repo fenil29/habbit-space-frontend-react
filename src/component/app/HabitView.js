@@ -14,10 +14,9 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 
 let requestedAddHabitDateTemp = {};
 let requestedRemoveHabitDateTemp = {};
-
 function HabitView(props) {
-  const contextStore = useContext(GlobalContext);
   let { habit_id } = useParams();
+  const contextStore = useContext(GlobalContext);
   const [getHabitDateLoading, setGetHabitDateLoading] = useState(true);
   const [currentHabitDate, setCurrentHabitDate] = useState(
     props.habitsDateInfo[habit_id]
@@ -29,9 +28,16 @@ function HabitView(props) {
 
   const addSelectedDate = (date, dateElement) => {
     // add date which is not completed to temp container
-    requestedAddHabitDateTemp[date] = true;
-    if(date in requestedRemoveHabitDateTemp){
-      delete requestedRemoveHabitDateTemp[date]
+    if (!requestedAddHabitDateTemp[habit_id]) {
+      requestedAddHabitDateTemp[habit_id] = {};
+    }
+    requestedAddHabitDateTemp[habit_id][date] = true;
+    console.log("tempstorelog", requestedAddHabitDateTemp);
+    if (
+      requestedRemoveHabitDateTemp[habit_id] &&
+      date in requestedRemoveHabitDateTemp[habit_id]
+    ) {
+      delete requestedRemoveHabitDateTemp[habit_id][date];
     }
     let currentHabitDateTemp = { ...currentHabitDate };
     currentHabitDateTemp.dates[date] = true;
@@ -42,12 +48,12 @@ function HabitView(props) {
         date: date,
       })
       .then((response) => {
-        // remove from temp container if the request is completed 
-        delete requestedAddHabitDateTemp[date];
+        // remove from temp container if the request is completed
+        delete requestedAddHabitDateTemp[habit_id][date];
       })
       .catch((error) => {
-        // remove from temp container if the request is completed 
-        delete requestedAddHabitDateTemp[date];
+        // remove from temp container if the request is completed
+        delete requestedAddHabitDateTemp[habit_id][date];
         console.log(error);
         if (
           error.response &&
@@ -65,9 +71,16 @@ function HabitView(props) {
   };
   const removeSelectedDate = (date, dateElement) => {
     // add date which is not completed to temp container
-    requestedRemoveHabitDateTemp[date] = true;
-    if(date in requestedAddHabitDateTemp){
-      delete requestedAddHabitDateTemp[date]
+    if (!requestedRemoveHabitDateTemp[habit_id]) {
+      requestedRemoveHabitDateTemp[habit_id] = {};
+    }
+
+    requestedRemoveHabitDateTemp[habit_id][date] = true;
+    if (
+      requestedAddHabitDateTemp[habit_id] &&
+      date in requestedAddHabitDateTemp[habit_id]
+    ) {
+      delete requestedAddHabitDateTemp[habit_id][date];
     }
     let currentHabitDateTemp = { ...currentHabitDate };
     delete currentHabitDateTemp.dates[date];
@@ -80,13 +93,12 @@ function HabitView(props) {
         },
       })
       .then((response) => {
-        // remove from temp container if the request is completed 
-        delete requestedRemoveHabitDateTemp[date];
-
+        // remove from temp container if the request is completed
+        delete requestedRemoveHabitDateTemp[habit_id][date];
       })
       .catch((error) => {
-        // remove from temp container if the request is completed 
-        delete requestedRemoveHabitDateTemp[date];
+        // remove from temp container if the request is completed
+        delete requestedRemoveHabitDateTemp[habit_id][date];
         console.log(error);
         if (
           error.response &&
@@ -122,13 +134,16 @@ function HabitView(props) {
           // if the request is successful no need to add because the the response of this request most likely has that date
           response.data.dates = {
             ...response.data.dates,
-            ...requestedAddHabitDateTemp,
+            ...requestedAddHabitDateTemp[habit_id],
           };
-          for(let ele in requestedRemoveHabitDateTemp){
-            if(ele in response.data.dates){
-              delete response.data.dates[ele]
+          if (requestedRemoveHabitDateTemp[habit_id]) {
+            for (let ele in requestedRemoveHabitDateTemp[habit_id]) {
+              if (ele in response.data.dates) {
+                delete response.data.dates[ele];
+              }
             }
-            }
+          }
+
           // remove currently pending remove date request
           setCurrentHabitDateCustom(response.data);
         })
@@ -156,14 +171,6 @@ function HabitView(props) {
       // cleanup
     };
   }, []);
-  useEffect(() => {
-    // effect
-    console.log("dhfbgfdbgkfdbg");
-    // getHabitDate();
-    return () => {
-      // cleanup
-    };
-  }, [currentHabitDate]);
   return (
     <Box className="app-content">
       {!currentHabitDate ? (
@@ -189,7 +196,7 @@ function HabitView(props) {
             {currentHabitDate.habit_name}
           </h2>
           <Calendar
-            selectedDate={currentHabitDate}
+            selectedDate={currentHabitDate.dates}
             addSelectedDate={addSelectedDate}
             removeSelectedDate={removeSelectedDate}
             onDateClick={onDateClick}
