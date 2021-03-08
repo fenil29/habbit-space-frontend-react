@@ -5,6 +5,10 @@
   box-sizing: border-box;
   transition: 0.25s background-color !important;
 }
+span{
+  transition: 0s background-color !important;
+
+}
 button:focus {
   box-shadow: none !important;
 }
@@ -43,3 +47,4 @@ button[customColor="blue"] {
     }
   }
 }
+

@@ -8,6 +8,7 @@
   --grid-gap: 1px;
   --day-label-size: 20px;
   user-select: none;
+  // padding: 5px;
 }
 
 ol,
@@ -21,10 +22,12 @@ li {
   position: relative;
   //   background-color: var(--grey-200);
   // border: solid 1px var(--grey-200);
-  max-width: 550px;
+  max-width: 560px;
   min-width: 450px;
   // width: 80%;
   margin: auto;
+  // border-width: 1px;
+  padding: 5px;
 }
 
 .calendar-month-header {
@@ -52,8 +55,9 @@ li {
 
 .day-of-week {
   //   color: var(--grey-800);
-  font-size: 18px;
+  font-size: 16px;
   //   background-color: #fff;
+  font-weight: 400;
   padding-bottom: 5px;
   padding-top: 10px;
 }
@@ -132,7 +136,7 @@ li {
     // color: white;
   }
 }
-.calendar-change-month-button{
+.calendar-change-month-button {
   // background-color: red;
   // height: 100%;
   // margin: 10px;
@@ -140,13 +144,12 @@ li {
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 36px;
+  width: 40px;
   // padding: 5px;
   // margin-right: 5px;
 
-  &:hover{
-    background-color: var(--secondary-background-color);
-
+  &:hover {
+    // background-color: var(--secondary-background-color);
   }
 }
 //
@@ -179,7 +182,7 @@ li {
     }
   }
 }
-@media only screen and (max-width: 465px) {
+@media only screen and (max-width: 475px) {
   .calendar-day {
     min-height: 50px;
   }
@@ -188,8 +191,8 @@ li {
     .days-grid {
       li {
         span {
-          width: 40px;
-          height: 40px;
+          width: 42px;
+          height: 42px;
           border-radius: 5px;
         }
       }

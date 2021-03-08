@@ -49,7 +49,8 @@ function AppOption(props) {
       .catch((error) => {
         setGetHabitListLoading(false);
         // console.log(error);
-        if (error.response &&
+        if (
+          error.response &&
           error.response.status === 401 &&
           error.response.data === "Unauthorized"
         ) {
@@ -74,7 +75,8 @@ function AppOption(props) {
       .catch((error) => {
         setAddHabitLoading(false);
         // console.log(error);
-        if (error.response &&
+        if (
+          error.response &&
           error.response.status === 401 &&
           error.response.data === "Unauthorized"
         ) {

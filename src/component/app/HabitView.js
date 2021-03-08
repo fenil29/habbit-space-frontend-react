@@ -189,12 +189,13 @@ function HabitView(props) {
             {/* <Button onClick={props.onSideDrawerOpen} size="sm" mr={2}> */}
             <HamburgerIcon
               onClick={props.onSideDrawerOpen}
-              mr={2}
+              mr={3}
               className="side-drawer-menu"
             />
             {/* </Button> */}
             {currentHabitDate.habit_name}
           </h2>
+          <hr className="habit-bottom-ht"/>
           <Calendar
             selectedDate={currentHabitDate.dates}
             addSelectedDate={addSelectedDate}
