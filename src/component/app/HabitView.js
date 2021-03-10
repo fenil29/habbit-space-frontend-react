@@ -166,13 +166,14 @@ function HabitView(props) {
   useEffect(() => {
     // effect
     // console.log(habit_id);
+    console.log(props.habitsDateInfo)
     getHabitDate();
     return () => {
       // cleanup
     };
   }, []);
   return (
-    <Box className="app-content">
+    <Box className="habit-view-container">
       {!currentHabitDate ? (
         <Stack m={10}>
           <Skeleton height="30px" mb={10} />
