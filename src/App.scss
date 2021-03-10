@@ -26,6 +26,16 @@ button[customColor="blue"] {
     background-color: var(--primary-color-hover) !important;
   }
 }
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  background: #c4c4c4;
+}
+
 // nab-bar
 .nav-bar {
   border-bottom-width: 1px;

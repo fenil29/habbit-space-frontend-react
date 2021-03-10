@@ -109,12 +109,21 @@ function AppOption(props) {
           <h2>Dashboard</h2>
         </Box>
         <List>
-          <ListItem>Activity</ListItem>
+          <NavLink
+            to="/app/all-habit"
+            exact
+            activeClassName="is-active-habit"
+            onClick={() => {
+              props.onSideDrawerClose();
+            }}
+          >
+          <ListItem>All Habits</ListItem>
+          </NavLink>
         </List>
         <br />
 
         <Box className="title">
-          <h2>Habits</h2>
+            <h2>Habits</h2>
         </Box>
         {/* <Divider /> */}
         <List>

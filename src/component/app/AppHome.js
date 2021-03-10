@@ -17,6 +17,8 @@ import "./AppHome.scss";
 
 import AppOption from "./AppOption";
 import HabitView from "./HabitView";
+import AllHabit from "./AllHabit";
+
 let habitsDateInfo = {};
 function AppHome() {
   console.log("habitsDateInfo Rendering");
@@ -66,6 +68,13 @@ function AppHome() {
               habitsDateInfo={habitsDateInfo}
               addHabitsDateInfo={addHabitsDateInfo}
             />
+          )}
+        />
+        <Route
+          path="/app/all-habit"
+          exact
+          component={() => (
+            <AllHabit/>
           )}
         />
       </Switch>

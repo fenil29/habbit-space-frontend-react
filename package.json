@@ -15,7 +15,9 @@
     "formik": "^2.2.6",
     "framer-motion": "^3.2.1",
     "node-sass": "^4.14.1",
+    "patch-package": "^6.4.6",
     "react": "^17.0.1",
+    "react-calendar-heatmap": "1.8.1",
     "react-dom": "^17.0.1",
     "react-google-login": "^5.2.2",
     "react-icons": "^4.1.0",
@@ -27,7 +29,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postinstall": "patch-package"
   },
   "proxy": "http://localhost:5555",
   "eslintConfig": {

@@ -1,0 +1,39 @@
+diff --git a/node_modules/react-calendar-heatmap/dist/react-calendar-heatmap.cjs.js b/node_modules/react-calendar-heatmap/dist/react-calendar-heatmap.cjs.js
+index 209ace2..892b99f 100644
+--- a/node_modules/react-calendar-heatmap/dist/react-calendar-heatmap.cjs.js
++++ b/node_modules/react-calendar-heatmap/dist/react-calendar-heatmap.cjs.js
+@@ -601,6 +601,8 @@ function (_React$Component) {
+         height: SQUARE_SIZE,
+         x: x,
+         y: y,
++        rx:"2",
++        ry:"2",
+         className: this.getClassNameForIndex(index),
+         onClick: function onClick() {
+           return _this2.handleClick(value);
+diff --git a/node_modules/react-calendar-heatmap/dist/react-calendar-heatmap.esm.js b/node_modules/react-calendar-heatmap/dist/react-calendar-heatmap.esm.js
+index f3cfeff..00e606a 100644
+--- a/node_modules/react-calendar-heatmap/dist/react-calendar-heatmap.esm.js
++++ b/node_modules/react-calendar-heatmap/dist/react-calendar-heatmap.esm.js
+@@ -597,6 +597,8 @@ function (_React$Component) {
+         height: SQUARE_SIZE,
+         x: x,
+         y: y,
++        rx:"2",
++        ry:"2",
+         className: this.getClassNameForIndex(index),
+         onClick: function onClick() {
+           return _this2.handleClick(value);
+diff --git a/node_modules/react-calendar-heatmap/dist/react-calendar-heatmap.umd.js b/node_modules/react-calendar-heatmap/dist/react-calendar-heatmap.umd.js
+index 27e1086..3a91381 100644
+--- a/node_modules/react-calendar-heatmap/dist/react-calendar-heatmap.umd.js
++++ b/node_modules/react-calendar-heatmap/dist/react-calendar-heatmap.umd.js
+@@ -603,6 +603,8 @@
+           height: SQUARE_SIZE,
+           x: x,
+           y: y,
++          rx:"2",
++          ry:"2",
+           className: this.getClassNameForIndex(index),
+           onClick: function onClick() {
+             return _this2.handleClick(value);

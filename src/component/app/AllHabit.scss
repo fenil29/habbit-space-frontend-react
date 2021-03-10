@@ -1,0 +1,37 @@
+.all-habit-container {
+  width: 100%;
+  .react-calendar-heatmap{
+    margin: 10px;
+    margin-right: 20px;
+  }
+  .react-calendar-heatmap text {
+    font-size: 10px;
+    fill: #aaa;
+  }
+
+  .react-calendar-heatmap .react-calendar-heatmap-small-text {
+    font-size: 5px;
+  }
+
+  .react-calendar-heatmap rect:hover {
+    stroke: #555;
+    stroke-width: 1px;
+  }
+
+  .react-calendar-heatmap .color-empty {
+    fill: var(--secondary-background-color);
+  }
+
+  .react-calendar-heatmap .color-completed {
+    fill: var(--primary-color-hover);
+  }
+  .react-calendar-heatmap .color-empty {
+    /* outline:1px solid red; */
+    /* outline-offset:-1px; */
+    /* shape-rendering:geometricPrecision; */
+    /* border-radius: 10px !important; */
+    /* background-color: red !important; */
+    /* overflow: hidden; */
+    /* shape-rendering: geometricPrecision */
+  }
+}
