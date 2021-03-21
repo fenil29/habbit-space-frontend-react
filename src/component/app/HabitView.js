@@ -11,6 +11,8 @@ import { GlobalContext } from "../../context/GlobalState";
 import axios from "axios";
 
 import { HamburgerIcon } from "@chakra-ui/icons";
+import { io } from "socket.io-client";
+const socket = io();
 
 let requestedAddHabitDateTemp = {};
 let requestedRemoveHabitDateTemp = {};
@@ -166,7 +168,12 @@ function HabitView(props) {
   useEffect(() => {
     // effect
     // console.log(habit_id);
-    console.log(props.habitsDateInfo)
+    socket.on("habit change", data => {
+          console.log(data);
+
+    });
+
+    console.log(props.habitsDateInfo);
     getHabitDate();
     return () => {
       // cleanup
@@ -175,7 +182,7 @@ function HabitView(props) {
   return (
     <Box className="habit-view-container">
       {!currentHabitDate ? (
-        <Stack mt={10}className="calendar-month">
+        <Stack mt={10} className="calendar-month">
           <Skeleton height="30px" mb={10} />
           {/* <Skeleton height="200px" /> */}
           <Skeleton height="20px" />
@@ -196,7 +203,7 @@ function HabitView(props) {
             {/* </Button> */}
             {currentHabitDate.habit_name}
           </h2>
-          <hr className="habit-bottom-ht"/>
+          <hr className="habit-bottom-ht" />
           <Calendar
             selectedDate={currentHabitDate.dates}
             addSelectedDate={addSelectedDate}
