@@ -1,12 +1,14 @@
 .all-habit-container {
   width: 100%;
+  max-width: 900px;
+  margin: auto;
   .react-calendar-heatmap{
     // margin: 10px;
     margin-right: 20px;
   }
   .react-calendar-heatmap text {
     font-size: 10px;
-    fill: #aaa;
+    // fill: #aaa;
   }
 
   .react-calendar-heatmap .react-calendar-heatmap-small-text {

@@ -30,13 +30,13 @@ function Calendar(props) {
   useEffect(() => {
     // effect
 
-    const daysOfWeekElement = document.getElementById("days-of-week");
+    // const daysOfWeekElement = document.getElementById("days-of-week");
 
-    WEEKDAYS.forEach((weekday) => {
-      const weekDayElement = document.createElement("li");
-      daysOfWeekElement.appendChild(weekDayElement);
-      weekDayElement.innerText = weekday;
-    });
+    // WEEKDAYS.forEach((weekday) => {
+    //   const weekDayElement = document.createElement("li");
+    //   daysOfWeekElement.appendChild(weekDayElement);
+    //   weekDayElement.innerText = weekday;
+    // });
 
     createCalendar();
     initMonthSelectors();
@@ -47,8 +47,6 @@ function Calendar(props) {
       // cleanup
     };
   }, []);
-
-
 
   function onDateClick(clickedDate) {
     props.onDateClick(clickedDate);
@@ -77,7 +75,6 @@ function Calendar(props) {
     //   appendDay(day, calendarDaysElement);
     // });
     setCurrentDates(days);
-
   }
 
   // function appendDay(day, calendarDaysElement) {
@@ -217,7 +214,7 @@ function Calendar(props) {
             id="present-month-selector"
             className="calendar-change-month-button"
           >
-            <RepeatIcon  w={5} h={5}/>
+            <RepeatIcon w={5} h={5} />
           </span>
           <span
             id="previous-month-selector"
@@ -234,9 +231,14 @@ function Calendar(props) {
         </section>
       </section>
 
-      <ol id="days-of-week" className="day-of-week"></ol>
+      <ol id="days-of-week" className="day-of-week">
+        {WEEKDAYS.map((weekday) => (
+          <li>{weekday}</li>
+        ))}
+      </ol>
 
-      <ol id="calendar-days" className="days-grid">       {currentDates.map((day, index) => (
+      <ol id="calendar-days" className="days-grid">
+        {currentDates.map((day, index) => (
           <li
             className={
               props.selectedDate[day.date]
@@ -253,7 +255,8 @@ function Calendar(props) {
               {day.dayOfMonth}
             </span>
           </li>
-        ))}</ol>
+        ))}
+      </ol>
     </div>
   );
 }

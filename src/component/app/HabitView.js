@@ -175,7 +175,7 @@ function HabitView(props) {
   return (
     <Box className="habit-view-container">
       {!currentHabitDate ? (
-        <Stack m={10}>
+        <Stack mt={10}className="calendar-month">
           <Skeleton height="30px" mb={10} />
           {/* <Skeleton height="200px" /> */}
           <Skeleton height="20px" />
