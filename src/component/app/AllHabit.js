@@ -20,10 +20,11 @@ function AllHabit(props) {
         console.log(response.data);
         for (let habitInfo of response.data) {
           // adding to local cache
-          let storeForCache = { ...habitInfo };
-          storeForCache.dates = { ...storeForCache.dates };
-          props.addHabitsDateInfo(habitInfo.habit_id, storeForCache);
-          console.log("sdfsf324d", storeForCache);
+          // let storeForCache = { ...habitInfo };
+          // storeForCache.dates = { ...storeForCache.dates };
+          // props.addHabitsDateInfo(habitInfo.habit_id, storeForCache);
+          // console.log("sdfsf324d", storeForCache);
+
           let dateValue = [];
           for (let date in habitInfo.dates) {
             dateValue.push({ date: date });

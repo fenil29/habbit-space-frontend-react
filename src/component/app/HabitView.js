@@ -11,8 +11,6 @@ import { GlobalContext } from "../../context/GlobalState";
 import axios from "axios";
 
 import { HamburgerIcon } from "@chakra-ui/icons";
-import { io } from "socket.io-client";
-const socket = io();
 
 let requestedAddHabitDateTemp = {};
 let requestedRemoveHabitDateTemp = {};
@@ -168,10 +166,6 @@ function HabitView(props) {
   useEffect(() => {
     // effect
     // console.log(habit_id);
-    socket.on("habit change", data => {
-          console.log(data);
-
-    });
 
     console.log(props.habitsDateInfo);
     getHabitDate();

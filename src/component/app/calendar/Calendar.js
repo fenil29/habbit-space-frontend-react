@@ -232,8 +232,8 @@ function Calendar(props) {
       </section>
 
       <ol id="days-of-week" className="day-of-week">
-        {WEEKDAYS.map((weekday) => (
-          <li>{weekday}</li>
+        {WEEKDAYS.map((weekday,index) => (
+          <li key={index}>{weekday}</li>
         ))}
       </ol>
 
