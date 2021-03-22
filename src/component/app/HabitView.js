@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, {
+  useEffect,
+  useState,
+  useContext,
+  useImperativeHandle,
+  forwardRef,
+} from "react";
 import { useParams } from "react-router-dom";
 
 import { Box, Stack, Skeleton, Button } from "@chakra-ui/react";
@@ -12,9 +18,11 @@ import axios from "axios";
 
 import { HamburgerIcon } from "@chakra-ui/icons";
 
+import { io } from "socket.io-client";
+
 let requestedAddHabitDateTemp = {};
 let requestedRemoveHabitDateTemp = {};
-function HabitView(props) {
+let HabitView = forwardRef((props, ref) => {
   let { habit_id } = useParams();
   const contextStore = useContext(GlobalContext);
   const [getHabitDateLoading, setGetHabitDateLoading] = useState(true);
@@ -32,7 +40,7 @@ function HabitView(props) {
       requestedAddHabitDateTemp[habit_id] = {};
     }
     requestedAddHabitDateTemp[habit_id][date] = true;
-    console.log("tempstorelog", requestedAddHabitDateTemp);
+    // console.log("tempstorelog", requestedAddHabitDateTemp);
     if (
       requestedRemoveHabitDateTemp[habit_id] &&
       date in requestedRemoveHabitDateTemp[habit_id]
@@ -163,12 +171,53 @@ function HabitView(props) {
     }
   };
 
+  useImperativeHandle(ref, () => ({
+    changeCurrentStateFromSocket(data) {
+      if (data.add) {
+        let currentHabitDateTemp = { ...currentHabitDate };
+        console.log(
+          props.habitsDateInfo[habit_id],
+          currentHabitDate,
+          currentHabitDateTemp.dates
+        );
+        currentHabitDateTemp.dates[data.add.date] = data.add[data.add.date];
+        setCurrentHabitDateCustom(currentHabitDateTemp);
+      }
+      if (data.remove) {
+        let currentHabitDateTemp = { ...currentHabitDate };
+        delete currentHabitDateTemp.dates[data.remove.date];
+        console.log(
+          props.habitsDateInfo[habit_id],
+          currentHabitDate,
+          currentHabitDateTemp.dates,
+          data.remove.date
+        );
+        setCurrentHabitDateCustom(currentHabitDateTemp);
+      }
+    },
+  }));
   useEffect(() => {
+    const socket = io();
     // effect
     // console.log(habit_id);
-
     console.log(props.habitsDateInfo);
-    getHabitDate();
+    if (!currentHabitDate) {
+      getHabitDate();
+    }
+
+    // socket.on("habit change", (data) => {
+    //   console.log(data);
+    //   if (data.add) {
+    //     let currentHabitDateTemp = { ...props.habitsDateInfo[habit_id] };
+    //     console.log(
+    //       props.habitsDateInfo[habit_id],
+    //       currentHabitDateTemp,
+    //       currentHabitDateTemp.dates
+    //     );
+    //     currentHabitDateTemp.dates[data.add.date] = data.add[data.add.date];
+    //     setCurrentHabitDateCustom(currentHabitDateTemp);
+    //   }
+    // });
     return () => {
       // cleanup
     };
@@ -208,6 +257,5 @@ function HabitView(props) {
       )}
     </Box>
   );
-}
-
+});
 export default HabitView;

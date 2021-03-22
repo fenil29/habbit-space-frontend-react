@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Switch, Route } from "react-router-dom";
 
 import HabitView from "./HabitView";
@@ -7,18 +7,24 @@ import AllHabit from "./AllHabit";
 import "./AppContent.scss";
 
 import { io } from "socket.io-client";
-const socket = io();
 
 let habitsDateInfo = {};
 
 function AppContent(props) {
+  const childRef = useRef();
+
   let addHabitsDateInfo = (habit_id, data) => {
     habitsDateInfo[habit_id] = data;
   };
   useEffect(() => {
+    const socket = io();
+
+    console.log("initialize socket");
     // effect
     socket.on("habit change", (data) => {
       console.log(data);
+
+      childRef.current.changeCurrentStateFromSocket(data);
     });
 
     return () => {
@@ -37,6 +43,7 @@ function AppContent(props) {
               onSideDrawerOpen={props.onSideDrawerOpen}
               habitsDateInfo={habitsDateInfo}
               addHabitsDateInfo={addHabitsDateInfo}
+              ref={childRef}
             />
           )}
         />
