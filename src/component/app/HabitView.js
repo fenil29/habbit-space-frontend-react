@@ -197,7 +197,7 @@ let HabitView = forwardRef((props, ref) => {
     },
   }));
   useEffect(() => {
-    const socket = io();
+    // const socket = io(API_URL, {path: '/api/socket.io'});
     // effect
     // console.log(habit_id);
     console.log(props.habitsDateInfo);

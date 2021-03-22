@@ -7,6 +7,8 @@ import AllHabit from "./AllHabit";
 import "./AppContent.scss";
 
 import { io } from "socket.io-client";
+import { API_URL } from "../../Constants";
+
 
 let habitsDateInfo = {};
 
@@ -17,7 +19,8 @@ function AppContent(props) {
     habitsDateInfo[habit_id] = data;
   };
   useEffect(() => {
-    const socket = io();
+    const socket = io(API_URL, {path: '/api/socket.io'});
+
 
     console.log("initialize socket");
     // effect
