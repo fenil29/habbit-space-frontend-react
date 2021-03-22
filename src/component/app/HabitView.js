@@ -173,26 +173,41 @@ let HabitView = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     changeCurrentStateFromSocket(data) {
-      if (data.add) {
-        let currentHabitDateTemp = { ...currentHabitDate };
-        console.log(
-          props.habitsDateInfo[habit_id],
-          currentHabitDate,
-          currentHabitDateTemp.dates
-        );
-        currentHabitDateTemp.dates[data.add.date] = data.add[data.add.date];
-        setCurrentHabitDateCustom(currentHabitDateTemp);
-      }
-      if (data.remove) {
-        let currentHabitDateTemp = { ...currentHabitDate };
-        delete currentHabitDateTemp.dates[data.remove.date];
-        console.log(
-          props.habitsDateInfo[habit_id],
-          currentHabitDate,
-          currentHabitDateTemp.dates,
-          data.remove.date
-        );
-        setCurrentHabitDateCustom(currentHabitDateTemp);
+      console.log("changeCurrentStateFromSocket");
+
+      if (data.habit_id == habit_id) {
+        if (data.add) {
+          let currentHabitDateTemp = { ...currentHabitDate };
+          console.log(
+            props.habitsDateInfo[habit_id],
+            currentHabitDate,
+            currentHabitDateTemp.dates
+          );
+          currentHabitDateTemp.dates[data.add.date] = data.add[data.add.date];
+          setCurrentHabitDateCustom(currentHabitDateTemp);
+        } else if (data.remove) {
+          let currentHabitDateTemp = { ...currentHabitDate };
+          delete currentHabitDateTemp.dates[data.remove.date];
+          console.log(
+            props.habitsDateInfo[habit_id],
+            currentHabitDate,
+            currentHabitDateTemp.dates,
+            data.remove.date
+          );
+          setCurrentHabitDateCustom(currentHabitDateTemp);
+        }
+      } else {
+        if(props.habitsDateInfo[data.habit_id]){
+        if (data.add) {
+          let currentHabitDateTemp = { ...props.habitsDateInfo[data.habit_id] };
+          currentHabitDateTemp.dates[data.add.date] = data.add[data.add.date];
+          props.addHabitsDateInfo(data.habit_id, currentHabitDateTemp);
+        } else if (data.remove) {
+          let currentHabitDateTemp = { ...props.habitsDateInfo[data.habit_id] };
+          delete currentHabitDateTemp.dates[data.remove.date];
+           props.addHabitsDateInfo(data.habit_id, currentHabitDateTemp);
+
+        }}
       }
     },
   }));
