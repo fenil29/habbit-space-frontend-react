@@ -17,54 +17,16 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 
 function App() {
-  
   const contextData = useContext(GlobalContext);
 
   return (
     <>
       {contextData.isLoaded ? (
         <Switch>
-          <DefaultRoute
-            path="/"
-            exact
-            component={() => (
-              <>
-                <HomeNavBar />
-                <Home />
-              </>
-            )}
-          />
-          <DefaultRoute
-            exact
-            path="/login"
-            component={() => (
-              <>
-                <HomeNavBar />
-                <Login />
-              </>
-            )}
-          />
-
-          <DefaultRoute
-            exact
-            path="/signup"
-            component={() => (
-              <>
-                <HomeNavBar />
-                <SignUp />
-              </>
-            )}
-          />
-
-          <AppRoute
-            path="/app"
-            component={() => (
-              <>
-                <AppNavBar />
-                <AppHome />
-              </>
-            )}
-          />
+          <DefaultRoute path="/" exact component={Home} />
+          <DefaultRoute exact path="/login" component={Login} />
+          <DefaultRoute exact path="/signup" component={SignUp} />
+          <AppRoute path="/app" component={AppHome} />
         </Switch>
       ) : (
         <></>

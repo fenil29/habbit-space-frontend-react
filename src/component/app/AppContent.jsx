@@ -9,26 +9,27 @@ import "./AppContent.scss";
 import { io } from "socket.io-client";
 import { API_URL } from "../../Constants";
 
-
-let habitsDateInfo = {};
+// let habitsDateInfo = {};
 
 function AppContent(props) {
-  const childRef = useRef();
+  const [habitsDateInfo, setHabitsDateInfo] = React.useState({});
 
   let addHabitsDateInfo = (habit_id, data) => {
-    habitsDateInfo[habit_id] = data;
+    let temp = { ...habitsDateInfo };
+    temp[habit_id] = data;
+    setHabitsDateInfo(temp);
   };
   useEffect(() => {
-    const socket = io(API_URL, {path: '/api/socket.io'});
-
+    const socket = io(API_URL, { path: "/api/socket.io" });
 
     console.log("initialize socket");
     // effect
-    socket.on("habit change", (data) => {
-      console.log(data);
+    // socket.on("habit change", (data) => {
+    //   console.log(data);
 
-      childRef.current.changeCurrentStateFromSocket(data);
-    });
+    //   childRef.current.changeCurrentStateFromSocket(data);
+    //   updateState({});
+    // });
 
     return () => {
       socket.off("habit change");
@@ -37,25 +38,18 @@ function AppContent(props) {
   }, []);
   return (
     <div className="app-content">
-      <Switch>
-        <Route
-          path="/app/habit/:habit_id"
-          exact
-          component={() => (
-            <HabitView
-              onSideDrawerOpen={props.onSideDrawerOpen}
-              habitsDateInfo={habitsDateInfo}
-              addHabitsDateInfo={addHabitsDateInfo}
-              ref={childRef}
-            />
-          )}
+      <Route path="/app/habit/:habit_id" exact>
+        <HabitView
+          onSideDrawerOpen={props.onSideDrawerOpen}
+          habitsDateInfo={habitsDateInfo}
+          addHabitsDateInfo={addHabitsDateInfo}
         />
-        <Route
-          path="/app/all-habit"
-          exact
-          component={() => <AllHabit addHabitsDateInfo={addHabitsDateInfo} />}
-        />
-      </Switch>
+      </Route>
+      <Route
+        path="/app/all-habit"
+        exact
+        component={() => <AllHabit addHabitsDateInfo={addHabitsDateInfo} />}
+      />
     </div>
   );
 }

@@ -5,6 +5,7 @@ import "./AppHome.scss";
 
 import AppOption from "./AppOption";
 import AppContent from "./AppContent";
+import AppNavBar from "./navbar-app/AppNavBar";
 
 function AppHome() {
   console.log("habitsDateInfo Rendering");
@@ -14,14 +15,17 @@ function AppHome() {
     onClose: onSideDrawerClose,
   } = useDisclosure();
   return (
-    <Box className="app-home" boxShadow="xl">
-      <AppOption
-        isSideDrawerOpen={isSideDrawerOpen}
-        onSideDrawerOpen={onSideDrawerOpen}
-        onSideDrawerClose={onSideDrawerClose}
-      />
-      <AppContent onSideDrawerOpen={onSideDrawerOpen} />
-    </Box>
+    <>
+      <AppNavBar />
+      <Box className="app-home" boxShadow="xl">
+        <AppOption
+          isSideDrawerOpen={isSideDrawerOpen}
+          onSideDrawerOpen={onSideDrawerOpen}
+          onSideDrawerClose={onSideDrawerClose}
+        />
+        <AppContent onSideDrawerOpen={onSideDrawerOpen} />
+      </Box>
+    </>
   );
 }
 

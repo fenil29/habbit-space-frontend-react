@@ -17,6 +17,8 @@ import { GoogleLogin } from "react-google-login";
 import { FcGoogle } from "react-icons/fc";
 import { API_URL, GOOGLE_AUTH_CLIENT_ID } from "../../../Constants";
 import { GlobalContext } from "../../../context/GlobalState";
+import HomeNavBar from "../navbar-home/HomeNavBar";
+
 import axios from "axios";
 
 import "./Login.scss";
@@ -51,11 +53,13 @@ function Login() {
       .catch((error) => {
         setLoading(false);
 
-        console.log(error.response &&
-          error.response.status === 404 &&
+        console.log(
+          error.response &&
+            error.response.status === 404 &&
             error.response.data === "User not found"
         );
-        if (error.response &&
+        if (
+          error.response &&
           error.response.status === 404 &&
           error.response.data === "User not found"
         ) {
@@ -67,44 +71,47 @@ function Login() {
   };
 
   return (
-    <Box className="login">
-      <Center>
-        <h1>Log In</h1>
-      </Center>
-      <Divider />
-      <Center>
-        <GoogleLogin
-          className="google-login-button"
-          clientId={GOOGLE_AUTH_CLIENT_ID}
-          onSuccess={responseGoogle}
-          onFailure={responseGoogle}
-          cookiePolicy={"single_host_origin"}
-          render={(renderProps) => (
-            <Button
-              colorScheme="blue"
-              variant="outline"
-              leftIcon={<Icon as={FcGoogle} />}
-              className="google-login-button"
-              onClick={renderProps.onClick}
-            >
-              Login with Google
-              {loading && <Spinner size="sm" ml={3} />}
-            </Button>
-          )}
-        />
-      </Center>
-      {noAccountFoundError && (
-        <Alert status="warning" alignItems="center">
-          <AlertIcon />
-          <Box flex="1">
-            <AlertTitle>Could not find your Account.</AlertTitle>
-            <AlertDescription display="block">
-              If you are new, Please consider Sign Up.
-            </AlertDescription>
-          </Box>
-        </Alert>
-      )}
-    </Box>
+    <>
+      <HomeNavBar />
+      <Box className="login">
+        <Center>
+          <h1>Log In</h1>
+        </Center>
+        <Divider />
+        <Center>
+          <GoogleLogin
+            className="google-login-button"
+            clientId={GOOGLE_AUTH_CLIENT_ID}
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle}
+            cookiePolicy={"single_host_origin"}
+            render={(renderProps) => (
+              <Button
+                colorScheme="blue"
+                variant="outline"
+                leftIcon={<Icon as={FcGoogle} />}
+                className="google-login-button"
+                onClick={renderProps.onClick}
+              >
+                Login with Google
+                {loading && <Spinner size="sm" ml={3} />}
+              </Button>
+            )}
+          />
+        </Center>
+        {noAccountFoundError && (
+          <Alert status="warning" alignItems="center">
+            <AlertIcon />
+            <Box flex="1">
+              <AlertTitle>Could not find your Account.</AlertTitle>
+              <AlertDescription display="block">
+                If you are new, Please consider Sign Up.
+              </AlertDescription>
+            </Box>
+          </Alert>
+        )}
+      </Box>
+    </>
   );
 }
 

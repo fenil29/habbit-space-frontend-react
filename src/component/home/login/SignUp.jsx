@@ -17,6 +17,7 @@ import {
 import { FcGoogle } from "react-icons/fc";
 import { API_URL, GOOGLE_AUTH_CLIENT_ID } from "../../../Constants";
 import { GlobalContext } from "../../../context/GlobalState";
+import HomeNavBar from "../navbar-home/HomeNavBar";
 
 import axios from "axios";
 
@@ -53,61 +54,65 @@ function SignUp() {
         (error) => {
           setLoading(false);
 
-          console.log(error.response &&
-            error.response.status === 409 &&
+          console.log(
+            error.response &&
+              error.response.status === 409 &&
               error.response.data === "User already exists"
           );
-          if (error.response &&
+          if (
+            error.response &&
             error.response.status === 409 &&
             error.response.data === "User already exists"
           ) {
             setUserAlreadyExistsError(true);
           } else {
             contextStore.showUnexpectedError();
-
           }
         }
       );
   };
   return (
-    <Box className="login">
-      <Center>
-        <h1>Sign Up</h1>
-      </Center>
-      <Divider />
-      <Center>
-        <GoogleLogin
-          className="google-login-button"
-          clientId={GOOGLE_AUTH_CLIENT_ID}
-          onSuccess={responseGoogle}
-          onFailure={responseGoogle}
-          cookiePolicy={"single_host_origin"}
-          render={(renderProps) => (
-            <Button
-              colorScheme="blue"
-              variant="outline"
-              leftIcon={<Icon as={FcGoogle} />}
-              className="google-login-button"
-              onClick={renderProps.onClick}
-            >
-              SignUp with Google
-              {loading && <Spinner size="sm" ml={3} />}
-            </Button>
-          )}
-        />
-      </Center>
-      {userAlreadyExistsError && (
-        <Alert status="warning" alignItems="center">
-          <AlertIcon />
-          <Box flex="1">
-            <AlertTitle>You Already have an account</AlertTitle>
-            <AlertDescription display="block">
-              Please use Login.
-            </AlertDescription>
-          </Box>
-        </Alert>
-      )}
-    </Box>
+    <>
+      <HomeNavBar />
+      <Box className="login">
+        <Center>
+          <h1>Sign Up</h1>
+        </Center>
+        <Divider />
+        <Center>
+          <GoogleLogin
+            className="google-login-button"
+            clientId={GOOGLE_AUTH_CLIENT_ID}
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle}
+            cookiePolicy={"single_host_origin"}
+            render={(renderProps) => (
+              <Button
+                colorScheme="blue"
+                variant="outline"
+                leftIcon={<Icon as={FcGoogle} />}
+                className="google-login-button"
+                onClick={renderProps.onClick}
+              >
+                SignUp with Google
+                {loading && <Spinner size="sm" ml={3} />}
+              </Button>
+            )}
+          />
+        </Center>
+        {userAlreadyExistsError && (
+          <Alert status="warning" alignItems="center">
+            <AlertIcon />
+            <Box flex="1">
+              <AlertTitle>You Already have an account</AlertTitle>
+              <AlertDescription display="block">
+                Please use Login.
+              </AlertDescription>
+            </Box>
+          </Alert>
+        )}
+      </Box>
+    </>
   );
 }
 
