@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,useLocation } from "react-router-dom";
 import "./HabitView.scss";
 
 import { Box, Stack, Skeleton, Button } from "@chakra-ui/react";
@@ -11,9 +11,9 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 
 import axios from "axios";
 
-
 function HabitView(props) {
   let { habit_id } = useParams();
+  const location = useLocation();
   const contextStore = useContext(GlobalContext);
   let currentHabitData = props.habitsDateInfo[habit_id];
   const setCurrentHabitData = (data) => {
@@ -29,10 +29,11 @@ function HabitView(props) {
       .post(API_URL + "/api/habit-date/" + habit_id, {
         date: date,
       })
-      .then((response) => {
-      })
+      .then((response) => {})
       .catch((error) => {
         console.log(error);
+        delete currentHabitData.dates[date];
+        setCurrentHabitData(currentHabitData);
         if (
           error.response &&
           error.response.status === 401 &&
@@ -40,14 +41,11 @@ function HabitView(props) {
         ) {
           contextStore.clearLoginDataAndRedirectToLogin();
         } else {
-          delete currentHabitData.dates[date];
-          setCurrentHabitData(currentHabitData);
           contextStore.showUnexpectedError();
         }
       });
   };
-  const removeSelectedDate = (date, dateElement) => {
-    let currentHabitDateTemp = { ...currentHabitData };
+  const removeSelectedDate = (date) => {
     delete currentHabitData.dates[date];
     setCurrentHabitData(currentHabitData);
 
@@ -57,10 +55,11 @@ function HabitView(props) {
           date: date,
         },
       })
-      .then((response) => {
-      })
+      .then((response) => {})
       .catch((error) => {
         console.log(error);
+        currentHabitData.dates[date] = true;
+        setCurrentHabitData(currentHabitData);
         if (
           error.response &&
           error.response.status === 401 &&
@@ -68,9 +67,6 @@ function HabitView(props) {
         ) {
           contextStore.clearLoginDataAndRedirectToLogin();
         } else {
-          currentHabitData.dates[date] = true;
-          setCurrentHabitData(currentHabitData);
-          // dateElement.classList.add("calendar-day--selected");
           contextStore.showUnexpectedError();
         }
       });
@@ -83,32 +79,33 @@ function HabitView(props) {
     }
   };
   let getHabitDate = () => {
-    if (true) {
-      // if (!currentHabitData) {
-      axios
-        .get(API_URL + "/api/habit-date/" + habit_id)
-        .then((response) => {
-          currentHabitData = response.data;
-          setCurrentHabitData(currentHabitData);
-        })
-        .catch((error) => {
-          console.log(error);
-          if (
-            error.response &&
-            error.response.status === 401 &&
-            error.response.data === "Unauthorized"
-          ) {
-            contextStore.clearLoginDataAndRedirectToLogin();
-          } else {
-            contextStore.showUnexpectedError();
-          }
-        });
-    }
+    axios
+      .get(API_URL + "/api/habit-date/" + habit_id)
+      .then((response) => {
+        currentHabitData = response.data;
+        setCurrentHabitData(currentHabitData);
+      })
+      .catch((error) => {
+        console.log(error);
+        if (
+          error.response &&
+          error.response.status === 401 &&
+          error.response.data === "Unauthorized"
+        ) {
+          contextStore.clearLoginDataAndRedirectToLogin();
+        } else {
+          contextStore.showUnexpectedError();
+        }
+      });
   };
-  console.log("4576k7h5j7h57", currentHabitData);
-  if (!currentHabitData) {
-    getHabitDate();
-  }
+  
+  useEffect(() => {
+    console.log('Location changed');
+    if (!currentHabitData) {
+      getHabitDate();
+    }
+
+  }, [location]);
   useEffect(() => {
     return () => {
       // cleanup
@@ -119,7 +116,6 @@ function HabitView(props) {
       {!currentHabitData ? (
         <Stack mt={10} className="calendar-month">
           <Skeleton height="30px" mb={10} />
-          {/* <Skeleton height="200px" /> */}
           <Skeleton height="20px" />
           <Skeleton height="20px" />
           <Skeleton height="20px" />
@@ -129,13 +125,11 @@ function HabitView(props) {
       ) : (
         <>
           <h2>
-            {/* <Button onClick={props.onSideDrawerOpen} size="sm" mr={2}> */}
             <HamburgerIcon
               onClick={props.onSideDrawerOpen}
               mr={3}
               className="side-drawer-menu"
             />
-            {/* </Button> */}
             {currentHabitData.habit_name}
           </h2>
           <hr className="habit-bottom-ht" />
