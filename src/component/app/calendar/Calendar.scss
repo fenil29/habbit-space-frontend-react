@@ -23,7 +23,7 @@ li {
   //   background-color: var(--grey-200);
   // border: solid 1px var(--grey-200);
   max-width: 560px;
-  min-width: 450px;
+  // min-width: 450px;
   // width: 80%;
   margin: auto;
   // border-width: 1px;
@@ -165,9 +165,11 @@ li {
         // background-color: #edf2f7;
         background-color: var(--secondary-background-color);
         color: var(--primary-font-color);
-        font-weight: 400;
-        width: 65px;
-        height: 65px;
+        font-weight: 500;
+        // width: 65px;
+        // height: 65px;
+        width: 87%;
+        height: 87%;
       
         border-radius: 5px;
         &:hover {
@@ -187,50 +189,50 @@ li {
   .calendar-day {
     min-height: 64px;
   }
-  .calendar-month {
-    min-width: 300px;
-    .days-grid {
-      li {
-        span {
-          width: 55px;
-          height: 55px;
-          border-radius: 5px;
-        }
-      }
-    }
-  }
+  // .calendar-month {
+  //   min-width: 300px;
+  //   .days-grid {
+  //     li {
+  //       span {
+  //         width: 55px;
+  //         height: 55px;
+  //         border-radius: 5px;
+  //       }
+  //     }
+  //   }
+  // }
 }
 @media only screen and (max-width: 460px) and (min-width: 405px) {
   .calendar-day {
     min-height: 58px;
   }
-  .calendar-month {
-    min-width: 300px;
-    .days-grid {
-      li {
-        span {
-          width: 50px;
-          height: 50px;
-          border-radius: 5px;
-        }
-      }
-    }
-  }
+  // .calendar-month {
+    // min-width: 300px;
+  //   .days-grid {
+  //     li {
+  //       span {
+  //         width: 50px;
+  //         height: 50px;
+  //         border-radius: 5px;
+  //       }
+  //     }
+  //   }
+  // }
 }
 @media only screen and (max-width: 405px) {
   .calendar-day {
     min-height: 52px;
   }
-  .calendar-month {
-    min-width: 300px;
-    .days-grid {
-      li {
-        span {
-          width: 45px;
-          height: 45px;
-          border-radius: 5px;
-        }
-      }
-    }
-  }
+//   .calendar-month {
+//     min-width: 300px;
+//     .days-grid {
+//       li {
+//         span {
+//           width: 45px;
+//           height: 45px;
+//           border-radius: 5px;
+//         }
+//       }
+//     }
+//   }
 }

@@ -15,6 +15,7 @@ function HabitView(props) {
   let { habit_id } = useParams();
   const location = useLocation();
   const contextStore = useContext(GlobalContext);
+  console.log("props.habitsDateInfo",props.habitsDateInfo)
   let currentHabitData = props.habitsDateInfo[habit_id];
   const setCurrentHabitData = (data) => {
     props.habitsDateInfo[habit_id] = data;

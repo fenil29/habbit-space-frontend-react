@@ -36,6 +36,9 @@ function AppContent(props) {
             return {...currentState};
           }
         }
+        else{
+          return currentState
+        }
       });
     });
 
