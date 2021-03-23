@@ -1,29 +1,25 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
+import "./HabitView.scss";
 
 import { Box, Stack, Skeleton, Button } from "@chakra-ui/react";
-import "./HabitView.scss";
 import Calendar from "./calendar/Calendar";
 
 import { API_URL } from "../../Constants";
 import { GlobalContext } from "../../context/GlobalState";
-
-import axios from "axios";
-
 import { HamburgerIcon } from "@chakra-ui/icons";
 
-import { io } from "socket.io-client";
+import axios from "axios";
 
 let requestedAddHabitDateTemp = {};
 let requestedRemoveHabitDateTemp = {};
 function HabitView(props) {
   let { habit_id } = useParams();
-  // let habit_id="7fe93df8-5f85-4560-9149-d30de45a0bc5"
   const contextStore = useContext(GlobalContext);
-  const [getHabitDateLoading, setGetHabitDateLoading] = useState(true);
-
-  const setCurrentHabitDateCustom = (data) => {
-    props.addHabitsDateInfo(habit_id, data);
+  let currentHabitData = props.habitsDateInfo[habit_id];
+  const setCurrentHabitData = (data) => {
+    props.habitsDateInfo[habit_id] = data;
+    props.addHabitsDateInfo(props.habitsDateInfo);
   };
 
   const addSelectedDate = (date, dateElement) => {
@@ -39,9 +35,8 @@ function HabitView(props) {
     ) {
       delete requestedRemoveHabitDateTemp[habit_id][date];
     }
-    let currentHabitDateTemp = { ...props.habitsDateInfo[habit_id] };
-    currentHabitDateTemp.dates[date] = true;
-    setCurrentHabitDateCustom(currentHabitDateTemp);
+    currentHabitData.dates[date] = true;
+    setCurrentHabitData(currentHabitData);
 
     axios
       .post(API_URL + "/api/habit-date/" + habit_id, {
@@ -62,9 +57,8 @@ function HabitView(props) {
         ) {
           contextStore.clearLoginDataAndRedirectToLogin();
         } else {
-          let currentHabitDateTemp = { ...props.habitsDateInfo[habit_id] };
-          delete currentHabitDateTemp.dates[date];
-          setCurrentHabitDateCustom(currentHabitDateTemp);
+          delete currentHabitData.dates[date];
+          setCurrentHabitData(currentHabitData);
           contextStore.showUnexpectedError();
         }
       });
@@ -82,9 +76,9 @@ function HabitView(props) {
     ) {
       delete requestedAddHabitDateTemp[habit_id][date];
     }
-    let currentHabitDateTemp = { ...props.habitsDateInfo[habit_id] };
-    delete currentHabitDateTemp.dates[date];
-    setCurrentHabitDateCustom(currentHabitDateTemp);
+    let currentHabitDateTemp = { ...currentHabitData };
+    delete currentHabitData.dates[date];
+    setCurrentHabitData(currentHabitData);
 
     axios
       .delete(API_URL + "/api/habit-date/" + habit_id, {
@@ -107,16 +101,15 @@ function HabitView(props) {
         ) {
           contextStore.clearLoginDataAndRedirectToLogin();
         } else {
-          let currentHabitDateTemp = { ...props.habitsDateInfo[habit_id] };
-          currentHabitDateTemp.dates[date] = true;
-          setCurrentHabitDateCustom(currentHabitDateTemp);
+          currentHabitData.dates[date] = true;
+          setCurrentHabitData(currentHabitData);
           // dateElement.classList.add("calendar-day--selected");
           contextStore.showUnexpectedError();
         }
       });
   };
   let onDateClick = (clickedDate) => {
-    if (clickedDate in props.habitsDateInfo[habit_id].dates) {
+    if (clickedDate in currentHabitData.dates) {
       removeSelectedDate(clickedDate);
     } else {
       addSelectedDate(clickedDate);
@@ -124,18 +117,17 @@ function HabitView(props) {
   };
   let getHabitDate = () => {
     if (true) {
-      // if (!props.habitsDateInfo[habit_id]) {
-      setGetHabitDateLoading(true);
+      // if (!currentHabitData) {
       axios
         .get(API_URL + "/api/habit-date/" + habit_id)
         .then((response) => {
-          setGetHabitDateLoading(false);
           // add currently pending add date request
           // if the request is successful no need to add because the the response of this request most likely has that date
           response.data.dates = {
             ...response.data.dates,
             ...requestedAddHabitDateTemp[habit_id],
           };
+          // remove currently pending remove date request
           if (requestedRemoveHabitDateTemp[habit_id]) {
             for (let ele in requestedRemoveHabitDateTemp[habit_id]) {
               if (ele in response.data.dates) {
@@ -143,12 +135,10 @@ function HabitView(props) {
               }
             }
           }
-
-          // remove currently pending remove date request
-          setCurrentHabitDateCustom(response.data);
+          currentHabitData = response.data;
+          setCurrentHabitData(currentHabitData);
         })
         .catch((error) => {
-          setGetHabitDateLoading(false);
           console.log(error);
           if (
             error.response &&
@@ -162,78 +152,18 @@ function HabitView(props) {
         });
     }
   };
-
-  let changeCurrentStateFromSocket = (data) => {
-    console.log("changeCurrentStateFromSocket");
-
-    if (data.habit_id == habit_id) {
-      if (data.add) {
-        let currentHabitDateTemp = { ...props.habitsDateInfo[habit_id] };
-        console.log(
-          props.habitsDateInfo[habit_id],
-          props.habitsDateInfo[habit_id],
-          currentHabitDateTemp.dates
-        );
-        currentHabitDateTemp.dates[data.add.date] = data.add[data.add.date];
-        setCurrentHabitDateCustom(currentHabitDateTemp);
-      } else if (data.remove) {
-        let currentHabitDateTemp = { ...props.habitsDateInfo[habit_id] };
-        delete currentHabitDateTemp.dates[data.remove.date];
-        console.log(
-          props.habitsDateInfo[habit_id],
-          props.habitsDateInfo[habit_id],
-          currentHabitDateTemp.dates,
-          data.remove.date
-        );
-        setCurrentHabitDateCustom(currentHabitDateTemp);
-      }
-    } else {
-      if (props.habitsDateInfo[data.habit_id]) {
-        if (data.add) {
-          let currentHabitDateTemp = {
-            ...props.habitsDateInfo[data.habit_id],
-          };
-          currentHabitDateTemp.dates[data.add.date] = data.add[data.add.date];
-          props.addHabitsDateInfo(data.habit_id, currentHabitDateTemp);
-        } else if (data.remove) {
-          let currentHabitDateTemp = {
-            ...props.habitsDateInfo[data.habit_id],
-          };
-          delete currentHabitDateTemp.dates[data.remove.date];
-          props.addHabitsDateInfo(data.habit_id, currentHabitDateTemp);
-        }
-      }
-    }
-  };
+  console.log("4576k7h5j7h57", currentHabitData);
+  if (!currentHabitData) {
+    getHabitDate();
+  }
   useEffect(() => {
-    // const socket = io(API_URL, {path: '/api/socket.io'});
-    // effect
-    // console.log(habit_id);
-    console.log(props.habitsDateInfo);
-    if (!props.habitsDateInfo[habit_id]) {
-      getHabitDate();
-    }
-
-    // socket.on("habit change", (data) => {
-    //   console.log(data);
-    //   if (data.add) {
-    //     let currentHabitDateTemp = { ...props.habitsDateInfo[habit_id] };
-    //     console.log(
-    //       props.habitsDateInfo[habit_id],
-    //       currentHabitDateTemp,
-    //       currentHabitDateTemp.dates
-    //     );
-    //     currentHabitDateTemp.dates[data.add.date] = data.add[data.add.date];
-    //     setCurrentHabitDateCustom(currentHabitDateTemp);
-    //   }
-    // });
     return () => {
       // cleanup
     };
   }, []);
   return (
     <Box className="habit-view-container">
-      {!props.habitsDateInfo[habit_id] ? (
+      {!currentHabitData ? (
         <Stack mt={10} className="calendar-month">
           <Skeleton height="30px" mb={10} />
           {/* <Skeleton height="200px" /> */}
@@ -253,11 +183,11 @@ function HabitView(props) {
               className="side-drawer-menu"
             />
             {/* </Button> */}
-            {props.habitsDateInfo[habit_id].habit_name}
+            {currentHabitData.habit_name}
           </h2>
           <hr className="habit-bottom-ht" />
           <Calendar
-            selectedDate={props.habitsDateInfo[habit_id].dates}
+            selectedDate={currentHabitData.dates}
             addSelectedDate={addSelectedDate}
             removeSelectedDate={removeSelectedDate}
             onDateClick={onDateClick}

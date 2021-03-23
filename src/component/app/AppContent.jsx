@@ -14,9 +14,8 @@ import { API_URL } from "../../Constants";
 function AppContent(props) {
   const [habitsDateInfo, setHabitsDateInfo] = React.useState({});
 
-  let addHabitsDateInfo = (habit_id, data) => {
-    let temp = { ...habitsDateInfo };
-    temp[habit_id] = data;
+  let addHabitsDateInfo = (data) => {
+    let temp = {...data}
     setHabitsDateInfo(temp);
   };
   useEffect(() => {
@@ -24,12 +23,18 @@ function AppContent(props) {
 
     console.log("initialize socket");
     // effect
-    // socket.on("habit change", (data) => {
-    //   console.log(data);
-
-    //   childRef.current.changeCurrentStateFromSocket(data);
-    //   updateState({});
-    // });
+    socket.on("habit change", (data) => {
+      console.log(data);
+      if (habitsDateInfo[data.habit_id]) {
+        if (data.add) {
+          habitsDateInfo[data.habit_id].dates[data.add.date] = data.add[data.add.date];
+          addHabitsDateInfo(habitsDateInfo);
+        } else if (data.remove) {
+          delete habitsDateInfo[data.habit_id].dates[data.remove.date];
+          addHabitsDateInfo(habitsDateInfo);
+        }
+      }
+    });
 
     return () => {
       socket.off("habit change");
