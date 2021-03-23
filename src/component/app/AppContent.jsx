@@ -10,6 +10,7 @@ import { io } from "socket.io-client";
 import { API_URL } from "../../Constants";
 
 // let habitsDateInfo = {};
+let socket;
 
 function AppContent(props) {
   const [habitsDateInfo, setHabitsDateInfo] = React.useState({});
@@ -18,32 +19,39 @@ function AppContent(props) {
     let temp = { ...data };
     setHabitsDateInfo(temp);
   };
+  let handleHabitChangeFromSocket = (data) => {
+    setHabitsDateInfo((currentState) => {
+      console.log(currentState, currentState[data.habit_id]);
+      if (currentState[data.habit_id]) {
+        if (data.add) {
+          currentState[data.habit_id].dates[data.add.date] =
+            data.add[data.add.date];
+          return { ...currentState };
+        } else if (data.remove) {
+          delete currentState[data.habit_id].dates[data.remove.date];
+          return { ...currentState };
+        }
+      } else {
+        return currentState;
+      }
+    });
+  };
   useEffect(() => {
-    const socket = io(API_URL, { path: "/api/socket.io" });
+    socket = io(API_URL, { path: "/api/socket.io" });
 
     console.log("initialize socket");
     // effect
-    socket.on("habit change", (data) => {
-      setHabitsDateInfo((currentState) => {
-        console.log(currentState,currentState[data.habit_id]);
-        if (currentState[data.habit_id]) {
-          if (data.add) {
-            currentState[data.habit_id].dates[data.add.date] =
-              data.add[data.add.date];
-            return {...currentState};
-          } else if (data.remove) {
-            delete currentState[data.habit_id].dates[data.remove.date];
-            return {...currentState};
-          }
-        }
-        else{
-          return currentState
-        }
-      });
+    socket.on("habit change", handleHabitChangeFromSocket);
+    socket.on("connect", () => {
+      console.log("connected"); //
+    });
+    socket.on("disconnect", () => {
+      console.log("disconnect"); //
     });
 
     return () => {
-      socket.off("habit change");
+      socket.off("habit change", handleHabitChangeFromSocket);
+      socket.disconnect();
       // cleanup
     };
   }, []);
