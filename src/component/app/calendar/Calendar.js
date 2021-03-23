@@ -6,6 +6,7 @@ import {
   RepeatIcon,
 } from "@chakra-ui/icons";
 import "./Calendar.scss";
+import classNames from "classnames";
 
 const weekday = require("dayjs/plugin/weekday");
 const weekOfYear = require("dayjs/plugin/weekOfYear");
@@ -232,7 +233,7 @@ function Calendar(props) {
       </section>
 
       <ol id="days-of-week" className="day-of-week">
-        {WEEKDAYS.map((weekday,index) => (
+        {WEEKDAYS.map((weekday, index) => (
           <li key={index}>{weekday}</li>
         ))}
       </ol>
@@ -240,11 +241,11 @@ function Calendar(props) {
       <ol id="calendar-days" className="days-grid">
         {currentDates.map((day, index) => (
           <li
-            className={
-              props.selectedDate[day.date]
-                ? "calendar-day calendar-day--selected"
-                : "calendar-day"
-            }
+            className={classNames(
+              "calendar-day",
+              { "calendar-day--selected": props.selectedDate[day.date] },
+              { "calendar-day--today": day.date == TODAY }
+            )}
             key={index}
           >
             <span
