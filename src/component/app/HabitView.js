@@ -11,8 +11,7 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 
 import axios from "axios";
 
-let requestedAddHabitDateTemp = {};
-let requestedRemoveHabitDateTemp = {};
+
 function HabitView(props) {
   let { habit_id } = useParams();
   const contextStore = useContext(GlobalContext);
@@ -23,18 +22,6 @@ function HabitView(props) {
   };
 
   const addSelectedDate = (date, dateElement) => {
-    // add date which is not completed to temp container
-    if (!requestedAddHabitDateTemp[habit_id]) {
-      requestedAddHabitDateTemp[habit_id] = {};
-    }
-    requestedAddHabitDateTemp[habit_id][date] = true;
-    // console.log("tempstorelog", requestedAddHabitDateTemp);
-    if (
-      requestedRemoveHabitDateTemp[habit_id] &&
-      date in requestedRemoveHabitDateTemp[habit_id]
-    ) {
-      delete requestedRemoveHabitDateTemp[habit_id][date];
-    }
     currentHabitData.dates[date] = true;
     setCurrentHabitData(currentHabitData);
 
@@ -43,12 +30,8 @@ function HabitView(props) {
         date: date,
       })
       .then((response) => {
-        // remove from temp container if the request is completed
-        delete requestedAddHabitDateTemp[habit_id][date];
       })
       .catch((error) => {
-        // remove from temp container if the request is completed
-        delete requestedAddHabitDateTemp[habit_id][date];
         console.log(error);
         if (
           error.response &&
@@ -64,18 +47,6 @@ function HabitView(props) {
       });
   };
   const removeSelectedDate = (date, dateElement) => {
-    // add date which is not completed to temp container
-    if (!requestedRemoveHabitDateTemp[habit_id]) {
-      requestedRemoveHabitDateTemp[habit_id] = {};
-    }
-
-    requestedRemoveHabitDateTemp[habit_id][date] = true;
-    if (
-      requestedAddHabitDateTemp[habit_id] &&
-      date in requestedAddHabitDateTemp[habit_id]
-    ) {
-      delete requestedAddHabitDateTemp[habit_id][date];
-    }
     let currentHabitDateTemp = { ...currentHabitData };
     delete currentHabitData.dates[date];
     setCurrentHabitData(currentHabitData);
@@ -87,12 +58,8 @@ function HabitView(props) {
         },
       })
       .then((response) => {
-        // remove from temp container if the request is completed
-        delete requestedRemoveHabitDateTemp[habit_id][date];
       })
       .catch((error) => {
-        // remove from temp container if the request is completed
-        delete requestedRemoveHabitDateTemp[habit_id][date];
         console.log(error);
         if (
           error.response &&
@@ -121,20 +88,6 @@ function HabitView(props) {
       axios
         .get(API_URL + "/api/habit-date/" + habit_id)
         .then((response) => {
-          // add currently pending add date request
-          // if the request is successful no need to add because the the response of this request most likely has that date
-          response.data.dates = {
-            ...response.data.dates,
-            ...requestedAddHabitDateTemp[habit_id],
-          };
-          // remove currently pending remove date request
-          if (requestedRemoveHabitDateTemp[habit_id]) {
-            for (let ele in requestedRemoveHabitDateTemp[habit_id]) {
-              if (ele in response.data.dates) {
-                delete response.data.dates[ele];
-              }
-            }
-          }
           currentHabitData = response.data;
           setCurrentHabitData(currentHabitData);
         })
