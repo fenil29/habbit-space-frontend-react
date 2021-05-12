@@ -59,7 +59,6 @@ function AppContent(props) {
     <div className="app-content">
       <Route path="/app/habit/:habit_id" exact>
         <HabitView
-          onSideDrawerOpen={props.onSideDrawerOpen}
           habitsDateInfo={habitsDateInfo}
           addHabitsDateInfo={addHabitsDateInfo}
         />

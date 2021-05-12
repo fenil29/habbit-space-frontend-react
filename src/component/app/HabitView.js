@@ -126,11 +126,7 @@ function HabitView(props) {
       ) : (
         <>
           <h2>
-            <HamburgerIcon
-              onClick={props.onSideDrawerOpen}
-              mr={3}
-              className="side-drawer-menu"
-            />
+           
             {currentHabitData.habit_name}
           </h2>
           <hr className="habit-bottom-ht" />

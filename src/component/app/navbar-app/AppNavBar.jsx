@@ -10,18 +10,25 @@ import {
   MenuDivider,
   Button,
 } from "@chakra-ui/react";
-import { ChevronDownIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, HamburgerIcon } from "@chakra-ui/icons";
 import DarkModeButton from "./DarkModeButton";
 
 
-function AppNavBar() {
+function AppNavBar(props) {
 
   return (
     <div className="nav-bar">
       <div className="nav-bar-content">
-        <Link to="/">
-          <Logo />
-        </Link>
+        <div className="left">
+          <HamburgerIcon
+            onClick={props.onSideDrawerOpen}
+            mr={3}
+            className="side-drawer-menu"
+          />
+          <Link to="/">
+            <Logo />
+          </Link>
+        </div>
         <div className="right">
           <DarkModeButton />
           <Menu>

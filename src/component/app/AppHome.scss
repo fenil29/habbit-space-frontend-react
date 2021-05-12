@@ -21,15 +21,16 @@
 }
 .side-drawer-menu {
   display: none !important;
+  font-size: 20px;
 }
 @media only screen and (max-width: 800px) {
   .nav-bar {
-    display: none;
+    // display: none;
   }
   .app-option-main {
     display: none;
   }
   .side-drawer-menu {
-    display: inline-block !important;
+    display: inline !important;
   }
 }

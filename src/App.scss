@@ -6,8 +6,7 @@
   transition: 0.25s background-color !important;
 }
 span{
-  transition: 0s background-color !important;
-
+  // transition: 0s background-color !important;
 }
 button:focus {
   box-shadow: none !important;
@@ -54,6 +53,10 @@ button[customColor="blue"] {
       a {
         margin: 10px;
       }
+    }
+    .left{
+      display: flex;
+      align-items: center;
     }
   }
 }

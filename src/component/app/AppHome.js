@@ -16,14 +16,14 @@ function AppHome() {
   } = useDisclosure();
   return (
     <>
-      <AppNavBar />
+      <AppNavBar onSideDrawerOpen={onSideDrawerOpen}/>
       <Box className="app-home" boxShadow="xl">
         <AppOption
           isSideDrawerOpen={isSideDrawerOpen}
           onSideDrawerOpen={onSideDrawerOpen}
           onSideDrawerClose={onSideDrawerClose}
         />
-        <AppContent onSideDrawerOpen={onSideDrawerOpen} />
+        <AppContent  />
       </Box>
     </>
   );
