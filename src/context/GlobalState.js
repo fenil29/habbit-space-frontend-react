@@ -1,6 +1,9 @@
 import React, { createContext, useState, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { useToast, Box,useDisclosure } from "@chakra-ui/react";
+import { useToast, Box, useDisclosure } from "@chakra-ui/react";
+import axios from "axios";
+import { API_URL } from "../Constants";
+
 
 export const GlobalContext = createContext();
 
@@ -45,6 +48,37 @@ function GlobalState(props) {
       isClosable: true,
     });
   };
+  let Logout = () => {
+    axios
+      .post(API_URL + "/api/logout",)
+      .then((response) => {
+        // console.log(response.status)
+        if(response.status===200){
+        setLoginDataL({ isLoggedIn: false });
+        toast({
+          title: "Logout Successful",
+          description: "you have successfully logged out.",
+          status: "success",
+          position: "bottom-left",
+          duration: 3000,
+          isClosable: true,
+        });
+        }
+      })
+      .catch((error) => {
+        if (
+          error.response &&
+          error.response.status === 401 &&
+          error.response.data === "Unauthorized"
+        ) {
+          clearLoginDataAndRedirectToLogin();
+        } else {
+          showUnexpectedError();
+        }
+      });
+
+
+  };
 
   useEffect(() => {
     loadData();
@@ -57,6 +91,7 @@ function GlobalState(props) {
         value={{
           loginData,
           isLoaded,
+          Logout,
           setLoginData: setLoginDataL,
           clearLoginDataAndRedirectToLogin,
           showUnexpectedError,

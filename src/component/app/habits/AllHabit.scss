@@ -1,0 +1,56 @@
+.all-habit-container {
+  width: 90%;
+  max-width: 950px;
+  margin: auto;
+  .react-calendar-heatmap{
+    // margin: 10px;
+    margin-right: 20px;
+  }
+  .react-calendar-heatmap text {
+    font-size: 10px;
+    // fill: #aaa;
+  }
+
+  .react-calendar-heatmap .react-calendar-heatmap-small-text {
+    font-size: 5px;
+  }
+
+  .react-calendar-heatmap rect:hover {
+    stroke: #555;
+    stroke-width: 1px;
+  }
+
+  .react-calendar-heatmap .color-empty {
+    fill: var(--secondary-background-color);
+  }
+
+  .react-calendar-heatmap .color-completed {
+    fill: var(--primary-color-hover);
+  }
+  .react-calendar-heatmap .color-empty {
+  //  outline:1px solid red; 
+    /* outline-offset:-1px; */
+    /* shape-rendering:geometricPrecision; */
+    /* border-radius: 10px !important; */
+    /* background-color: red !important; */
+    /* overflow: hidden; */
+    /* shape-rendering: geometricPrecision */
+  }
+  h3{
+    font-size: 18px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    // border-top: 1px solid black;
+  }
+
+}
+h2.title {
+  max-width: 550px;
+  margin: auto;
+  padding: 10px;
+  // padding-top: 20px;
+  font-size: 21px;
+  font-weight: 500;
+  // border-bottom-width: 1px;
+  text-align: center;
+}

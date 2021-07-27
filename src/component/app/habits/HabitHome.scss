@@ -1,0 +1,17 @@
+@import "../../../Variables.scss";
+
+.habit-home {
+  display: flex;
+
+  // flex: 1;
+  // overflow: auto;
+  width: 100%;
+  // margin: auto;
+}
+
+.habit-content,
+.habit-option {
+  // border-width: 1px;
+  // border-radius: $border-radius;
+  height: 100%;
+}

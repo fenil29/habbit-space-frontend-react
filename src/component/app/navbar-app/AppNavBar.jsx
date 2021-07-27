@@ -12,9 +12,10 @@ import {
 } from "@chakra-ui/react";
 import { ChevronDownIcon, HamburgerIcon } from "@chakra-ui/icons";
 import DarkModeButton from "./DarkModeButton";
-
+import { GlobalContext } from "../../../context/GlobalState";
 
 function AppNavBar(props) {
+  const contextStore = useContext(GlobalContext);
 
   return (
     <div className="nav-bar">
@@ -40,11 +41,20 @@ function AppNavBar(props) {
               Fenil Kaneria
             </MenuButton>
             <MenuList>
-              <MenuItem>App</MenuItem>
-              <MenuItem>Settings</MenuItem>
-              <MenuItem>Account</MenuItem>
+              <Link to="/app/all-habit">
+                <MenuItem>Habits</MenuItem>
+              </Link>
+              <Link to="/app/settings/account">
+                <MenuItem>Account</MenuItem>
+              </Link>
               <MenuDivider />
-              <MenuItem>Sign Out</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  contextStore.Logout();
+                }}
+              >
+                Log out
+              </MenuItem>
             </MenuList>
           </Menu>
         </div>
