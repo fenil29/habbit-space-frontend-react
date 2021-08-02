@@ -26,7 +26,7 @@ import "./SettingsHome.scss";
 
 function SettingsHome(props) {
   return (
-    <Box className="setting-home" boxShadow="xl">
+    <Box className="setting-home" >
     <SettingsOption
       isSideDrawerOpen={props.isSideDrawerOpen}
       onSideDrawerOpen={props.onSideDrawerOpen}

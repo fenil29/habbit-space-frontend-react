@@ -3,7 +3,10 @@
   margin: 0;
   border: 0;
   box-sizing: border-box;
+}
+.body,.habit-option *,.settings-option *{
   transition: 0.25s background-color !important;
+  
 }
 span{
   // transition: 0s background-color !important;
@@ -47,7 +50,7 @@ button[customColor="blue"] {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    .right {
+    .right-home {
       display: flex;
       align-items: center;
       a {

@@ -10,7 +10,7 @@ function HomeNavBar() {
         <Link to="/">
           <Logo />
         </Link>
-        <div className="right">
+        <div className="right-home">
           <Link to="/login" className="element">
             Login
           </Link>

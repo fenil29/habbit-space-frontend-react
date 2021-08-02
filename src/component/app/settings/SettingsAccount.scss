@@ -1,0 +1,14 @@
+.settings-account{
+    // display: flex;
+
+width:80%;
+margin: 40px auto;
+    .settings-avatar{
+        width: 100%;
+        // margin: auto;
+        // text-align: center;
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+    }
+}

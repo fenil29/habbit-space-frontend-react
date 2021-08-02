@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useContext} from "react";
 import {
   Button,
   Modal,
@@ -16,8 +16,17 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/react";
 import { Formik, Field, Form } from "formik";
+import { API_URL } from "../../../Constants";
+import { GlobalContext } from "../../../context/GlobalState";
+
+import axios from "axios";
+
 
 function AddHabitModel(props) {
+  const contextStore = useContext(GlobalContext);
+
+  const [addHabitLoading, setAddHabitLoading] = useState(false);
+
   const initialRef = React.useRef();
   function validateName(value) {
     let error;
@@ -28,6 +37,33 @@ function AddHabitModel(props) {
     }
     return error;
   }
+  let addHabit = (habitName) => {
+    setAddHabitLoading(true);
+    axios
+      .post(API_URL + "/api/habit", {
+        habit_name: habitName,
+      })
+      .then((response) => {
+        setAddHabitLoading(false);
+        // console.log(response);
+        // setHabitList(response.data);
+        props.onHabitsSuccessfulAdd(response.data)
+      })
+      .catch((error) => {
+        setAddHabitLoading(false);
+        // console.log(error);
+        if (
+          error.response &&
+          error.response.status === 401 &&
+          error.response.data === "Unauthorized"
+        ) {
+          contextStore.clearLoginDataAndRedirectToLogin();
+        } else {
+          contextStore.showUnexpectedError();
+        }
+      });
+  };
+
   return (
     <Modal
       isOpen={props.isOpen}
@@ -41,7 +77,7 @@ function AddHabitModel(props) {
           initialValues={{ habitName: "" }}
           onSubmit={(values, actions) => {
             // alert(JSON.stringify(values));
-            props.onAddHabit(values.habitName);
+            addHabit(values.habitName);
           }}
         >
           <Form>
@@ -63,7 +99,7 @@ function AddHabitModel(props) {
             <ModalFooter>
               <Button
                 // colorScheme="blue"
-                isLoading={props.addHabitLoading}
+                isLoading={addHabitLoading}
                 // loadingText="Adding"
                 type="submit"
                 customColor="blue"

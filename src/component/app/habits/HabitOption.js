@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState, useLayoutEffect } from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./HabitOption.scss";
 import {
   Box,
@@ -9,15 +9,14 @@ import {
   Button,
   useDisclosure,
   Stack,
+  Skeleton,
   Drawer,
   DrawerBody,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
 } from "@chakra-ui/react";
-import { Skeleton, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
 
 import AddHabitModel from "./AddHabitModel";
 import { API_URL } from "../../../Constants";
@@ -29,7 +28,6 @@ function HabitOption(props) {
   const contextStore = useContext(GlobalContext);
   const [habitList, setHabitList] = useState([]);
   const [getHabitListLoading, setGetHabitListLoading] = useState(false);
-  const [addHabitLoading, setAddHabitLoading] = useState(false);
 
   const {
     isOpen: isOpenAddHabitModel,
@@ -43,12 +41,10 @@ function HabitOption(props) {
       .get(API_URL + "/api/habit")
       .then((response) => {
         setGetHabitListLoading(false);
-        // console.log(response.data);
         setHabitList(response.data);
       })
       .catch((error) => {
         setGetHabitListLoading(false);
-        // console.log(error);
         if (
           error.response &&
           error.response.status === 401 &&
@@ -60,31 +56,9 @@ function HabitOption(props) {
         }
       });
   };
-  let addHabit = (habitName) => {
-    setAddHabitLoading(true);
-    axios
-      .post(API_URL + "/api/habit", {
-        habit_name: habitName,
-      })
-      .then((response) => {
-        setAddHabitLoading(false);
-        onCloseAddHabitModel();
-        // console.log(response);
-        setHabitList(response.data);
-      })
-      .catch((error) => {
-        setAddHabitLoading(false);
-        // console.log(error);
-        if (
-          error.response &&
-          error.response.status === 401 &&
-          error.response.data === "Unauthorized"
-        ) {
-          contextStore.clearLoginDataAndRedirectToLogin();
-        } else {
-          contextStore.showUnexpectedError();
-        }
-      });
+  let onHabitsSuccessfulAdd = (newHabitList) => {
+    onCloseAddHabitModel();
+    setHabitList(newHabitList);
   };
 
   useEffect(() => {
@@ -117,20 +91,15 @@ function HabitOption(props) {
               props.onSideDrawerClose();
             }}
           >
-          <ListItem>All Habits</ListItem>
+            <ListItem>All Habits</ListItem>
           </NavLink>
         </List>
         <br />
 
         <Box className="title">
-            <h2>Habits</h2>
+          <h2>Habits</h2>
         </Box>
-        {/* <Divider /> */}
         <List>
-          {/* <ListItem>
-            <ListIcon as={CheckIcon} />
-            Lorem ipsum dolor sit amet
-          </ListItem> */}
           {getHabitListLoading ? (
             <Stack m={2}>
               <Skeleton height="20px" />
@@ -139,18 +108,6 @@ function HabitOption(props) {
             </Stack>
           ) : (
             <>
-              {/* <NavLink
-                to={"/app/habit/04a13a79-3109-4ed2-b11d-c3619dd8e2c6"}
-                activeClassName="is-active-habit"
-              >
-                <ListItem>list</ListItem>
-              </NavLink>
-              <NavLink
-                to={"/app/habit/b23332da-463e-404e-a49f-e4152c82e334"}
-                activeClassName="is-active-habit"
-              >
-                <ListItem>list2</ListItem>
-              </NavLink> */}
               {habitList.map((item) => (
                 <NavLink
                   to={"/app/habit/" + item.habit_id}
@@ -184,8 +141,7 @@ function HabitOption(props) {
         <AddHabitModel
           isOpen={isOpenAddHabitModel}
           onClose={onCloseAddHabitModel}
-          onAddHabit={addHabit}
-          addHabitLoading={addHabitLoading}
+          onHabitsSuccessfulAdd={onHabitsSuccessfulAdd}
         />
       </Box>
     </>
@@ -207,7 +163,6 @@ function HabitOption(props) {
           <DrawerContent>
             <DrawerCloseButton />
             <DrawerHeader borderBottomWidth="1px">Habit Tracker</DrawerHeader>
-
             <DrawerBody p={0}>
               <OptionComponent type="drawer" />
             </DrawerBody>

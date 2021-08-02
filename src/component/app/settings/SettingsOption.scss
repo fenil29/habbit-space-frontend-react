@@ -1,16 +1,17 @@
 .settings-option {
     width: 250px;
     // background-color: var(--secondary-background-color);
-    border-right-width: 1px;
-    border-left-width: 1px;
+    // border-right-width: 1px;
+    // border-left-width: 1px;
     padding: 5px;
     padding-bottom: 20px;
     // margin-bottom: 1000px;
     overflow: auto;
     // height: 100%;
+    margin-top: 20px;
   
     .title {
-      border-bottom-width: 1px;
+      // border-bottom-width: 1px;
       padding: 0px 10px;
       margin-bottom: 10px;
     }
