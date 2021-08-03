@@ -46,6 +46,7 @@ function EditHabitModel(props) {
         habit_name: habitName,
       })
       .then((response) => {
+        if(response.status===200){
         setEditHabitLoading(false);
         // console.log(response);
         // setHabitList(response.data);
@@ -59,7 +60,11 @@ function EditHabitModel(props) {
           duration: 3000,
           isClosable: true,
         })
-      
+        }
+        else{
+          contextStore.showUnexpectedError();
+
+        }
       })
       .catch((error) => {
         setEditHabitLoading(false);
@@ -110,16 +115,17 @@ function EditHabitModel(props) {
             </ModalBody>
             <ModalFooter>
               <Button
-                // colorScheme="blue"
                 isLoading={editHabitLoading}
                 // loadingText="Adding"
+                colorScheme="blue"
+                variant="outline"
                 type="submit"
-                customColor="blue"
+                // customColor="blue"
                 mr={3}
               >
                 Edit
               </Button>
-              <Button onClick={props.onClose}>Cancel</Button>
+              <Button onClick={props.onClose}  variant="outline">Cancel</Button>
             </ModalFooter>
           </Form>
         </Formik>

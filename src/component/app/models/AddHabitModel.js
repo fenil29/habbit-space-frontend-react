@@ -46,6 +46,7 @@ function AddHabitModel(props) {
         habit_name: habitName,
       })
       .then((response) => {
+        if(response.status===200){
         setAddHabitLoading(false);
         // console.log(response);
         // setHabitList(response.data);
@@ -57,7 +58,11 @@ function AddHabitModel(props) {
           duration: 3000,
           isClosable: true,
         })
-      
+      }
+      else{
+        contextStore.showUnexpectedError();
+
+      }
       })
       .catch((error) => {
         setAddHabitLoading(false);
@@ -108,11 +113,12 @@ function AddHabitModel(props) {
             </ModalBody>
             <ModalFooter>
               <Button
-                // colorScheme="blue"
+                colorScheme="blue"
+                variant="outline"
                 isLoading={addHabitLoading}
                 // loadingText="Adding"
                 type="submit"
-                customColor="blue"
+                // customColor="blue"
                 mr={3}
               >
                 Add

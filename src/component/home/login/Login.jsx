@@ -44,11 +44,18 @@ function Login() {
         token: response.tokenId,
       })
       .then((response) => {
+        if(response.status===200){
+
         setLoading(false);
         console.log(response.data);
         response.data.isLoggedIn = true;
         contextStore.setLoginData(response.data);
         history.push("/app");
+        }
+        else{
+          contextStore.showUnexpectedError();
+
+        }
       })
       .catch((error) => {
         setLoading(false);

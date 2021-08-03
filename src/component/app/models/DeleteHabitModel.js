@@ -33,6 +33,7 @@ function DeleteHabitModel(props) {
     axios
       .delete(API_URL + "/api/habit/" + props.habitInfo.habit_id)
       .then((response) => {
+        if(response.status===200){
         setDeleteHabitLoading(false);
         props.onClose();
         toast({
@@ -43,6 +44,11 @@ function DeleteHabitModel(props) {
             isClosable: true,
           })
           props.onHabitsSuccessfulDelete(props.habitInfo.habit_id)
+        }
+        else{
+          contextStore.showUnexpectedError();
+
+        }
       })
       .catch((error) => {
           console.log(error)
@@ -75,10 +81,10 @@ function DeleteHabitModel(props) {
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme="red" mr={3} isLoading={deleteHabitLoading} onClick={deleteHabit}>
+          <Button colorScheme="red" mr={3} isLoading={deleteHabitLoading} onClick={deleteHabit}  variant="outline">
             Delete
           </Button>
-          <Button onClick={props.onClose}>Cancel</Button>
+          <Button onClick={props.onClose}  variant="outline">Cancel</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

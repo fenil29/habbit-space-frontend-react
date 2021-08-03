@@ -21,23 +21,28 @@ import {
   Wrap,
   WrapItem,
   Avatar,
-  useToast 
-
+  useToast,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { Formik, Field, Form } from "formik";
 
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { API_URL } from "../../../Constants";
+import DeleteAccountModel from "../models/DeleteAccountModel";
 
 import axios from "axios";
-
 
 function SettingsAccount() {
   const contextStore = useContext(GlobalContext);
   const [editMode, setEditMode] = useState(false);
   const [editAccountLoading, setEditAccountLoading] = useState(false);
-  const toast = useToast()
-  
+  const toast = useToast();
+  const {
+    isOpen: isOpenDeleteAccountModel,
+    onOpen: onOpenDeleteAccountModel,
+    onClose: onCloseDeleteAccountModel,
+  } = useDisclosure();
+
   console.log(contextStore.loginData);
   let loginData = contextStore.loginData;
   function validateName(value) {
@@ -64,16 +69,18 @@ function SettingsAccount() {
         initialValues={{
           FirstName: loginData.first_name,
           LastName: loginData.last_name,
+          Email:loginData.email,
         }}
         onSubmit={(values, actions) => {
-       
           setEditAccountLoading(true);
           axios
-            .put(API_URL + "/api/account" , {
+            .put(API_URL + "/api/account", {
               first_name: values.FirstName,
               last_name: values.LastName,
             })
             .then((response) => {
+        if(response.status===200){
+              
               setEditAccountLoading(false);
               console.log(response.data);
               // setHabitList(response.data);
@@ -85,8 +92,11 @@ function SettingsAccount() {
                 status: "success",
                 duration: 3000,
                 isClosable: true,
-              })
-            
+              });
+            }else{
+              contextStore.showUnexpectedError();
+
+            }
             })
             .catch((error) => {
               setEditAccountLoading(false);
@@ -105,6 +115,15 @@ function SettingsAccount() {
       >
         {(props) => (
           <Form>
+            <Field name="Email">
+              {({ field, form }) => (
+                <FormControl>
+                  <FormLabel htmlFor="FirstName">Email</FormLabel>
+                  <Input {...field} id="Email" placeholder="Email" disabled />
+                </FormControl>
+              )}
+            </Field>
+            <br/>
             <Field name="FirstName" validate={validateName}>
               {({ field, form }) => (
                 <FormControl
@@ -122,7 +141,7 @@ function SettingsAccount() {
                 </FormControl>
               )}
             </Field>
-           <br/>
+            <br />
             <Field name="LastName" validate={validateName}>
               {({ field, form }) => (
                 <FormControl
@@ -142,9 +161,11 @@ function SettingsAccount() {
             {editMode && (
               <Button
                 mt={4}
-                customColor="blue"
+                // customColor="blue"
                 isLoading={editAccountLoading}
                 type="submit"
+                colorScheme="blue"
+                variant="outline"
               >
                 Submit
               </Button>
@@ -157,8 +178,10 @@ function SettingsAccount() {
           <Button
             mt={4}
             leftIcon={<EditIcon />}
-            customColor="blue"
-            variant="solid"
+            colorScheme="blue"
+            variant="outline"
+            // customColor="blue"
+            // variant="solid"
             onClick={() => {
               setEditMode(true);
             }}
@@ -172,9 +195,17 @@ function SettingsAccount() {
         leftIcon={<DeleteIcon />}
         colorScheme="red"
         variant="outline"
+        onClick={() => {
+          onOpenDeleteAccountModel();
+        }}
       >
         Delete Account
       </Button>
+      <DeleteAccountModel
+        isOpen={isOpenDeleteAccountModel}
+        onClose={onCloseDeleteAccountModel}
+        accountInfo={contextStore.loginData}
+      />
     </div>
   );
 }

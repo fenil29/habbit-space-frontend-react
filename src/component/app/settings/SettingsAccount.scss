@@ -11,4 +11,7 @@ margin: 40px auto;
         justify-content: center;
         flex-direction: row;
     }
+    input[disabled]{
+        opacity: 0.6;
+    }
 }

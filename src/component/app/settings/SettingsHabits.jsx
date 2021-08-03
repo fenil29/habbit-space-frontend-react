@@ -82,6 +82,11 @@ function SettingsHabits() {
       .post(API_URL + "/api/all-habit-position", allHabitPositionIds)
       .then((response) => {
         // console.log(response);
+        if(response.status===200){
+        }else{
+        contextStore.showUnexpectedError();
+          
+        }
       })
       .catch((error) => {
         contextStore.showUnexpectedError();
