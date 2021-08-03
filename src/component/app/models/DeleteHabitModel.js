@@ -31,7 +31,7 @@ function DeleteHabitModel(props) {
   let deleteHabit = (habitName) => {
     setDeleteHabitLoading(true);
     axios
-      .delete(API_URL + "/api/habit/"+props.habitInfo.habit_id)
+      .delete(API_URL + "/api/habit/" + props.habitInfo.habit_id)
       .then((response) => {
         setDeleteHabitLoading(false);
         props.onClose();

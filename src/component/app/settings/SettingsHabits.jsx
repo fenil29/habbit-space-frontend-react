@@ -13,6 +13,7 @@ import { API_URL } from "../../../Constants";
 import { GlobalContext } from "../../../context/GlobalState";
 import AddHabitModel from "../models/AddHabitModel";
 import DeleteHabitModel from "../models/DeleteHabitModel";
+import EditHabitModel from "../models/EditHabitModel";
 
 import axios from "axios";
 
@@ -29,6 +30,7 @@ function SettingsHabits() {
   const [habitList, setHabitList] = useState([]);
   const [getHabitListLoading, setGetHabitListLoading] = useState(false);
   const [deleteHabitInfo, setDeleteHabitInfo] = useState({});
+  const [editHabitInfo, setEditHabitInfo] = useState({});
 
   const {
     isOpen: isOpenAddHabitModel,
@@ -39,6 +41,11 @@ function SettingsHabits() {
     isOpen: isOpenDeleteHabitModel,
     onOpen: onOpenDeleteHabitModel,
     onClose: onCloseDeleteHabitModel,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenEditHabitModel,
+    onOpen: onOpenEditHabitModel,
+    onClose: onCloseEditHabitModel,
   } = useDisclosure();
 
   let getHabit = () => {
@@ -102,6 +109,16 @@ function SettingsHabits() {
   let onHabitsSuccessfulDelete = (deletedHabitId) => {
      let newHabitList =  habitList.filter(habit=>(habit.habit_id != deletedHabitId))
      setHabitList(newHabitList)
+  };
+  let onHabitsSuccessfulEdit = (editedHabit) => {
+    let newHabitList =  habitList.map(habit=>{
+
+      if(habit.habit_id==editedHabit.habit_id){
+        habit.habit_name=editedHabit.habit_name
+      }
+      return habit
+    })
+    setHabitList(newHabitList)
   };
   useEffect(() => {
     // effect
@@ -182,8 +199,8 @@ function SettingsHabits() {
                               className="habit-option-icon"
                               onClick={() => {
                                 setDeleteHabitInfo({})
-                                onOpenDeleteHabitModel();
                                 setDeleteHabitInfo(habit)
+                                onOpenDeleteHabitModel();
                               }}
                             />
                             <EditIcon
@@ -191,6 +208,11 @@ function SettingsHabits() {
                               h={4}
                               mr={3}
                               className="habit-option-icon"
+                              onClick={() => {
+                                setEditHabitInfo({})
+                                setEditHabitInfo(habit)
+                                onOpenEditHabitModel();
+                              }}
                             />
                             <HamburgerIcon
                               w={5}
@@ -220,6 +242,12 @@ function SettingsHabits() {
         onClose={onCloseDeleteHabitModel}
         habitInfo={deleteHabitInfo}
         onHabitsSuccessfulDelete={onHabitsSuccessfulDelete}
+      />
+      <EditHabitModel
+        isOpen={isOpenEditHabitModel}
+        onClose={onCloseEditHabitModel}
+        habitInfo={editHabitInfo}
+        onHabitsSuccessfulEdit={onHabitsSuccessfulEdit}
       />
     </div>
   );
