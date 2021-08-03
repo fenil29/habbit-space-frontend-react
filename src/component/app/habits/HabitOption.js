@@ -18,7 +18,7 @@ import {
   DrawerCloseButton,
 } from "@chakra-ui/react";
 
-import AddHabitModel from "./AddHabitModel";
+import AddHabitModel from "../models/AddHabitModel";
 import { API_URL } from "../../../Constants";
 import { GlobalContext } from "../../../context/GlobalState";
 
@@ -56,11 +56,11 @@ function HabitOption(props) {
         }
       });
   };
-  let onHabitsSuccessfulAdd = (newHabitList) => {
-    onCloseAddHabitModel();
-    setHabitList(newHabitList);
-  };
 
+  let onHabitsSuccessfulAdd = (newHabit) => {
+    onCloseAddHabitModel();
+    setHabitList([...habitList,newHabit]);
+  };
   useEffect(() => {
     // effect
     getHabit();

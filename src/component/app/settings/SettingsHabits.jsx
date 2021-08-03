@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./SettingsHabits.scss";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { HamburgerIcon, DeleteIcon, AddIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, DeleteIcon, AddIcon, EditIcon } from "@chakra-ui/icons";
 
 import {
   Button,
-  ButtonGroup,
   Stack,
   Skeleton,
   useDisclosure,
 } from "@chakra-ui/react";
 import { API_URL } from "../../../Constants";
 import { GlobalContext } from "../../../context/GlobalState";
-import AddHabitModel from "../habits/AddHabitModel";
+import AddHabitModel from "../models/AddHabitModel";
+import DeleteHabitModel from "../models/DeleteHabitModel";
 
 import axios from "axios";
 
@@ -28,11 +28,17 @@ function SettingsHabits() {
   const contextStore = useContext(GlobalContext);
   const [habitList, setHabitList] = useState([]);
   const [getHabitListLoading, setGetHabitListLoading] = useState(false);
+  const [deleteHabitInfo, setDeleteHabitInfo] = useState({});
 
   const {
     isOpen: isOpenAddHabitModel,
     onOpen: onOpenAddHabitModel,
     onClose: onCloseAddHabitModel,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenDeleteHabitModel,
+    onOpen: onOpenDeleteHabitModel,
+    onClose: onCloseDeleteHabitModel,
   } = useDisclosure();
 
   let getHabit = () => {
@@ -89,9 +95,13 @@ function SettingsHabits() {
     setAllHabitPosition(newHabitList);
     setHabitList(newHabitList);
   }
-  let onHabitsSuccessfulAdd = (newHabitList) => {
+  let onHabitsSuccessfulAdd = (newHabit) => {
     onCloseAddHabitModel();
-    setHabitList(newHabitList);
+    setHabitList([...habitList,newHabit]);
+  };
+  let onHabitsSuccessfulDelete = (deletedHabitId) => {
+     let newHabitList =  habitList.filter(habit=>(habit.habit_id != deletedHabitId))
+     setHabitList(newHabitList)
   };
   useEffect(() => {
     // effect
@@ -142,10 +152,10 @@ function SettingsHabits() {
                       : "habit-list-container is-dragging-over-container"
                   }
                 >
-                  {habitList.map((item, index) => (
+                  {habitList.map((habit, index) => (
                     <Draggable
-                      key={item.habit_id}
-                      draggableId={item.habit_id}
+                      key={habit.habit_id}
+                      draggableId={habit.habit_id}
                       index={index}
                     >
                       {(provided, snapshot) => (
@@ -163,9 +173,20 @@ function SettingsHabits() {
                               : "habit-list-item is-dragging-over-item"
                           }
                         >
-                          {item.habit_name}
+                          {habit.habit_name}
                           <div>
                             <DeleteIcon
+                              w={4}
+                              h={4}
+                              mr={3}
+                              className="habit-option-icon"
+                              onClick={() => {
+                                setDeleteHabitInfo({})
+                                onOpenDeleteHabitModel();
+                                setDeleteHabitInfo(habit)
+                              }}
+                            />
+                            <EditIcon
                               w={4}
                               h={4}
                               mr={3}
@@ -193,6 +214,12 @@ function SettingsHabits() {
         isOpen={isOpenAddHabitModel}
         onClose={onCloseAddHabitModel}
         onHabitsSuccessfulAdd={onHabitsSuccessfulAdd}
+      />
+      <DeleteHabitModel
+        isOpen={isOpenDeleteHabitModel}
+        onClose={onCloseDeleteHabitModel}
+        habitInfo={deleteHabitInfo}
+        onHabitsSuccessfulDelete={onHabitsSuccessfulDelete}
       />
     </div>
   );

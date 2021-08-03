@@ -1,4 +1,4 @@
-import React,{useState,useContext} from "react";
+import React, { useState, useContext } from "react";
 import {
   Button,
   Modal,
@@ -14,6 +14,7 @@ import {
   // Form,
   // Field,
   FormErrorMessage,
+  useToast 
 } from "@chakra-ui/react";
 import { Formik, Field, Form } from "formik";
 import { API_URL } from "../../../Constants";
@@ -21,11 +22,12 @@ import { GlobalContext } from "../../../context/GlobalState";
 
 import axios from "axios";
 
-
 function AddHabitModel(props) {
   const contextStore = useContext(GlobalContext);
 
   const [addHabitLoading, setAddHabitLoading] = useState(false);
+  const toast = useToast()
+
 
   const initialRef = React.useRef();
   function validateName(value) {
@@ -47,7 +49,15 @@ function AddHabitModel(props) {
         setAddHabitLoading(false);
         // console.log(response);
         // setHabitList(response.data);
-        props.onHabitsSuccessfulAdd(response.data)
+        props.onHabitsSuccessfulAdd(response.data);
+        toast({
+          position: "bottom-left",
+          title: "Habit added successfully",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        })
+      
       })
       .catch((error) => {
         setAddHabitLoading(false);

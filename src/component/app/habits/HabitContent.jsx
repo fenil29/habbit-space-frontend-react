@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 import HabitView from "./HabitView";
 import AllHabit from "./AllHabit";
@@ -57,15 +57,18 @@ function HabitContent(props) {
   }, []);
   return (
     <div className="habit-content">
-      <Route path="/app/habit/:habit_id" exact>
-        <HabitView
-          habitsDateInfo={habitsDateInfo}
-          addHabitsDateInfo={addHabitsDateInfo}
-        />
-      </Route>
-      <Route path="/app/all-habit" exact>
-        <AllHabit addHabitsDateInfo={addHabitsDateInfo} />
-      </Route>
+      <Switch>
+        <Route path="/app/habit/:habit_id" exact>
+          <HabitView
+            habitsDateInfo={habitsDateInfo}
+            addHabitsDateInfo={addHabitsDateInfo}
+          />
+        </Route>
+        <Route path="/app/all-habit" exact>
+          <AllHabit addHabitsDateInfo={addHabitsDateInfo} />
+        </Route>
+        <Redirect to="/app/all-habit" />
+      </Switch>
     </div>
   );
 }

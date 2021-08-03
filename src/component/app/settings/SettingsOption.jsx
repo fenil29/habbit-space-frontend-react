@@ -37,15 +37,6 @@ function SettingsOption(props) {
         </Box>
         <List>
           <NavLink
-            to={"/app/settings/account"}
-            activeClassName="is-active-habit"
-            onClick={() => {
-              props.onSideDrawerClose();
-            }}
-          >
-            <ListItem>account</ListItem>
-          </NavLink>
-          <NavLink
             to={"/app/settings/habits"}
             activeClassName="is-active-habit"
             onClick={() => {
@@ -53,6 +44,15 @@ function SettingsOption(props) {
             }}
           >
             <ListItem>habits</ListItem>
+          </NavLink>
+          <NavLink
+            to={"/app/settings/account"}
+            activeClassName="is-active-habit"
+            onClick={() => {
+              props.onSideDrawerClose();
+            }}
+          >
+            <ListItem>account</ListItem>
           </NavLink>
         </List>
       </Box>

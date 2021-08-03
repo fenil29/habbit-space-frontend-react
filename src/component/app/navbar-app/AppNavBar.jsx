@@ -44,8 +44,8 @@ function AppNavBar(props) {
               <Link to="/app/all-habit">
                 <MenuItem>Habits</MenuItem>
               </Link>
-              <Link to="/app/settings/account">
-                <MenuItem>Account</MenuItem>
+              <Link to="/app/settings/habits">
+                <MenuItem>Settings</MenuItem>
               </Link>
               <MenuDivider />
               <MenuItem

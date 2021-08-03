@@ -25,6 +25,7 @@ function AppHome() {
           <Route
             path="/app/settings/:setting_name"
             component={() => (
+              // <div>feni</div>
               <SettingsHome
                 isSideDrawerOpen={isSideDrawerOpen}
                 onSideDrawerOpen={onSideDrawerOpen}

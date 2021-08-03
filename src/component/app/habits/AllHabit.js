@@ -79,7 +79,7 @@ function AllHabit(props) {
     <div className="all-habit-container">
       <h2 className="title">All habits Activity</h2>
       <hr className="habit-bottom-ht" />
-      <br />
+      {/* <br /> */}
       {habitInfoWithDate.map((habit,index) => (
         <>
         <h3>{habit.habit_name}</h3>

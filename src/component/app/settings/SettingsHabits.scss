@@ -1,19 +1,24 @@
 .settings-habits {
-  width: 80%;
-  margin: 25px auto;
-  .title-container{
-
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 5px;
+  width: 100%;
+  padding: 20px 5%;
+  margin: auto;
+  overflow: auto;
+  height: 100%;
+  .title-container {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
   }
   .title {
     font-weight: 500;
     font-size: 22px;
   }
   .habit-list-container {
+    // padding-bottom: 10px;
+    // max-height: 100px;
+  
   }
   .habit-list-item {
     user-select: none;
