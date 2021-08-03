@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 
 import "./SettingsAccount.scss";
 import { GlobalContext } from "../../../context/GlobalState";
@@ -21,13 +21,23 @@ import {
   Wrap,
   WrapItem,
   Avatar,
+  useToast 
+
 } from "@chakra-ui/react";
 import { Formik, Field, Form } from "formik";
 
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
+import { API_URL } from "../../../Constants";
+
+import axios from "axios";
+
 
 function SettingsAccount() {
   const contextStore = useContext(GlobalContext);
+  const [editMode, setEditMode] = useState(false);
+  const [editAccountLoading, setEditAccountLoading] = useState(false);
+  const toast = useToast()
+  
   console.log(contextStore.loginData);
   let loginData = contextStore.loginData;
   function validateName(value) {
@@ -56,10 +66,41 @@ function SettingsAccount() {
           LastName: loginData.last_name,
         }}
         onSubmit={(values, actions) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            actions.setSubmitting(false);
-          }, 1000);
+       
+          setEditAccountLoading(true);
+          axios
+            .put(API_URL + "/api/account" , {
+              first_name: values.FirstName,
+              last_name: values.LastName,
+            })
+            .then((response) => {
+              setEditAccountLoading(false);
+              console.log(response.data);
+              // setHabitList(response.data);
+              response.data.isLoggedIn = true;
+              contextStore.setLoginData(response.data);
+              toast({
+                position: "bottom-left",
+                title: "Account updated successfully",
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+              })
+            
+            })
+            .catch((error) => {
+              setEditAccountLoading(false);
+              console.log(error);
+              if (
+                error.response &&
+                error.response.status === 401 &&
+                error.response.data === "Unauthorized"
+              ) {
+                contextStore.clearLoginDataAndRedirectToLogin();
+              } else {
+                contextStore.showUnexpectedError();
+              }
+            });
         }}
       >
         {(props) => (
@@ -68,40 +109,64 @@ function SettingsAccount() {
               {({ field, form }) => (
                 <FormControl
                   isInvalid={form.errors.FirstName && form.touched.FirstName}
+                  // isDisabled={!editMode}
                 >
                   <FormLabel htmlFor="FirstName">First Name</FormLabel>
-                  <Input {...field} id="FirstName" placeholder="FirstName" />
+                  <Input
+                    {...field}
+                    id="FirstName"
+                    placeholder="FirstName"
+                    disabled={!editMode}
+                  />
                   <FormErrorMessage>{form.errors.FirstName}</FormErrorMessage>
                 </FormControl>
               )}
             </Field>
-            <br />
+           <br/>
             <Field name="LastName" validate={validateName}>
               {({ field, form }) => (
                 <FormControl
                   isInvalid={form.errors.LastName && form.touched.LastName}
                 >
                   <FormLabel htmlFor="LastName">Last Name</FormLabel>
-                  <Input {...field} id="LastName" placeholder="LastName" />
+                  <Input
+                    {...field}
+                    id="LastName"
+                    placeholder="LastName"
+                    disabled={!editMode}
+                  />
                   <FormErrorMessage>{form.errors.LastName}</FormErrorMessage>
                 </FormControl>
               )}
             </Field>
-            <Button
-              mt={4}
-              customColor="blue"
-              isLoading={props.isSubmitting}
-              type="submit"
-            >
-              Submit
-            </Button>
+            {editMode && (
+              <Button
+                mt={4}
+                customColor="blue"
+                isLoading={editAccountLoading}
+                type="submit"
+              >
+                Submit
+              </Button>
+            )}
           </Form>
         )}
       </Formik>
-      <Button mt={4} leftIcon={<EditIcon />} customColor="blue" variant="solid">
-        Edit
-      </Button>
-      <br />
+      {!editMode && (
+        <div>
+          <Button
+            mt={4}
+            leftIcon={<EditIcon />}
+            customColor="blue"
+            variant="solid"
+            onClick={() => {
+              setEditMode(true);
+            }}
+          >
+            Edit
+          </Button>
+        </div>
+      )}
       <Button
         mt={4}
         leftIcon={<DeleteIcon />}

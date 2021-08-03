@@ -25,7 +25,7 @@ import axios from "axios";
 function EditHabitModel(props) {
   const contextStore = useContext(GlobalContext);
 
-  const [addHabitLoading, setAddHabitLoading] = useState(false);
+  const [editHabitLoading, setEditHabitLoading] = useState(false);
   const toast = useToast()
 
 
@@ -40,13 +40,13 @@ function EditHabitModel(props) {
     return error;
   }
   let editHabit = (habitName) => {
-    setAddHabitLoading(true);
+    setEditHabitLoading(true);
     axios
       .put(API_URL + "/api/habit/" +  props.habitInfo.habit_id, {
         habit_name: habitName,
       })
       .then((response) => {
-        setAddHabitLoading(false);
+        setEditHabitLoading(false);
         // console.log(response);
         // setHabitList(response.data);
         props.onClose();
@@ -62,7 +62,7 @@ function EditHabitModel(props) {
       
       })
       .catch((error) => {
-        setAddHabitLoading(false);
+        setEditHabitLoading(false);
         console.log(error);
         if (
           error.response &&
@@ -111,7 +111,7 @@ function EditHabitModel(props) {
             <ModalFooter>
               <Button
                 // colorScheme="blue"
-                isLoading={addHabitLoading}
+                isLoading={editHabitLoading}
                 // loadingText="Adding"
                 type="submit"
                 customColor="blue"

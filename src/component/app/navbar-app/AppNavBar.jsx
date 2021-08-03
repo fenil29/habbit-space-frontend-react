@@ -38,7 +38,7 @@ function AppNavBar(props) {
               rightIcon={<ChevronDownIcon />}
               customColor="light-blue"
             >
-              Fenil Kaneria
+              {contextStore.loginData.first_name +" "+ contextStore.loginData.last_name}
             </MenuButton>
             <MenuList>
               <Link to="/app/all-habit">
