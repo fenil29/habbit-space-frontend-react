@@ -33,8 +33,8 @@ function DeleteHabitModel(props) {
     axios
       .delete(API_URL + "/api/habit/" + props.habitInfo.habit_id)
       .then((response) => {
-        if(response.status===200){
         setDeleteHabitLoading(false);
+        if(response.status===200){
         props.onClose();
         toast({
             position: "bottom-left",

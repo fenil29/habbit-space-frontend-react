@@ -46,8 +46,8 @@ function AddHabitModel(props) {
         habit_name: habitName,
       })
       .then((response) => {
-        if(response.status===200){
         setAddHabitLoading(false);
+        if(response.status===200){
         // console.log(response);
         // setHabitList(response.data);
         props.onHabitsSuccessfulAdd(response.data);

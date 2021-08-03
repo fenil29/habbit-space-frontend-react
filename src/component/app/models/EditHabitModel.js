@@ -46,8 +46,8 @@ function EditHabitModel(props) {
         habit_name: habitName,
       })
       .then((response) => {
-        if(response.status===200){
         setEditHabitLoading(false);
+        if(response.status===200){
         // console.log(response);
         // setHabitList(response.data);
         props.onClose();

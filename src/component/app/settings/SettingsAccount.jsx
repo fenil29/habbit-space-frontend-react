@@ -54,6 +54,34 @@ function SettingsAccount() {
     }
     return error;
   }
+
+  let logoutFromAllOtherSessions = () => {
+    axios
+      .post(API_URL + "/api/logout-all-other-sessions")
+      .then((response) => {
+        // console.log(response.status)
+        if (response.status === 200) {
+          toast({
+            title: "successfully logged out from all other session",
+            status: "success",
+            position: "bottom-left",
+            duration: 3000,
+            isClosable: true,
+          });
+        }
+      })
+      .catch((error) => {
+        if (
+          error.response &&
+          error.response.status === 401 &&
+          error.response.data === "Unauthorized"
+        ) {
+          contextStore.clearLoginDataAndRedirectToLogin();
+        } else {
+          contextStore.showUnexpectedError();
+        }
+      });
+  };
   return (
     <div className="settings-account">
       <Wrap className="settings-avatar">
@@ -69,7 +97,7 @@ function SettingsAccount() {
         initialValues={{
           FirstName: loginData.first_name,
           LastName: loginData.last_name,
-          Email:loginData.email,
+          Email: loginData.email,
         }}
         onSubmit={(values, actions) => {
           setEditAccountLoading(true);
@@ -79,24 +107,22 @@ function SettingsAccount() {
               last_name: values.LastName,
             })
             .then((response) => {
-        if(response.status===200){
-              
-              setEditAccountLoading(false);
-              console.log(response.data);
-              // setHabitList(response.data);
-              response.data.isLoggedIn = true;
-              contextStore.setLoginData(response.data);
-              toast({
-                position: "bottom-left",
-                title: "Account updated successfully",
-                status: "success",
-                duration: 3000,
-                isClosable: true,
-              });
-            }else{
-              contextStore.showUnexpectedError();
-
-            }
+              if (response.status === 200) {
+                setEditAccountLoading(false);
+                console.log(response.data);
+                // setHabitList(response.data);
+                response.data.isLoggedIn = true;
+                contextStore.setLoginData(response.data);
+                toast({
+                  position: "bottom-left",
+                  title: "Account updated successfully",
+                  status: "success",
+                  duration: 3000,
+                  isClosable: true,
+                });
+              } else {
+                contextStore.showUnexpectedError();
+              }
             })
             .catch((error) => {
               setEditAccountLoading(false);
@@ -123,7 +149,7 @@ function SettingsAccount() {
                 </FormControl>
               )}
             </Field>
-            <br/>
+            <br />
             <Field name="FirstName" validate={validateName}>
               {({ field, form }) => (
                 <FormControl
@@ -190,6 +216,18 @@ function SettingsAccount() {
           </Button>
         </div>
       )}
+      <div>
+        <Button
+          mt={4}
+          colorScheme="blue"
+          variant="outline"
+          onClick={() => {
+            logoutFromAllOtherSessions();
+          }}
+        >
+          Logout from all other sessions
+        </Button>
+      </div>
       <Button
         mt={4}
         leftIcon={<DeleteIcon />}

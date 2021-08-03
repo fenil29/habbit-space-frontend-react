@@ -8,12 +8,16 @@ import {
   Stack,
   Skeleton,
   useDisclosure,
+  Spinner,
+  Center,
 } from "@chakra-ui/react";
 import { API_URL } from "../../../Constants";
 import { GlobalContext } from "../../../context/GlobalState";
 import AddHabitModel from "../models/AddHabitModel";
 import DeleteHabitModel from "../models/DeleteHabitModel";
 import EditHabitModel from "../models/EditHabitModel";
+import NoData from "../../../assets/NoData.svg";
+
 
 import axios from "axios";
 
@@ -82,10 +86,9 @@ function SettingsHabits() {
       .post(API_URL + "/api/all-habit-position", allHabitPositionIds)
       .then((response) => {
         // console.log(response);
-        if(response.status===200){
-        }else{
-        contextStore.showUnexpectedError();
-          
+        if (response.status === 200) {
+        } else {
+          contextStore.showUnexpectedError();
         }
       })
       .catch((error) => {
@@ -109,21 +112,22 @@ function SettingsHabits() {
   }
   let onHabitsSuccessfulAdd = (newHabit) => {
     onCloseAddHabitModel();
-    setHabitList([...habitList,newHabit]);
+    setHabitList([...habitList, newHabit]);
   };
   let onHabitsSuccessfulDelete = (deletedHabitId) => {
-     let newHabitList =  habitList.filter(habit=>(habit.habit_id != deletedHabitId))
-     setHabitList(newHabitList)
+    let newHabitList = habitList.filter(
+      (habit) => habit.habit_id != deletedHabitId
+    );
+    setHabitList(newHabitList);
   };
   let onHabitsSuccessfulEdit = (editedHabit) => {
-    let newHabitList =  habitList.map(habit=>{
-
-      if(habit.habit_id==editedHabit.habit_id){
-        habit.habit_name=editedHabit.habit_name
+    let newHabitList = habitList.map((habit) => {
+      if (habit.habit_id == editedHabit.habit_id) {
+        habit.habit_name = editedHabit.habit_name;
       }
-      return habit
-    })
-    setHabitList(newHabitList)
+      return habit;
+    });
+    setHabitList(newHabitList);
   };
   useEffect(() => {
     // effect
@@ -159,6 +163,14 @@ function SettingsHabits() {
           <Skeleton height="40px" />
           <Skeleton height="40px" />
         </Stack>
+      ) : habitList.length == 0 ? (
+        <Center className="no-data-container">
+        <img src={NoData} alt="no data image" />
+        <div>
+          <h1>No Habit Found</h1>
+          <h2>Please add new habit to see the information</h2>
+        </div>
+      </Center>
       ) : (
         <>
           <DragDropContext onDragEnd={onDragEnd}>
@@ -203,8 +215,8 @@ function SettingsHabits() {
                               mr={3}
                               className="habit-option-icon"
                               onClick={() => {
-                                setDeleteHabitInfo({})
-                                setDeleteHabitInfo(habit)
+                                setDeleteHabitInfo({});
+                                setDeleteHabitInfo(habit);
                                 onOpenDeleteHabitModel();
                               }}
                             />
@@ -214,8 +226,8 @@ function SettingsHabits() {
                               mr={3}
                               className="habit-option-icon"
                               onClick={() => {
-                                setEditHabitInfo({})
-                                setEditHabitInfo(habit)
+                                setEditHabitInfo({});
+                                setEditHabitInfo(habit);
                                 onOpenEditHabitModel();
                               }}
                             />

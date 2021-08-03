@@ -44,18 +44,15 @@ function SignUp() {
       })
       .then(
         (response) => {
-        if(response.status===200 || response.status===201){
-          
           setLoading(false);
-
-          console.log(response.data);
-          response.data.isLoggedIn = true;
-          contextStore.setLoginData(response.data);
-          history.push("/app");
-        }else{
-          contextStore.showUnexpectedError();
-
-        }
+          if (response.status === 200 || response.status === 201) {
+            console.log(response.data);
+            response.data.isLoggedIn = true;
+            contextStore.setLoginData(response.data);
+            history.push("/app");
+          } else {
+            contextStore.showUnexpectedError();
+          }
         },
         (error) => {
           setLoading(false);
