@@ -9,8 +9,10 @@ import MonthWeek from "../../../assets/MonthWeek.svg";
 import MobileApp from "../../../assets/MobileApp.svg";
 import AnalyticsInformation from "../../../assets/AnalyticsInformation.svg";
 
+
 function HomeContent() {
   return (
+    <>
     <div className="home-page-content">
       <h1>A Minimal Habit Tracker</h1>
       {/* <h2>that help you to track your habit easily</h2> */}
@@ -118,6 +120,16 @@ function HomeContent() {
       </div>
 
     </div>
+      <hr/>
+      <div className="home-page-content ">
+        <div className="contact-link">
+
+        <a href="https://forms.gle/NW7W9cVtUmqS6QHP9" target="_blank" rel="noopener noreferrer" >
+        Contact Us
+        </a>
+        </div>
+      </div>
+      </>
   );
 }
 
