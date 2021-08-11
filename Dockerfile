@@ -1,6 +1,6 @@
 FROM node:14-alpine as build
 WORKDIR /app
-COPY package*.json patches ./
+COPY package*.json patches/ ./
 RUN npm install --unsafe-perm
 COPY . ./ 
 RUN npm run build 
