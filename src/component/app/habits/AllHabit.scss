@@ -45,6 +45,13 @@
     font-weight: 500;
     padding-left: 30px;
   }
+  .react-calendar-heatmap-month-labels{
+    fill: var(--primary-font-color);
+    margin-bottom: 50px;
+  }
+  .react-calendar-heatmap-weekday-labels{
+    fill: var(--primary-font-color);
+  }
 
 }
 h2.title {
