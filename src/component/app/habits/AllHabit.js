@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 
 import "./AllHabit.scss";
 import CalendarHeatmap from "react-calendar-heatmap";
+import ReactTooltip from "react-tooltip";
+
 import { API_URL } from "../../../Constants";
 import { GlobalContext } from "../../../context/GlobalState";
 import { Spinner, Center } from "@chakra-ui/react";
@@ -30,12 +32,11 @@ function AllHabit(props) {
           // storeForCache.dates = { ...storeForCache.dates };
           // props.addHabitsDateInfo(habitInfo.habit_id, storeForCache);
           // console.log("sdfsf324d", storeForCache);
-
-          let dateValue = [];
-          for (let date in habitInfo.dates) {
-            dateValue.push({ date: date });
-          }
-          habitInfo.dates = dateValue;
+          // let dateValue = [];
+          // for (let date in habitInfo.dates) {
+          //   dateValue.push({ date: date });
+          // }
+          // habitInfo.dates = dateValue;
         }
         console.log(response.data);
         setHabitInfoWithDate(response.data);
@@ -104,29 +105,64 @@ function AllHabit(props) {
           </div>
         </Center>
       ) : (
-        habitInfoWithDate.map((habit, index) => (
-          <>
-            <h3>{habit.habit_name}</h3>
-            <CalendarHeatmap
-              // startDate={shiftDate(today, -150)}
-              key={index}
-              startDate={shiftDate(today, -totalDisplayDay)}
-              gutterSize={3}
-              endDate={today}
-              weekdayLabels={["S", "M", "T", "W", "T", "F", "S"]}
-              // showOutOfRangeDays={true}
-              values={habit.dates}
-              classForValue={(value) => {
-                if (!value) {
-                  return "color-empty";
-                }
-                return `color-completed`;
-              }}
-              showWeekdayLabels={true}
-            />
-            <hr className="habit-bottom-ht" />
-          </>
-        ))
+        habitInfoWithDate.map((habit, index) => {
+          let allHabitDayWithCount = [];
+          let loopCurrentDay = shiftDate(today, -totalDisplayDay);
+          // console.log(loopCurrentDay);
+          console.log(habit);
+
+          do {
+            // increment date by one day
+            loopCurrentDay = new Date(
+              loopCurrentDay.getTime() + 60 * 60 * 24 * 1000
+            );
+            // console.log(loopCurrentDay.toISOString().slice(0, 10))
+            if (loopCurrentDay.toISOString().slice(0, 10) in habit.dates) {
+              allHabitDayWithCount.push({
+                date: loopCurrentDay.toISOString().slice(0, 10),
+                count: 1,
+              });
+            } else {
+              allHabitDayWithCount.push({
+                date: loopCurrentDay.toISOString().slice(0, 10),
+                count:0,
+              });
+            }
+          } while (
+            loopCurrentDay.toISOString().slice(0, 10) !==
+            today.toISOString().slice(0, 10)
+          );
+
+          return (
+            <>
+              <h3>{habit.habit_name}</h3>
+              <CalendarHeatmap
+                // startDate={shiftDate(today, -150)}
+                key={index}
+                startDate={shiftDate(today, -totalDisplayDay)}
+                gutterSize={3}
+                endDate={today}
+                weekdayLabels={["S", "M", "T", "W", "T", "F", "S"]}
+                // showOutOfRangeDays={true}
+                values={allHabitDayWithCount}
+                classForValue={(value) => {
+                  if (value.count===0) {
+                    return "color-empty";
+                  }
+                  return `color-completed`;
+                }}
+                showWeekdayLabels={true}
+                tooltipDataAttrs={(value) => {
+                  return {
+                    "data-tip": `${value.date}`,
+                  };
+                }}
+              />
+              <ReactTooltip />
+              <hr className="habit-bottom-ht" />
+            </>
+          );
+        })
       )}
     </div>
   );
