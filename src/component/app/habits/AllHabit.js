@@ -110,29 +110,29 @@ function AllHabit(props) {
           let loopCurrentDay = shiftDate(today, -totalDisplayDay);
           // console.log(loopCurrentDay);
           console.log(habit);
-          if (habit.dates) {
-            do {
-              // increment date by one day
-              loopCurrentDay = new Date(
-                loopCurrentDay.getTime() + 60 * 60 * 24 * 1000
-              );
-              // console.log(loopCurrentDay.toISOString().slice(0, 10))
-              if (loopCurrentDay.toISOString().slice(0, 10) in habit.dates) {
-                allHabitDayWithCount.push({
-                  date: loopCurrentDay.toISOString().slice(0, 10),
-                  count: 1,
-                });
-              } else {
-                allHabitDayWithCount.push({
-                  date: loopCurrentDay.toISOString().slice(0, 10),
-                  count: 0,
-                });
-              }
-            } while (
-              loopCurrentDay.toISOString().slice(0, 10) !==
-              today.toISOString().slice(0, 10)
+
+          do {
+            // increment date by one day
+            loopCurrentDay = new Date(
+              loopCurrentDay.getTime() + 60 * 60 * 24 * 1000
             );
-          }
+            // console.log(loopCurrentDay.toISOString().slice(0, 10))
+            if (habit.dates && loopCurrentDay.toISOString().slice(0, 10) in habit.dates) {
+              allHabitDayWithCount.push({
+                date: loopCurrentDay.toISOString().slice(0, 10),
+                count: 1,
+              });
+            } else {
+              allHabitDayWithCount.push({
+                date: loopCurrentDay.toISOString().slice(0, 10),
+                count:0,
+              });
+            }
+          } while (
+            loopCurrentDay.toISOString().slice(0, 10) !==
+            today.toISOString().slice(0, 10)
+          );
+
           return (
             <>
               <h3>{habit.habit_name}</h3>
@@ -146,7 +146,7 @@ function AllHabit(props) {
                 // showOutOfRangeDays={true}
                 values={allHabitDayWithCount}
                 classForValue={(value) => {
-                  if (value.count === 0) {
+                  if (value.count===0) {
                     return "color-empty";
                   }
                   return `color-completed`;
