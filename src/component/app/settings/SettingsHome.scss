@@ -1,4 +1,3 @@
-
 .setting-home {
   display: flex;
 
@@ -15,6 +14,14 @@
   // border-radius: $border-radius;
   // height: 100%;
 }
-.settings-content{
-flex:1
+.settings-content {
+  flex: 1;
+}
+@media only screen and (max-width: 800px) {
+  .setting-home {
+    flex-direction: column;
+  }
+  .settings-option {
+    width: 100%;
+  }
 }
