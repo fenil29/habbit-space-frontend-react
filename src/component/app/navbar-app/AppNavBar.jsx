@@ -9,6 +9,11 @@ import {
   MenuItem,
   MenuDivider,
   Button,
+  Avatar,
+  AvatarBadge,
+  AvatarGroup,
+  Wrap,
+  WrapItem,
 } from "@chakra-ui/react";
 import { ChevronDownIcon, HamburgerIcon } from "@chakra-ui/icons";
 import DarkModeButton from "./DarkModeButton";
@@ -38,7 +43,17 @@ function AppNavBar(props) {
               rightIcon={<ChevronDownIcon />}
               customColor="light-blue"
             >
-              {contextStore.loginData.first_name +" "+ contextStore.loginData.last_name}
+              {/* {contextStore.loginData.first_name +" "+ contextStore.loginData.last_name} */}
+              <Wrap>
+                <WrapItem>
+                  <Avatar
+                    size="sm" 
+                    name={contextStore.loginData.first_name +" "+ contextStore.loginData.last_name}
+                    src={contextStore.loginData.picture}
+                    mr="1"
+                  />
+                </WrapItem>
+              </Wrap>
             </MenuButton>
             <MenuList>
               <Link to="/app/all-habit">
