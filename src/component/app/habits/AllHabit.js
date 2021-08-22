@@ -3,13 +3,15 @@ import React, { useContext, useEffect, useState } from "react";
 import "./AllHabit.scss";
 import CalendarHeatmap from "react-calendar-heatmap";
 import ReactTooltip from "react-tooltip";
+import AddHabitModel from "../models/AddHabitModel";
 
 import { API_URL } from "../../../Constants";
 import { GlobalContext } from "../../../context/GlobalState";
-import { Spinner, Center } from "@chakra-ui/react";
+import { Spinner, Center, useDisclosure, Button } from "@chakra-ui/react";
+
 import NoData from "../../../assets/NoData.svg";
 
-import { ChevronDownIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, HamburgerIcon, AddIcon } from "@chakra-ui/icons";
 
 import axios from "axios";
 
@@ -20,6 +22,12 @@ function AllHabit(props) {
   const [habitInfoWithDate, setHabitInfoWithDate] = useState([]);
   const [getHabitInfoLoading, setGetHabitInfoLoading] = useState(true);
   const [totalDisplayDay, setTotalDisplayDay] = useState(365);
+
+  const {
+    isOpen: isOpenAddHabitModel,
+    onOpen: onOpenAddHabitModel,
+    onClose: onCloseAddHabitModel,
+  } = useDisclosure();
 
   let getHabitWithDate = () => {
     setGetHabitInfoLoading(true);
@@ -59,6 +67,9 @@ function AllHabit(props) {
         }
       });
   };
+  let onHabitsSuccessfulAdd = () => {
+    getHabitWithDate();
+  };
   useEffect(() => {
     // effect
     getHabitWithDate();
@@ -85,14 +96,14 @@ function AllHabit(props) {
 
   return (
     <>
-        <div className="habit-main-top-title">
-          <HamburgerIcon
-            onClick={props.onSideDrawerOpen}
-            ml={5}
-            className="side-drawer-menu"
-          />
-          <h2>All habits Activity</h2>
-        </div>
+      <div className="habit-main-top-title">
+        <HamburgerIcon
+          onClick={props.onSideDrawerOpen}
+          ml={5}
+          className="side-drawer-menu"
+        />
+        <h2>All habits Activity</h2>
+      </div>
       <div className="all-habit-container">
         <hr className="habit-bottom-ht" />
         {/* <br /> */}
@@ -113,6 +124,27 @@ function AllHabit(props) {
               <h1>No Habit Found</h1>
               <h2>Please add new habit to see the information</h2>
             </div>
+            <Button
+              colorScheme="blue"
+              size="sm"
+              mt="3"
+              // variant="outline"
+              onClick={() => {
+                onOpenAddHabitModel();
+              }}
+            >
+              <AddIcon
+                //   w={4}
+                //   h={4}
+                mr={2}
+              />
+              Add Habit
+            </Button>
+            <AddHabitModel
+              isOpen={isOpenAddHabitModel}
+              onClose={onCloseAddHabitModel}
+              onHabitsSuccessfulAdd={onHabitsSuccessfulAdd}
+            />
           </Center>
         ) : (
           habitInfoWithDate.map((habit, index) => {
