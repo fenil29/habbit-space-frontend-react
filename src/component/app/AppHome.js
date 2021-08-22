@@ -12,33 +12,21 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function AppHome() {
   console.log("habitsDateInfo Rendering");
-  const {
-    isOpen: isSideDrawerOpen,
-    onOpen: onSideDrawerOpen,
-    onClose: onSideDrawerClose,
-  } = useDisclosure();
+
   return (
     <>
-      <AppNavBar onSideDrawerOpen={onSideDrawerOpen} />
+      <AppNavBar  />
       <div className="app-home">
         <Switch>
           <Route
             path="/app/settings/:setting_name"
             component={() => (
-              // <div>feni</div>
-              <SettingsHome
-                isSideDrawerOpen={isSideDrawerOpen}
-                onSideDrawerOpen={onSideDrawerOpen}
-                onSideDrawerClose={onSideDrawerClose}
-              />
+              <SettingsHome />
             )}
             exact
           />
           <Route path="/app">
             <HabitHome
-              isSideDrawerOpen={isSideDrawerOpen}
-              onSideDrawerOpen={onSideDrawerOpen}
-              onSideDrawerClose={onSideDrawerClose}
             />
           </Route>
         </Switch>

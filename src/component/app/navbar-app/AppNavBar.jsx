@@ -26,11 +26,6 @@ function AppNavBar(props) {
     <div className="nav-bar">
       <div className="nav-bar-content">
         <div className="left">
-          <HamburgerIcon
-            onClick={props.onSideDrawerOpen}
-            mr={3}
-            className="side-drawer-menu"
-          />
           <Link to="/">
             <Logo />
           </Link>
@@ -44,18 +39,27 @@ function AppNavBar(props) {
               customColor="light-blue"
             >
               {/* {contextStore.loginData.first_name +" "+ contextStore.loginData.last_name} */}
-              <Wrap>
-                <WrapItem>
-                  <Avatar
-                    size="sm" 
-                    name={contextStore.loginData.first_name +" "+ contextStore.loginData.last_name}
-                    src={contextStore.loginData.picture}
-                    mr="1"
-                  />
-                </WrapItem>
-              </Wrap>
+
+              <Avatar
+                size="sm"
+                name={
+                  contextStore.loginData.first_name +
+                  " " +
+                  contextStore.loginData.last_name
+                }
+                src={contextStore.loginData.picture}
+                mr="1"
+              />
             </MenuButton>
             <MenuList>
+              <div>
+                <MenuItem>
+                  {contextStore.loginData.first_name +
+                    " " +
+                    contextStore.loginData.last_name}
+                </MenuItem>
+              </div>
+              <hr />
               <Link to="/app/all-habit">
                 <MenuItem>Habits</MenuItem>
               </Link>

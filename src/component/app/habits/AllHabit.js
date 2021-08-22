@@ -9,6 +9,8 @@ import { GlobalContext } from "../../../context/GlobalState";
 import { Spinner, Center } from "@chakra-ui/react";
 import NoData from "../../../assets/NoData.svg";
 
+import { ChevronDownIcon, HamburgerIcon } from "@chakra-ui/icons";
+
 import axios from "axios";
 
 const today = new Date();
@@ -82,89 +84,101 @@ function AllHabit(props) {
   }
 
   return (
-    <div className="all-habit-container">
-      <h2 className="title">All habits Activity</h2>
-      <hr className="habit-bottom-ht" />
-      {/* <br /> */}
-      {getHabitInfoLoading ? (
-        <Center mt={20}>
-          <Spinner
-            thickness="4px"
-            speed="0.65s"
-            emptyColor="gray.200"
-            color="blue.500"
-            size="xl"
+    <>
+        <div className="habit-main-top-title">
+          <HamburgerIcon
+            onClick={props.onSideDrawerOpen}
+            ml={5}
+            className="side-drawer-menu"
           />
-        </Center>
-      ) : habitInfoWithDate.length === 0 ? (
-        <Center className="no-data-container">
-          <img src={NoData} alt="no data image" />
-          <div>
-            <h1>No Habit Found</h1>
-            <h2>Please add new habit to see the information</h2>
-          </div>
-        </Center>
-      ) : (
-        habitInfoWithDate.map((habit, index) => {
-          let allHabitDayWithCount = [];
-          let loopCurrentDay = shiftDate(today, -totalDisplayDay);
-          // console.log(loopCurrentDay);
-          console.log(habit);
+          <h2>All habits Activity</h2>
+        </div>
+      <div className="all-habit-container">
+        <hr className="habit-bottom-ht" />
+        {/* <br /> */}
+        {getHabitInfoLoading ? (
+          <Center mt={20}>
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
+            />
+          </Center>
+        ) : habitInfoWithDate.length === 0 ? (
+          <Center className="no-data-container">
+            <img src={NoData} alt="no data image" />
+            <div>
+              <h1>No Habit Found</h1>
+              <h2>Please add new habit to see the information</h2>
+            </div>
+          </Center>
+        ) : (
+          habitInfoWithDate.map((habit, index) => {
+            let allHabitDayWithCount = [];
+            let loopCurrentDay = shiftDate(today, -totalDisplayDay);
+            // console.log(loopCurrentDay);
+            console.log(habit);
 
-          do {
-            // increment date by one day
-            loopCurrentDay = new Date(
-              loopCurrentDay.getTime() + 60 * 60 * 24 * 1000
+            do {
+              // increment date by one day
+              loopCurrentDay = new Date(
+                loopCurrentDay.getTime() + 60 * 60 * 24 * 1000
+              );
+              // console.log(loopCurrentDay.toISOString().slice(0, 10))
+              if (
+                habit.dates &&
+                loopCurrentDay.toISOString().slice(0, 10) in habit.dates
+              ) {
+                allHabitDayWithCount.push({
+                  date: loopCurrentDay.toISOString().slice(0, 10),
+                  count: 1,
+                });
+              } else {
+                allHabitDayWithCount.push({
+                  date: loopCurrentDay.toISOString().slice(0, 10),
+                  count: 0,
+                });
+              }
+            } while (
+              loopCurrentDay.toISOString().slice(0, 10) !==
+              today.toISOString().slice(0, 10)
             );
-            // console.log(loopCurrentDay.toISOString().slice(0, 10))
-            if (habit.dates && loopCurrentDay.toISOString().slice(0, 10) in habit.dates) {
-              allHabitDayWithCount.push({
-                date: loopCurrentDay.toISOString().slice(0, 10),
-                count: 1,
-              });
-            } else {
-              allHabitDayWithCount.push({
-                date: loopCurrentDay.toISOString().slice(0, 10),
-                count:0,
-              });
-            }
-          } while (
-            loopCurrentDay.toISOString().slice(0, 10) !==
-            today.toISOString().slice(0, 10)
-          );
 
-          return (
-            <>
-              <h3>{habit.habit_name}</h3>
-              <CalendarHeatmap
-                // startDate={shiftDate(today, -150)}
-                key={index}
-                startDate={shiftDate(today, -totalDisplayDay)}
-                gutterSize={3}
-                endDate={today}
-                weekdayLabels={["S", "M", "T", "W", "T", "F", "S"]}
-                // showOutOfRangeDays={true}
-                values={allHabitDayWithCount}
-                classForValue={(value) => {
-                  if (value.count===0) {
-                    return "color-empty";
-                  }
-                  return `color-completed`;
-                }}
-                showWeekdayLabels={true}
-                tooltipDataAttrs={(value) => {
-                  return {
-                    "data-tip": `${value.date}`,
-                  };
-                }}
-              />
-              <ReactTooltip />
-              <hr className="habit-bottom-ht" />
-            </>
-          );
-        })
-      )}
-    </div>
+            return (
+              <>
+                <h3>{habit.habit_name}</h3>
+                <CalendarHeatmap
+                  // startDate={shiftDate(today, -150)}
+                  key={index}
+                  startDate={shiftDate(today, -totalDisplayDay)}
+                  gutterSize={3}
+                  endDate={today}
+                  weekdayLabels={["S", "M", "T", "W", "T", "F", "S"]}
+                  // showOutOfRangeDays={true}
+                  values={allHabitDayWithCount}
+                  classForValue={(value) => {
+                    if (value.count === 0) {
+                      return "color-empty";
+                    }
+                    return `color-completed`;
+                  }}
+                  showWeekdayLabels={true}
+                  tooltipDataAttrs={(value) => {
+                    return {
+                      "data-tip": `${value.date}`,
+                    };
+                  }}
+                />
+                <ReactTooltip />
+                <hr className="habit-bottom-ht" />
+              </>
+            );
+          })
+        )}
+      </div>
+    </>
   );
 }
 

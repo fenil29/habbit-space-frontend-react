@@ -61,11 +61,15 @@ function HabitContent(props) {
         <Route path="/app/habit/:habit_id" exact>
           <HabitView
             habitsDateInfo={habitsDateInfo}
+            onSideDrawerOpen={props.onSideDrawerOpen}
             addHabitsDateInfo={addHabitsDateInfo}
           />
         </Route>
         <Route path="/app/all-habit" exact>
-          <AllHabit addHabitsDateInfo={addHabitsDateInfo} />
+          <AllHabit
+            onSideDrawerOpen={props.onSideDrawerOpen}
+            addHabitsDateInfo={addHabitsDateInfo}
+          />
         </Route>
         <Redirect to="/app/all-habit" />
       </Switch>

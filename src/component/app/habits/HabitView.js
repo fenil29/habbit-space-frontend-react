@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams,useLocation } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import "./HabitView.scss";
 
 import { Box, Stack, Skeleton, Button } from "@chakra-ui/react";
@@ -15,7 +15,7 @@ function HabitView(props) {
   let { habit_id } = useParams();
   const location = useLocation();
   const contextStore = useContext(GlobalContext);
-  console.log("props.habitsDateInfo",props.habitsDateInfo)
+  console.log("props.habitsDateInfo", props.habitsDateInfo);
   let currentHabitData = props.habitsDateInfo[habit_id];
   const setCurrentHabitData = (data) => {
     props.habitsDateInfo[habit_id] = data;
@@ -99,13 +99,12 @@ function HabitView(props) {
         }
       });
   };
-  
+
   useEffect(() => {
-    console.log('Location changed');
+    console.log("Location changed");
     if (!currentHabitData) {
       getHabitDate();
     }
-
   }, [location]);
   useEffect(() => {
     return () => {
@@ -125,9 +124,15 @@ function HabitView(props) {
         </Stack>
       ) : (
         <>
-          <h2 className="title">           
-            {currentHabitData.habit_name}
-          </h2>
+          <div className="habit-main-top-title">
+            <HamburgerIcon
+              onClick={props.onSideDrawerOpen}
+              ml={5}
+
+              className="side-drawer-menu"
+            />
+            <h2> {currentHabitData.habit_name}</h2>
+          </div>
           <hr className="habit-bottom-ht" />
           <Calendar
             selectedDate={currentHabitData.dates}

@@ -4,11 +4,12 @@
   border: 0;
   box-sizing: border-box;
 }
-.body,.habit-option *,.settings-option *{
+.body,
+.habit-option *,
+.settings-option * {
   transition: 0.25s background-color !important;
-  
 }
-span{
+span {
   // transition: 0s background-color !important;
 }
 button:focus {
@@ -57,10 +58,16 @@ button[customColor="blue"] {
         margin: 10px;
       }
     }
-    .left{
+    .left {
       display: flex;
       align-items: center;
     }
   }
 }
-
+@media only screen and (max-width: 800px) {
+  .nav-bar {
+    .nav-bar-content {
+      width: 90%;
+    }
+  }
+}

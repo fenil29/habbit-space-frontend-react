@@ -4,17 +4,22 @@ import HabitContent from "../habits/HabitContent";
 
 import HabitOption from "../habits/HabitOption";
 
-import "./HabitHome.scss"
+import "./HabitHome.scss";
 
-function HabitHome(props) {
+function HabitHome() {
+  const {
+    isOpen: isSideDrawerOpen,
+    onOpen: onSideDrawerOpen,
+    onClose: onSideDrawerClose,
+  } = useDisclosure();
   return (
     <Box className="habit-home" boxShadow="xl">
       <HabitOption
-        isSideDrawerOpen={props.isSideDrawerOpen}
-        onSideDrawerOpen={props.onSideDrawerOpen}
-        onSideDrawerClose={props.onSideDrawerClose}
+        isSideDrawerOpen={isSideDrawerOpen}
+        onSideDrawerOpen={onSideDrawerOpen}
+        onSideDrawerClose={onSideDrawerClose}
       />
-      <HabitContent />
+      <HabitContent  onSideDrawerOpen={onSideDrawerOpen}/>
     </Box>
   );
 }

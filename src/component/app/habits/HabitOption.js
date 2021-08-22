@@ -23,7 +23,6 @@ import { API_URL } from "../../../Constants";
 import { GlobalContext } from "../../../context/GlobalState";
 import { Link, useHistory } from "react-router-dom";
 
-
 import axios from "axios";
 
 function HabitOption(props) {
@@ -40,7 +39,6 @@ function HabitOption(props) {
   } = useDisclosure();
 
   let getHabit = () => {
-
     setGetHabitListLoading(true);
     axios
       .get(API_URL + "/api/habit")
@@ -65,9 +63,8 @@ function HabitOption(props) {
   let onHabitsSuccessfulAdd = (newHabit) => {
     onCloseAddHabitModel();
 
-    setHabitList([...habitList,newHabit]);
-    history.push("/app/habit/"+newHabit.habit_id);
-
+    setHabitList([...habitList, newHabit]);
+    history.push("/app/habit/" + newHabit.habit_id);
   };
   useEffect(() => {
     // effect
