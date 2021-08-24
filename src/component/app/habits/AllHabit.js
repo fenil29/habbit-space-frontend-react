@@ -10,6 +10,7 @@ import { Spinner, Center, Button } from "@chakra-ui/react";
 import NoData from "../../../assets/NoData.svg";
 
 import { ChevronDownIcon, HamburgerIcon } from "@chakra-ui/icons";
+import AddHabitModel from "../models/AddHabitModel";
 
 import axios from "axios";
 
@@ -21,7 +22,7 @@ function AllHabit(props) {
   const [getHabitInfoLoading, setGetHabitInfoLoading] = useState(true);
   const [totalDisplayDay, setTotalDisplayDay] = useState(365);
 
-  let getHabitWithDate = () => {
+  let getHabitWithDate = (props) => {
     setGetHabitInfoLoading(true);
     axios
       .get(API_URL + "/api/habit-with-date")
@@ -119,7 +120,7 @@ function AllHabit(props) {
               mt="3"
               variant="outline"
               onClick={() => {
-                props.onSideDrawerOpen();
+                props.onOpenAddHabitModel();
               }}
             >
               Add Habit

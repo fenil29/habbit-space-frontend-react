@@ -19,62 +19,9 @@ import {
 } from "@chakra-ui/react";
 
 import AddHabitModel from "../models/AddHabitModel";
-import { API_URL } from "../../../Constants";
-import { GlobalContext } from "../../../context/GlobalState";
-import { Link, useHistory } from "react-router-dom";
 
-import axios from "axios";
 
 function HabitOption(props) {
-  let history = useHistory();
-
-  const contextStore = useContext(GlobalContext);
-  const [habitList, setHabitList] = useState([]);
-  const [getHabitListLoading, setGetHabitListLoading] = useState(false);
-
-  const {
-    isOpen: isOpenAddHabitModel,
-    onOpen: onOpenAddHabitModel,
-    onClose: onCloseAddHabitModel,
-  } = useDisclosure();
-
-  let getHabit = () => {
-    setGetHabitListLoading(true);
-    axios
-      .get(API_URL + "/api/habit")
-      .then((response) => {
-        setGetHabitListLoading(false);
-        setHabitList(response.data);
-      })
-      .catch((error) => {
-        setGetHabitListLoading(false);
-        if (
-          error.response &&
-          error.response.status === 401 &&
-          error.response.data === "Unauthorized"
-        ) {
-          contextStore.clearLoginDataAndRedirectToLogin();
-        } else {
-          contextStore.showUnexpectedError();
-        }
-      });
-  };
-
-  let onHabitsSuccessfulAdd = (newHabit) => {
-    onCloseAddHabitModel();
-
-    setHabitList([...habitList, newHabit]);
-    history.push("/app/habit/" + newHabit.habit_id);
-  };
-  useEffect(() => {
-    // effect
-    getHabit();
-
-    return () => {
-      // cleanup
-    };
-  }, []);
-
   const OptionComponent = (localProps) => (
     <>
       <Box
@@ -105,7 +52,7 @@ function HabitOption(props) {
           <h2>Habits</h2>
         </Box>
         <List>
-          {getHabitListLoading ? (
+          {props.getHabitListLoading ? (
             <Stack m={2}>
               <Skeleton height="20px" />
               <Skeleton height="20px" />
@@ -113,7 +60,7 @@ function HabitOption(props) {
             </Stack>
           ) : (
             <>
-              {habitList.map((item) => (
+              {props.habitList.map((item) => (
                 <NavLink
                   to={"/app/habit/" + item.habit_id}
                   key={item.habit_id}
@@ -135,7 +82,7 @@ function HabitOption(props) {
             // variant="outline"
             size="sm"
             onClick={() => {
-              onOpenAddHabitModel();
+              props.onOpenAddHabitModel();
               props.onSideDrawerClose();
             }}
           >
@@ -144,9 +91,9 @@ function HabitOption(props) {
         </Center>
         {/* add habit model */}
         <AddHabitModel
-          isOpen={isOpenAddHabitModel}
-          onClose={onCloseAddHabitModel}
-          onHabitsSuccessfulAdd={onHabitsSuccessfulAdd}
+          isOpen={props.isOpenAddHabitModel}
+          onClose={props.onCloseAddHabitModel}
+          onHabitsSuccessfulAdd={props.onHabitsSuccessfulAdd}
         />
       </Box>
     </>

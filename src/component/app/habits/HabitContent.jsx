@@ -69,6 +69,8 @@ function HabitContent(props) {
           <AllHabit
             onSideDrawerOpen={props.onSideDrawerOpen}
             addHabitsDateInfo={addHabitsDateInfo}
+        onOpenAddHabitModel={props.onOpenAddHabitModel}
+
           />
         </Route>
         <Redirect to="/app/all-habit" />
