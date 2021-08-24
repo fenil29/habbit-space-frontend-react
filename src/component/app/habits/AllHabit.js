@@ -3,15 +3,13 @@ import React, { useContext, useEffect, useState } from "react";
 import "./AllHabit.scss";
 import CalendarHeatmap from "react-calendar-heatmap";
 import ReactTooltip from "react-tooltip";
-import AddHabitModel from "../models/AddHabitModel";
 
 import { API_URL } from "../../../Constants";
 import { GlobalContext } from "../../../context/GlobalState";
-import { Spinner, Center, useDisclosure, Button } from "@chakra-ui/react";
-
+import { Spinner, Center, Button } from "@chakra-ui/react";
 import NoData from "../../../assets/NoData.svg";
 
-import { ChevronDownIcon, HamburgerIcon, AddIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, HamburgerIcon } from "@chakra-ui/icons";
 
 import axios from "axios";
 
@@ -22,12 +20,6 @@ function AllHabit(props) {
   const [habitInfoWithDate, setHabitInfoWithDate] = useState([]);
   const [getHabitInfoLoading, setGetHabitInfoLoading] = useState(true);
   const [totalDisplayDay, setTotalDisplayDay] = useState(365);
-
-  const {
-    isOpen: isOpenAddHabitModel,
-    onOpen: onOpenAddHabitModel,
-    onClose: onCloseAddHabitModel,
-  } = useDisclosure();
 
   let getHabitWithDate = () => {
     setGetHabitInfoLoading(true);
@@ -66,9 +58,6 @@ function AllHabit(props) {
           contextStore.showUnexpectedError();
         }
       });
-  };
-  let onHabitsSuccessfulAdd = () => {
-    getHabitWithDate();
   };
   useEffect(() => {
     // effect
@@ -128,23 +117,13 @@ function AllHabit(props) {
               colorScheme="blue"
               size="sm"
               mt="3"
-              // variant="outline"
+              variant="outline"
               onClick={() => {
-                onOpenAddHabitModel();
+                props.onSideDrawerOpen();
               }}
             >
-              <AddIcon
-                //   w={4}
-                //   h={4}
-                mr={2}
-              />
               Add Habit
             </Button>
-            <AddHabitModel
-              isOpen={isOpenAddHabitModel}
-              onClose={onCloseAddHabitModel}
-              onHabitsSuccessfulAdd={onHabitsSuccessfulAdd}
-            />
           </Center>
         ) : (
           habitInfoWithDate.map((habit, index) => {

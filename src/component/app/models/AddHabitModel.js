@@ -84,7 +84,7 @@ function AddHabitModel(props) {
       isOpen={props.isOpen}
       onClose={props.onClose}
       initialFocusRef={initialRef}
-    >
+      >
       <ModalOverlay />
 
       <ModalContent>
