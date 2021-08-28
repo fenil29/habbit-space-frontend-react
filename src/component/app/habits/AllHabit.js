@@ -9,8 +9,7 @@ import { GlobalContext } from "../../../context/GlobalState";
 import { Spinner, Center, Button } from "@chakra-ui/react";
 import NoData from "../../../assets/NoData.svg";
 
-import { ChevronDownIcon, HamburgerIcon } from "@chakra-ui/icons";
-import AddHabitModel from "../models/AddHabitModel";
+import { HamburgerIcon } from "@chakra-ui/icons";
 
 import axios from "axios";
 
@@ -109,7 +108,7 @@ function AllHabit(props) {
           </Center>
         ) : habitInfoWithDate.length === 0 ? (
           <Center className="no-data-container">
-            <img src={NoData} alt="no data image" />
+            <img src={NoData} alt="no data" />
             <div>
               <h1>No Habit Found</h1>
               <h2>Please add new habit to see the information</h2>
