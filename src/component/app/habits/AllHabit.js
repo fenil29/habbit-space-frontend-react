@@ -131,13 +131,13 @@ function AllHabit(props) {
             let allHabitDayWithCount = [];
             let loopCurrentDay = shiftDate(today, -totalDisplayDay);
             // console.log(loopCurrentDay);
-            console.log(habit);
-
+            
             do {
               // increment date by one day
               loopCurrentDay = new Date(
                 loopCurrentDay.getTime() + 60 * 60 * 24 * 1000
-              );
+                );
+                console.log("sdfdsfds",loopCurrentDay);
               // console.log(loopCurrentDay.toISOString().slice(0, 10))
               if (
                 habit.dates &&
@@ -145,7 +145,7 @@ function AllHabit(props) {
               ) {
                 allHabitDayWithCount.push({
                   date: loopCurrentDay.toISOString().slice(0, 10),
-                  count: 1,
+                  count: habit.dates[loopCurrentDay.toISOString().slice(0, 10)],
                 });
               } else {
                 allHabitDayWithCount.push({
@@ -171,8 +171,12 @@ function AllHabit(props) {
                   // showOutOfRangeDays={true}
                   values={allHabitDayWithCount}
                   classForValue={(value) => {
+                    console.log("kjsdfkjdsf",value)
                     if (value.count === 0) {
                       return "color-empty";
+                    }
+                    if (value.count === -1) {
+                      return "color-fail";
                     }
                     return `color-completed`;
                   }}

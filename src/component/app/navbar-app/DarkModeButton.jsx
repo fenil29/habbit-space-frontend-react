@@ -5,6 +5,7 @@ import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 let colorList = [
   "--primary-color",
   "--primary-color-hover",
+  "--red-color",
   // "--primary-background-color",
   "--secondary-background-color",
   "--secondary-background-color-hover",

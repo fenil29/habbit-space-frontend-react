@@ -23,6 +23,9 @@
   .react-calendar-heatmap .color-empty {
     fill: var(--secondary-background-color);
   }
+  .react-calendar-heatmap .color-fail {
+    fill:  var(--red-color) ;
+  }
 
   .react-calendar-heatmap .color-completed {
     fill: var(--primary-color-hover);
