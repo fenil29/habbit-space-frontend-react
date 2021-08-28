@@ -243,8 +243,9 @@ function Calendar(props) {
           <li
             className={classNames(
               "calendar-day",
-              { "calendar-day--selected": props.selectedDate[day.date] },
-              { "calendar-day--today": day.date == TODAY }
+              { "calendar-day--selected": props.selectedDate[day.date]===1 },
+              { "calendar-day--selected-fail": props.selectedDate[day.date]===-1 },
+              { "calendar-day--today": day.date === TODAY }
             )}
             key={index}
           >

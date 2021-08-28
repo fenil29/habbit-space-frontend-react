@@ -23,14 +23,10 @@ function HabitContent(props) {
     setHabitsDateInfo((currentState) => {
       console.log(currentState, currentState[data.habit_id]);
       if (currentState[data.habit_id]) {
-        if (data.add) {
-          currentState[data.habit_id].dates[data.add.date] =
-            data.add[data.add.date];
+ 
+          currentState[data.habit_id].dates[data.habitChangeData.date] =
+            data.habitChangeData[data.habitChangeData.date];
           return { ...currentState };
-        } else if (data.remove) {
-          delete currentState[data.habit_id].dates[data.remove.date];
-          return { ...currentState };
-        }
       } else {
         return currentState;
       }

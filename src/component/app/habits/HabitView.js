@@ -22,30 +22,6 @@ function HabitView(props) {
     props.addHabitsDateInfo(props.habitsDateInfo);
   };
 
-  const addSelectedDate = (date, dateElement) => {
-    currentHabitData.dates[date] = true;
-    setCurrentHabitData(currentHabitData);
-
-    axios
-      .post(API_URL + "/api/habit-date/" + habit_id, {
-        date: date,
-      })
-      .then((response) => {})
-      .catch((error) => {
-        console.log(error);
-        delete currentHabitData.dates[date];
-        setCurrentHabitData(currentHabitData);
-        if (
-          error.response &&
-          error.response.status === 401 &&
-          error.response.data === "Unauthorized"
-        ) {
-          contextStore.clearLoginDataAndRedirectToLogin();
-        } else {
-          contextStore.showUnexpectedError();
-        }
-      });
-  };
   const removeSelectedDate = (date) => {
     delete currentHabitData.dates[date];
     setCurrentHabitData(currentHabitData);
@@ -73,11 +49,38 @@ function HabitView(props) {
       });
   };
   let onDateClick = (clickedDate) => {
-    if (clickedDate in currentHabitData.dates) {
-      removeSelectedDate(clickedDate);
-    } else {
-      addSelectedDate(clickedDate);
+    if (currentHabitData.dates[clickedDate] === 1) {
+      currentHabitData.dates[clickedDate] = -1;
+    } else if (currentHabitData.dates[clickedDate] === -1) {
+      currentHabitData.dates[clickedDate] = 0;
+    } else if (
+      !currentHabitData.dates[clickedDate] ||
+      currentHabitData.dates[clickedDate] === 0
+    ) {
+      currentHabitData.dates[clickedDate] = 1;
     }
+    setCurrentHabitData(currentHabitData);
+
+    axios
+      .post(API_URL + "/api/habit-date/" + habit_id, {
+        date: clickedDate,
+        status: currentHabitData.dates[clickedDate],
+      })
+      .then((response) => {})
+      .catch((error) => {
+        console.log(error);
+        delete currentHabitData.dates[clickedDate];
+        setCurrentHabitData(currentHabitData);
+        if (
+          error.response &&
+          error.response.status === 401 &&
+          error.response.data === "Unauthorized"
+        ) {
+          contextStore.clearLoginDataAndRedirectToLogin();
+        } else {
+          contextStore.showUnexpectedError();
+        }
+      });
   };
   let getHabitDate = () => {
     axios
@@ -128,7 +131,6 @@ function HabitView(props) {
             <HamburgerIcon
               onClick={props.onSideDrawerOpen}
               ml={5}
-
               className="side-drawer-menu"
             />
             <h2> {currentHabitData.habit_name}</h2>
@@ -136,7 +138,7 @@ function HabitView(props) {
           <hr className="habit-bottom-ht" />
           <Calendar
             selectedDate={currentHabitData.dates}
-            addSelectedDate={addSelectedDate}
+            onDateClick={onDateClick}
             removeSelectedDate={removeSelectedDate}
             onDateClick={onDateClick}
           />
