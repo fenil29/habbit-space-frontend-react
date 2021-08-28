@@ -22,32 +22,7 @@ function HabitView(props) {
     props.addHabitsDateInfo(props.habitsDateInfo);
   };
 
-  const removeSelectedDate = (date) => {
-    delete currentHabitData.dates[date];
-    setCurrentHabitData(currentHabitData);
 
-    axios
-      .delete(API_URL + "/api/habit-date/" + habit_id, {
-        data: {
-          date: date,
-        },
-      })
-      .then((response) => {})
-      .catch((error) => {
-        console.log(error);
-        currentHabitData.dates[date] = true;
-        setCurrentHabitData(currentHabitData);
-        if (
-          error.response &&
-          error.response.status === 401 &&
-          error.response.data === "Unauthorized"
-        ) {
-          contextStore.clearLoginDataAndRedirectToLogin();
-        } else {
-          contextStore.showUnexpectedError();
-        }
-      });
-  };
   let onDateClick = (clickedDate) => {
     if (currentHabitData.dates[clickedDate] === 1) {
       currentHabitData.dates[clickedDate] = -1;
@@ -65,6 +40,7 @@ function HabitView(props) {
       .post(API_URL + "/api/habit-date/" + habit_id, {
         date: clickedDate,
         status: currentHabitData.dates[clickedDate],
+        currentSessionId:props.currentSessionId,
       })
       .then((response) => {})
       .catch((error) => {
@@ -139,7 +115,6 @@ function HabitView(props) {
           <Calendar
             selectedDate={currentHabitData.dates}
             onDateClick={onDateClick}
-            removeSelectedDate={removeSelectedDate}
             onDateClick={onDateClick}
           />
         </>
