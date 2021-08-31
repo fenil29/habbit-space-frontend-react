@@ -8,7 +8,6 @@ import {
   Stack,
   Skeleton,
   useDisclosure,
-  Spinner,
   Center,
 } from "@chakra-ui/react";
 import { API_URL } from "../../../Constants";
@@ -17,7 +16,6 @@ import AddHabitModel from "../models/AddHabitModel";
 import DeleteHabitModel from "../models/DeleteHabitModel";
 import EditHabitModel from "../models/EditHabitModel";
 import NoData from "../../../assets/NoData.svg";
-
 
 import axios from "axios";
 
@@ -85,7 +83,6 @@ function SettingsHabits() {
     axios
       .post(API_URL + "/api/all-habit-position", allHabitPositionIds)
       .then((response) => {
-        // console.log(response);
         if (response.status === 200) {
         } else {
           contextStore.showUnexpectedError();
@@ -106,7 +103,6 @@ function SettingsHabits() {
       result.source.index,
       result.destination.index
     );
-    // console.log(newHabitList);
     setAllHabitPosition(newHabitList);
     setHabitList(newHabitList);
   }
@@ -116,13 +112,13 @@ function SettingsHabits() {
   };
   let onHabitsSuccessfulDelete = (deletedHabitId) => {
     let newHabitList = habitList.filter(
-      (habit) => habit.habit_id != deletedHabitId
+      (habit) => habit.habit_id !== deletedHabitId
     );
     setHabitList(newHabitList);
   };
   let onHabitsSuccessfulEdit = (editedHabit) => {
     let newHabitList = habitList.map((habit) => {
-      if (habit.habit_id == editedHabit.habit_id) {
+      if (habit.habit_id === editedHabit.habit_id) {
         habit.habit_name = editedHabit.habit_name;
       }
       return habit;
@@ -136,6 +132,7 @@ function SettingsHabits() {
     return () => {
       // cleanup
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className="settings-habits">
@@ -163,14 +160,14 @@ function SettingsHabits() {
           <Skeleton height="40px" />
           <Skeleton height="40px" />
         </Stack>
-      ) : habitList.length == 0 ? (
+      ) : habitList.length === 0 ? (
         <Center className="no-data-container">
-        <img src={NoData} alt="no data image" />
-        <div>
-          <h1>No Habit Found</h1>
-          <h2>Please add new habit to see the information</h2>
-        </div>
-      </Center>
+          <img src={NoData} alt="no data" />
+          <div>
+            <h1>No Habit Found</h1>
+            <h2>Please add new habit to see the information</h2>
+          </div>
+        </Center>
       ) : (
         <>
           <DragDropContext onDragEnd={onDragEnd}>
@@ -179,7 +176,6 @@ function SettingsHabits() {
                 <div
                   {...provided.droppableProps}
                   ref={provided.innerRef}
-                  //   style={getListStyle(snapshot.isDraggingOver)}
                   className={
                     snapshot.isDraggingOver
                       ? "habit-list-container"
@@ -197,10 +193,6 @@ function SettingsHabits() {
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          // style={getItemStyle(
-                          //   snapshot.isDragging,
-                          //   provided.draggableProps.style
-                          // )}
                           className={
                             !snapshot.isDragging
                               ? "habit-list-item"

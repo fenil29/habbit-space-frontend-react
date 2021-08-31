@@ -1,6 +1,5 @@
-import React, { createContext, useState, useEffect, useRef } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { useToast, Box, useDisclosure } from "@chakra-ui/react";
+import React, { createContext, useState, useEffect } from "react";
+import { useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { API_URL } from "../Constants";
 

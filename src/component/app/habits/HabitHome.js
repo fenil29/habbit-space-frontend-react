@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from "react";
 import { Box, useDisclosure } from "@chakra-ui/react";
 import HabitContent from "../habits/HabitContent";
 
-import { Link, useHistory } from "react-router-dom";
+import {  useHistory } from "react-router-dom";
 import HabitOption from "../habits/HabitOption";
 
 import "./HabitHome.scss";
@@ -65,6 +65,7 @@ function HabitHome() {
     return () => {
       // cleanup
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Box className="habit-home" boxShadow="xl">

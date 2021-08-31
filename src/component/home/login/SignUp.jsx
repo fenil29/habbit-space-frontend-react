@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
 import {
   Center,
@@ -7,7 +7,6 @@ import {
   Divider,
   Button,
   Icon,
-  useToast,
   Alert,
   AlertIcon,
   AlertTitle,
@@ -15,11 +14,12 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
+import axios from "axios";
+
 import { API_URL, GOOGLE_AUTH_CLIENT_ID } from "../../../Constants";
 import { GlobalContext } from "../../../context/GlobalState";
 import HomeNavBar from "../navbar-home/HomeNavBar";
 
-import axios from "axios";
 
 function SignUp() {
   let history = useHistory();
@@ -27,7 +27,6 @@ function SignUp() {
   const [userAlreadyExistsError, setUserAlreadyExistsError] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const toast = useToast();
   useEffect(() => {
     // effect
     return () => {

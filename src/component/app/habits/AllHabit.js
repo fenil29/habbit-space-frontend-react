@@ -28,18 +28,18 @@ function AllHabit(props) {
       .then((response) => {
         console.log(response.data);
         setGetHabitInfoLoading(false);
-        for (let habitInfo of response.data) {
-          // adding to local cache
-          // let storeForCache = { ...habitInfo };
-          // storeForCache.dates = { ...storeForCache.dates };
-          // props.addHabitsDateInfo(habitInfo.habit_id, storeForCache);
-          // console.log("sdfsf324d", storeForCache);
-          // let dateValue = [];
-          // for (let date in habitInfo.dates) {
-          //   dateValue.push({ date: date });
-          // }
-          // habitInfo.dates = dateValue;
-        }
+        // for (let habitInfo of response.data) {
+        //   // adding to local cache
+        //   // let storeForCache = { ...habitInfo };
+        //   // storeForCache.dates = { ...storeForCache.dates };
+        //   // props.addHabitsDateInfo(habitInfo.habit_id, storeForCache);
+        //   // console.log("sdfsf324d", storeForCache);
+        //   // let dateValue = [];
+        //   // for (let date in habitInfo.dates) {
+        //   //   dateValue.push({ date: date });
+        //   // }
+        //   // habitInfo.dates = dateValue;
+        // }
         console.log(response.data);
         setHabitInfoWithDate(response.data);
         // adding to local cache
@@ -68,6 +68,7 @@ function AllHabit(props) {
       // cleanup
       window.removeEventListener("resize", handleResize);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   function handleResize() {
     let totalDays = document.querySelector(".habit-content").clientWidth * 0.35;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 
 import HabitView from "./HabitView";
@@ -22,10 +22,7 @@ function HabitContent(props) {
   };
   let handleHabitChangeFromSocket = (data) => {
     setCurrentSessionId((currentStateCurrentSessionId) => {
-      console.log("shjfdhjs786  1", data.currentSessionId);
-      console.log("shjfdhjs786  2", currentStateCurrentSessionId);
       if (data.currentSessionId !== currentStateCurrentSessionId) {
-        console.log("kjfdgkjfdkj54h6j54")
         setHabitsDateInfo((currentState) => {
           console.log(currentState, currentState[data.habit_id]);
           if (currentState[data.habit_id]) {

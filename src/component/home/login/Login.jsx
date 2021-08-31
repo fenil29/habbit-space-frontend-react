@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Link, useHistory } from "react-router-dom";
+import {  useHistory } from "react-router-dom";
+import "./Login.scss";
+
 import {
   Center,
   Box,
   Divider,
   Button,
   Icon,
-  useToast,
   Alert,
   AlertIcon,
   AlertTitle,
@@ -15,13 +16,13 @@ import {
 } from "@chakra-ui/react";
 import { GoogleLogin } from "react-google-login";
 import { FcGoogle } from "react-icons/fc";
+import axios from "axios";
+
 import { API_URL, GOOGLE_AUTH_CLIENT_ID } from "../../../Constants";
 import { GlobalContext } from "../../../context/GlobalState";
 import HomeNavBar from "../navbar-home/HomeNavBar";
 
-import axios from "axios";
 
-import "./Login.scss";
 
 function Login() {
   let history = useHistory();

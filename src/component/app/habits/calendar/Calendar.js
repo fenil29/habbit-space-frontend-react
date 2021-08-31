@@ -47,13 +47,14 @@ function Calendar(props) {
     return () => {
       // cleanup
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function onDateClick(clickedDate) {
     props.onDateClick(clickedDate);
   }
   function createCalendar(year = INITIAL_YEAR, month = INITIAL_MONTH) {
-    const calendarDaysElement = document.getElementById("calendar-days");
+    // const calendarDaysElement = document.getElementById("calendar-days");
 
     document.getElementById("selected-month").innerText = dayjs(
       new Date(year, month - 1)
@@ -102,14 +103,14 @@ function Calendar(props) {
   //   }
   // }
 
-  function removeAllDayElements(calendarDaysElement) {
-    let first = calendarDaysElement.firstElementChild;
+  // function removeAllDayElements(calendarDaysElement) {
+  //   let first = calendarDaysElement.firstElementChild;
 
-    while (first) {
-      first.remove();
-      first = calendarDaysElement.firstElementChild;
-    }
-  }
+  //   while (first) {
+  //     first.remove();
+  //     first = calendarDaysElement.firstElementChild;
+  //   }
+  // }
 
   function getNumberOfDaysInMonth(year, month) {
     return dayjs(`${year}-${month}-01`).daysInMonth();

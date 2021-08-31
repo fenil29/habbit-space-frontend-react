@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
-import { Switch, Route } from "react-router-dom";
+import React from "react";
+import { Route } from "react-router-dom";
 
 import SettingsAccount from "./SettingsAccount";
 import SettingsHabits from "./SettingsHabits";

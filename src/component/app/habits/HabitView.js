@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import "./HabitView.scss";
 
-import { Box, Stack, Skeleton, Button } from "@chakra-ui/react";
+import { Box, Stack, Skeleton } from "@chakra-ui/react";
 import Calendar from "./calendar/Calendar";
 
 import { API_URL } from "../../../Constants";
@@ -84,6 +84,7 @@ function HabitView(props) {
     if (!currentHabitData) {
       getHabitDate();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
   useEffect(() => {
     return () => {
@@ -114,7 +115,6 @@ function HabitView(props) {
           <hr className="habit-bottom-ht" />
           <Calendar
             selectedDate={currentHabitData.dates}
-            onDateClick={onDateClick}
             onDateClick={onDateClick}
           />
         </>

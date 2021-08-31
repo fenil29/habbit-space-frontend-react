@@ -1,26 +1,8 @@
 import React from "react";
 import "./SettingsOption.scss";
 
-import {
-  Box,
-  Center,
-  List,
-  ListItem,
-  Button,
-  useDisclosure,
-  Stack,
-  Drawer,
-  DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-} from "@chakra-ui/react";
-import { Skeleton, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
-import { NavLink, useHistory } from "react-router-dom";
-
-import { GlobalContext } from "../../../context/GlobalState";
+import { Box, List, ListItem } from "@chakra-ui/react";
+import { NavLink } from "react-router-dom";
 
 function SettingsOption(props) {
   return (

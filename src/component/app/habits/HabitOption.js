@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState, useLayoutEffect } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import "./HabitOption.scss";
 import {
@@ -7,7 +7,6 @@ import {
   List,
   ListItem,
   Button,
-  useDisclosure,
   Stack,
   Skeleton,
   Drawer,

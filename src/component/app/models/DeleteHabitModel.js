@@ -8,15 +8,8 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  FormControl,
-  FormLabel,
-  Input,
-  // Form,
-  // Field,
   useToast,
-  FormErrorMessage,
 } from "@chakra-ui/react";
-import { Formik, Field, Form } from "formik";
 import { API_URL } from "../../../Constants";
 import { GlobalContext } from "../../../context/GlobalState";
 

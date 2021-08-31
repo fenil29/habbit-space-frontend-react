@@ -32,6 +32,7 @@ function DarkModeButton() {
   React.useEffect(() => {
     console.log(colorMode);
     AdjustCustomColorMode();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [colorMode]);
 
   useEffect(() => {
@@ -40,6 +41,7 @@ function DarkModeButton() {
     return () => {
       // cleanup
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Button

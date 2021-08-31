@@ -1,22 +1,13 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, {  useContext, useState } from "react";
 
 import "./SettingsAccount.scss";
 import { GlobalContext } from "../../../context/GlobalState";
 
 import {
   Button,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   FormControl,
   FormLabel,
   Input,
-  // Form,
-  // Field,
   FormErrorMessage,
   Wrap,
   WrapItem,

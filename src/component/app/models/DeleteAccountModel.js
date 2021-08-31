@@ -11,15 +11,13 @@ import {
   FormControl,
   FormLabel,
   Input,
-  // Form,
-  // Field,
   FormErrorMessage,
   useToast,
 } from "@chakra-ui/react";
 import { Formik, Field, Form } from "formik";
 import { API_URL } from "../../../Constants";
 import { GlobalContext } from "../../../context/GlobalState";
-import { Link, useHistory } from "react-router-dom";
+import {  useHistory } from "react-router-dom";
 
 import axios from "axios";
 
@@ -91,7 +89,6 @@ function DeleteAccountModel(props) {
         <Formik
           initialValues={{ Email: "" }}
           onSubmit={(values, actions) => {
-            // alert(JSON.stringify(values));
             deleteAccount();
           }}
         >
