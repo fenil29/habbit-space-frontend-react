@@ -145,12 +145,12 @@ function AllHabit(props) {
                 dayjs(loopCurrentDay).format("YYYY-MM-DD") in habit.dates
               ) {
                 allHabitDayWithCount.push({
-                  date: loopCurrentDay.toISOString().slice(0, 10),
-                  count: habit.dates[loopCurrentDay.toISOString().slice(0, 10)],
+                  date: dayjs(loopCurrentDay).format("YYYY-MM-DD"),
+                  count: habit.dates[dayjs(loopCurrentDay).format("YYYY-MM-DD")],
                 });
               } else {
                 allHabitDayWithCount.push({
-                  date: loopCurrentDay.toISOString().slice(0, 10),
+                  date: dayjs(loopCurrentDay).format("YYYY-MM-DD"),
                   count: 0,
                 });
               }
@@ -170,13 +170,17 @@ function AllHabit(props) {
                   values={allHabitDayWithCount}
                   classForValue={(value) => {
                     console.log("kjsdfkjdsf", value);
-                    if (value.count === 0) {
+                    if (!value) {
                       return "color-empty";
+                    } else {
+                      if (value.count === 0) {
+                        return "color-empty";
+                      }
+                      if (value.count === -1) {
+                        return "color-fail";
+                      }
+                      return `color-completed`;
                     }
-                    if (value.count === -1) {
-                      return "color-fail";
-                    }
-                    return `color-completed`;
                   }}
                   showWeekdayLabels={true}
                   tooltipDataAttrs={(value) => {
