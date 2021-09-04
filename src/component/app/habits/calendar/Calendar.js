@@ -71,6 +71,14 @@ function Calendar(props) {
       // cleanup
     };
   }, [selectedMonth]);
+  useEffect(() => {
+    // effect
+    updateOverview();
+
+    return () => {
+      // cleanup
+    };
+  }, [props.selectedDate]);
 
   function onDateClick(clickedDate) {
     props.onDateClick(clickedDate);
