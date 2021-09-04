@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import dayjs from "dayjs";
 
 import "./AllHabit.scss";
 import CalendarHeatmap from "react-calendar-heatmap";
@@ -68,7 +69,7 @@ function AllHabit(props) {
       // cleanup
       window.removeEventListener("resize", handleResize);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   function handleResize() {
     let totalDays = document.querySelector(".habit-content").clientWidth * 0.35;
@@ -131,17 +132,17 @@ function AllHabit(props) {
             let allHabitDayWithCount = [];
             let loopCurrentDay = shiftDate(today, -totalDisplayDay);
             // console.log(loopCurrentDay);
-            
+
             do {
               // increment date by one day
               loopCurrentDay = new Date(
                 loopCurrentDay.getTime() + 60 * 60 * 24 * 1000
-                );
-                console.log("sdfdsfds",loopCurrentDay);
+              );
+              console.log("sdfdsfds", loopCurrentDay);
               // console.log(loopCurrentDay.toISOString().slice(0, 10))
               if (
                 habit.dates &&
-                loopCurrentDay.toISOString().slice(0, 10) in habit.dates
+                dayjs(loopCurrentDay).format("YYYY-MM-DD") in habit.dates
               ) {
                 allHabitDayWithCount.push({
                   date: loopCurrentDay.toISOString().slice(0, 10),
@@ -153,10 +154,7 @@ function AllHabit(props) {
                   count: 0,
                 });
               }
-            } while (
-              loopCurrentDay.toISOString().slice(0, 10) !==
-              today.toISOString().slice(0, 10)
-            );
+            } while (dayjs(loopCurrentDay).unix() < dayjs(today).unix());
 
             return (
               <>
@@ -171,7 +169,7 @@ function AllHabit(props) {
                   // showOutOfRangeDays={true}
                   values={allHabitDayWithCount}
                   classForValue={(value) => {
-                    console.log("kjsdfkjdsf",value)
+                    console.log("kjsdfkjdsf", value);
                     if (value.count === 0) {
                       return "color-empty";
                     }
