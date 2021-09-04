@@ -7,6 +7,7 @@ import {
 } from "@chakra-ui/icons";
 import "./Calendar.scss";
 import classNames from "classnames";
+import { Progress } from "@chakra-ui/react";
 
 const weekday = require("dayjs/plugin/weekday");
 const weekOfYear = require("dayjs/plugin/weekOfYear");
@@ -15,31 +16,42 @@ dayjs.extend(weekday);
 dayjs.extend(weekOfYear);
 
 function Calendar(props) {
-  const [currentDates, setCurrentDates] = useState([]);
-
   const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const TODAY = dayjs().format("YYYY-MM-DD");
 
   const INITIAL_YEAR = dayjs().format("YYYY");
   const INITIAL_MONTH = dayjs().format("M");
 
-  let selectedMonth = dayjs(new Date(INITIAL_YEAR, INITIAL_MONTH - 1, 1));
   let currentMonthDays;
   let previousMonthDays;
   let nextMonthDays;
 
+  const [currentDates, setCurrentDates] = useState([]);
+  const [selectedMonth, setSelectedMonth] = useState(
+    dayjs(new Date(INITIAL_YEAR, INITIAL_MONTH - 1, 1))
+  );
+  const [successCount, setSuccessCount] = useState(0);
+  const [failCount, setFailCount] = useState(0);
+
+  let updateOverview = () => {
+    // let
+    let tempSuccessCount = 0;
+    let tempFailCount = 0;
+    for (let [key, value] of Object.entries(props.selectedDate)) {
+      if (dayjs(key).format("MM-YYYY") === selectedMonth.format("MM-YYYY")) {
+        if (Number(value) === 1) {
+          tempSuccessCount = tempSuccessCount + 1;
+        } else if (Number(value) === -1) {
+          tempFailCount = tempFailCount + 1;
+        }
+      }
+    }
+    setSuccessCount(tempSuccessCount);
+    setFailCount(tempFailCount);
+  };
+
   useEffect(() => {
-    // effect
-
-    // const daysOfWeekElement = document.getElementById("days-of-week");
-
-    // WEEKDAYS.forEach((weekday) => {
-    //   const weekDayElement = document.createElement("li");
-    //   daysOfWeekElement.appendChild(weekDayElement);
-    //   weekDayElement.innerText = weekday;
-    // });
-
-    createCalendar();
+    // createCalendar();
     initMonthSelectors();
 
     // add event listener for click
@@ -47,20 +59,27 @@ function Calendar(props) {
     return () => {
       // cleanup
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    // effect
+    createCalendar(selectedMonth.format("YYYY"), selectedMonth.format("M"));
+    updateOverview();
+
+    return () => {
+      // cleanup
+    };
+  }, [selectedMonth]);
 
   function onDateClick(clickedDate) {
     props.onDateClick(clickedDate);
+    updateOverview();
   }
   function createCalendar(year = INITIAL_YEAR, month = INITIAL_MONTH) {
-    // const calendarDaysElement = document.getElementById("calendar-days");
-
     document.getElementById("selected-month").innerText = dayjs(
       new Date(year, month - 1)
     ).format("MMMM YYYY");
-
-    // removeAllDayElements(calendarDaysElement);
 
     currentMonthDays = createDaysForCurrentMonth(
       year,
@@ -73,44 +92,8 @@ function Calendar(props) {
     nextMonthDays = createDaysForNextMonth(year, month);
 
     const days = [...previousMonthDays, ...currentMonthDays, ...nextMonthDays];
-    // days.forEach((day) => {
-    //   appendDay(day, calendarDaysElement);
-    // });
     setCurrentDates(days);
   }
-
-  // function appendDay(day, calendarDaysElement) {
-  //   const dayElement = document.createElement("li");
-  //   const dayElementClassList = dayElement.classList;
-  //   dayElementClassList.add("calendar-day");
-  //   const dayOfMonthElement = document.createElement("span");
-  //   dayOfMonthElement.innerText = day.dayOfMonth;
-  //   dayOfMonthElement.setAttribute("value", day.date);
-  //   dayOfMonthElement.addEventListener("click", onDateClick);
-
-  //   dayElement.appendChild(dayOfMonthElement);
-  //   calendarDaysElement.appendChild(dayElement);
-
-  //   if (!day.isCurrentMonth) {
-  //     dayElementClassList.add("calendar-day--not-current");
-  //   }
-
-  //   if (day.date === TODAY) {
-  //     dayElementClassList.add("calendar-day--today");
-  //   }
-  //   if (day.date in props.selectedDate.dates) {
-  //     dayElementClassList.add("calendar-day--selected");
-  //   }
-  // }
-
-  // function removeAllDayElements(calendarDaysElement) {
-  //   let first = calendarDaysElement.firstElementChild;
-
-  //   while (first) {
-  //     first.remove();
-  //     first = calendarDaysElement.firstElementChild;
-  //   }
-  // }
 
   function getNumberOfDaysInMonth(year, month) {
     return dayjs(`${year}-${month}-01`).daysInMonth();
@@ -185,82 +168,103 @@ function Calendar(props) {
     document
       .getElementById("previous-month-selector")
       .addEventListener("click", function () {
-        selectedMonth = dayjs(selectedMonth).subtract(1, "month");
-        createCalendar(selectedMonth.format("YYYY"), selectedMonth.format("M"));
+        setSelectedMonth((selectedMonth) =>
+          dayjs(selectedMonth).subtract(1, "month")
+        );
       });
 
     document
       .getElementById("present-month-selector")
       .addEventListener("click", function () {
-        selectedMonth = dayjs(new Date(INITIAL_YEAR, INITIAL_MONTH - 1, 1));
-        createCalendar(selectedMonth.format("YYYY"), selectedMonth.format("M"));
+        setSelectedMonth((selectedMonth) =>
+          dayjs(new Date(INITIAL_YEAR, INITIAL_MONTH - 1, 1))
+        );
       });
 
     document
       .getElementById("next-month-selector")
-      .addEventListener("click", function () {
-        selectedMonth = dayjs(selectedMonth).add(1, "month");
-        createCalendar(selectedMonth.format("YYYY"), selectedMonth.format("M"));
+      .addEventListener("click", () => {
+        setSelectedMonth((selectedMonth) =>
+          dayjs(selectedMonth).add(1, "month")
+        );
       });
   }
+  let currentHabitRatio =
+  Math.round((successCount * 100) / (successCount + failCount) || 0) 
   return (
-    <div className="calendar-month">
-      <section className="calendar-month-header">
-        <div
-          id="selected-month"
-          className="calendar-month-header-selected-month"
-        ></div>
-        <section className="calendar-month-header-selectors">
-          {/* <span id="present-month-selector">Today</span> */}
-          <span
-            id="present-month-selector"
-            className="calendar-change-month-button"
-          >
-            <RepeatIcon w={5} h={5} />
-          </span>
-          <span
-            id="previous-month-selector"
-            className="calendar-change-month-button"
-          >
-            <ChevronLeftIcon w={7} h={7} />
-          </span>
-          <span
-            id="next-month-selector"
-            className="calendar-change-month-button"
-          >
-            <ChevronRightIcon w={7} h={7} />
-          </span>
-        </section>
-      </section>
-
-      <ol id="days-of-week" className="day-of-week">
-        {WEEKDAYS.map((weekday, index) => (
-          <li key={index}>{weekday}</li>
-        ))}
-      </ol>
-
-      <ol id="calendar-days" className="days-grid">
-        {currentDates.map((day, index) => (
-          <li
-            className={classNames(
-              "calendar-day",
-              { "calendar-day--selected": props.selectedDate[day.date]===1 },
-              { "calendar-day--selected-fail": props.selectedDate[day.date]===-1 },
-              { "calendar-day--today": day.date === TODAY }
-            )}
-            key={index}
-          >
+    <>
+      <div className="calendar-month">
+        <section className="calendar-month-header">
+          <div
+            id="selected-month"
+            className="calendar-month-header-selected-month"
+          ></div>
+          <section className="calendar-month-header-selectors">
+            {/* <span id="present-month-selector">Today</span> */}
             <span
-              onClick={() => {
-                onDateClick(day.date, index);
-              }}
+              id="present-month-selector"
+              className="calendar-change-month-button"
             >
-              {day.dayOfMonth}
+              <RepeatIcon w={5} h={5} />
             </span>
-          </li>
-        ))}
-      </ol>
-    </div>
+            <span
+              id="previous-month-selector"
+              className="calendar-change-month-button"
+            >
+              <ChevronLeftIcon w={7} h={7} />
+            </span>
+            <span
+              id="next-month-selector"
+              className="calendar-change-month-button"
+            >
+              <ChevronRightIcon w={7} h={7} />
+            </span>
+          </section>
+        </section>
+
+        <ol id="days-of-week" className="day-of-week">
+          {WEEKDAYS.map((weekday, index) => (
+            <li key={index}>{weekday}</li>
+          ))}
+        </ol>
+
+        <ol id="calendar-days" className="days-grid">
+          {currentDates.map((day, index) => (
+            <li
+              className={classNames(
+                "calendar-day",
+                {
+                  "calendar-day--selected": props.selectedDate[day.date] === 1,
+                },
+                {
+                  "calendar-day--selected-fail":
+                    props.selectedDate[day.date] === -1,
+                },
+                { "calendar-day--today": day.date === TODAY }
+              )}
+              key={index}
+            >
+              <span
+                onClick={() => {
+                  onDateClick(day.date, index);
+                }}
+              >
+                {day.dayOfMonth}
+              </span>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <div className="habit-overview-container">
+        <h1>This Month</h1>
+        <h2>{`(${successCount}/${successCount + failCount})`}</h2>
+        <div className="habit-overview-progress-container">
+          <Progress value={currentHabitRatio} className="progress-bar" />
+        </div>
+        <h2>{`${currentHabitRatio}%`}</h2>
+
+      </div>
+    </>
   );
 }
 

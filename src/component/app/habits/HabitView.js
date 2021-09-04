@@ -7,7 +7,7 @@ import Calendar from "./calendar/Calendar";
 
 import { API_URL } from "../../../Constants";
 import { GlobalContext } from "../../../context/GlobalState";
-import { HamburgerIcon } from "@chakra-ui/icons";
+import { HamburgerIcon } from "@chakra-ui/icons"; 
 
 import axios from "axios";
 
@@ -21,7 +21,6 @@ function HabitView(props) {
     props.habitsDateInfo[habit_id] = data;
     props.addHabitsDateInfo(props.habitsDateInfo);
   };
-
 
   let onDateClick = (clickedDate) => {
     if (currentHabitData.dates[clickedDate] === 1) {
@@ -40,7 +39,7 @@ function HabitView(props) {
       .post(API_URL + "/api/habit-date/" + habit_id, {
         date: clickedDate,
         status: currentHabitData.dates[clickedDate],
-        currentSessionId:props.currentSessionId,
+        currentSessionId: props.currentSessionId,
       })
       .then((response) => {})
       .catch((error) => {
@@ -84,7 +83,7 @@ function HabitView(props) {
     if (!currentHabitData) {
       getHabitDate();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
   useEffect(() => {
     return () => {
