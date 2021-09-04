@@ -257,11 +257,11 @@ function Calendar(props) {
       </div>
       <div className="habit-overview-container">
         <h1>This Month</h1>
-        <h2>{`(${successCount}/${successCount + failCount})`}</h2>
         <div className="habit-overview-progress-container">
           <Progress value={currentHabitRatio} className="progress-bar" />
         </div>
-        <h2>{`${currentHabitRatio}%`}</h2>
+        <h2><span>{`${currentHabitRatio}%`} </span>&nbsp;<span>{`${successCount}/${successCount + failCount}`}</span></h2>
+     
 
       </div>
     </>
