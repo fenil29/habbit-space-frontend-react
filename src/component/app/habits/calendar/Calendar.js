@@ -197,8 +197,9 @@ function Calendar(props) {
         );
       });
   }
-  let currentHabitRatio =
-  Math.round((successCount * 100) / (successCount + failCount) || 0) 
+  let currentHabitRatio = Math.round(
+    (successCount * 100) / (successCount + failCount)
+  );
   return (
     <>
       <div className="calendar-month">
@@ -266,11 +267,12 @@ function Calendar(props) {
       <div className="habit-overview-container">
         <h1>This Month</h1>
         <div className="habit-overview-progress-container">
-          <Progress value={currentHabitRatio} className="progress-bar" />
+          <Progress value={currentHabitRatio || 0} className={isNaN(currentHabitRatio)?"progress-bar default-background":"progress-bar "} />
         </div>
-        <h2><span>{`${currentHabitRatio}%`} </span>&nbsp;<span>{`${successCount}/${successCount + failCount}`}</span></h2>
-     
-
+        <h2>
+          <span>{`${currentHabitRatio || 0}%`} </span>&nbsp;
+          <span>{`${successCount}/${successCount + failCount}`}</span>
+        </h2>
       </div>
     </>
   );

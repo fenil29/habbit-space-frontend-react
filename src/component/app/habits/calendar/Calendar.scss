@@ -287,5 +287,8 @@ li {
       background-color: var(--primary-color);
     }
   }
+  .default-background{
+    background: var(--secondary-background-color) !important;
+  }
 }
 
