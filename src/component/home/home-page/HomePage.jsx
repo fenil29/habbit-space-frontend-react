@@ -58,7 +58,7 @@ function HomeContent() {
           <h3>Simple Interface</h3>
           <p>
             Provides you the easy to use interface so complex features and
-            options don't come info your way
+            options don't come into your way
           </p>
         </div>
         <div className="right">
