@@ -111,6 +111,8 @@ function HabitView(props) {
             <HamburgerIcon
               onClick={props.onSideDrawerOpen}
               ml={5}
+              width="22px"
+              height="22px"
               className="side-drawer-menu"
             />
             <h2> {currentHabitData.habit_name}</h2>
@@ -128,7 +130,6 @@ function HabitView(props) {
             <div className="color-info-container">
               <div className="fail-color color-square"></div>
               <h1>failed to complete habit</h1>
-
             </div>
           </div>
         </>
