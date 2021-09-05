@@ -93,7 +93,7 @@ function AllHabit(props) {
           ml={5}
           className="side-drawer-menu"
         />
-        <h2>All habits Activity</h2>
+        <h2>All Habits Activity</h2>
       </div>
       <div className="all-habit-container">
         <hr className="habit-bottom-ht" />
