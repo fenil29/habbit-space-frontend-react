@@ -73,6 +73,10 @@ function SignUp() {
         }
       );
   };
+  let onFailure=(Error)=>{
+    console.log(Error)
+    contextStore.showUnexpectedError();
+  }
   return (
     <>
       <HomeNavBar />
@@ -86,7 +90,7 @@ function SignUp() {
             className="google-login-button"
             clientId={GOOGLE_AUTH_CLIENT_ID}
             onSuccess={responseGoogle}
-            onFailure={responseGoogle}
+            onFailure={onFailure}
             cookiePolicy={"single_host_origin"}
             render={(renderProps) => (
               <Button

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import {  useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "./Login.scss";
 
 import {
@@ -21,8 +21,6 @@ import axios from "axios";
 import { API_URL, GOOGLE_AUTH_CLIENT_ID } from "../../../Constants";
 import { GlobalContext } from "../../../context/GlobalState";
 import HomeNavBar from "../navbar-home/HomeNavBar";
-
-
 
 function Login() {
   let history = useHistory();
@@ -46,16 +44,13 @@ function Login() {
       })
       .then((response) => {
         setLoading(false);
-        if(response.status===200){
-
-        console.log(response.data);
-        response.data.isLoggedIn = true;
-        contextStore.setLoginData(response.data);
-        history.push("/app");
-        }
-        else{
+        if (response.status === 200) {
+          console.log(response.data);
+          response.data.isLoggedIn = true;
+          contextStore.setLoginData(response.data);
+          history.push("/app");
+        } else {
           contextStore.showUnexpectedError();
-
         }
       })
       .catch((error) => {
@@ -77,6 +72,10 @@ function Login() {
         }
       });
   };
+  let onFailure=(Error)=>{
+    console.log(Error)
+    contextStore.showUnexpectedError();
+  }
 
   return (
     <>
@@ -91,7 +90,7 @@ function Login() {
             className="google-login-button"
             clientId={GOOGLE_AUTH_CLIENT_ID}
             onSuccess={responseGoogle}
-            onFailure={responseGoogle}
+            onFailure={onFailure}
             cookiePolicy={"single_host_origin"}
             render={(renderProps) => (
               <Button
