@@ -7,9 +7,13 @@ import Calendar from "./calendar/Calendar";
 
 import { API_URL } from "../../../Constants";
 import { GlobalContext } from "../../../context/GlobalState";
-import { HamburgerIcon } from "@chakra-ui/icons"; 
+import { HamburgerIcon } from "@chakra-ui/icons";
 
 import axios from "axios";
+import {
+  getAllByPlaceholderText,
+  getByPlaceholderText,
+} from "@testing-library/dom";
 
 function HabitView(props) {
   let { habit_id } = useParams();
@@ -116,6 +120,17 @@ function HabitView(props) {
             selectedDate={currentHabitData.dates}
             onDateClick={onDateClick}
           />
+          <div className="color-info">
+            <div className="color-info-container">
+              <div className="success-color color-square"></div>
+              <h1>Succeed to complete habit</h1>
+            </div>
+            <div className="color-info-container">
+              <div className="fail-color color-square"></div>
+              <h1>failed to complete habit</h1>
+
+            </div>
+          </div>
         </>
       )}
     </Box>
