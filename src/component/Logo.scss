@@ -1,5 +1,9 @@
 .logo {
   font-size: 20px;
   font-weight: 500;
-  display: inline
+  display: flex;
+  .icon{
+    width: 25px;
+    margin-right: 5px;
+  }
 }
