@@ -9,8 +9,13 @@
 .settings-option * {
   transition: 0.25s background-color !important;
 }
-span {
-  // transition: 0s background-color !important;
+.calendar-day span {
+  transition: 0.2s background-color !important;
+}
+.habit-overview-progress-container div[role="progressbar"]{
+  // background-color: cyan !important;
+  transition: width 0.7s;
+
 }
 button:focus {
   box-shadow: none !important;
