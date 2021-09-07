@@ -10,10 +10,6 @@ import { GlobalContext } from "../../../context/GlobalState";
 import { HamburgerIcon } from "@chakra-ui/icons";
 
 import axios from "axios";
-import {
-  getAllByPlaceholderText,
-  getByPlaceholderText,
-} from "@testing-library/dom";
 
 function HabitView(props) {
   let { habit_id } = useParams();
