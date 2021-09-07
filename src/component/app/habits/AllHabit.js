@@ -87,12 +87,8 @@ function AllHabit(props) {
 
   return (
     <>
-      <div className="habit-main-top-title">
-        <HamburgerIcon
-          onClick={props.onSideDrawerOpen}
-          ml={5}
-          className="side-drawer-menu"
-        />
+      <div className="habit-main-top-title" onClick={props.onSideDrawerOpen}>
+        <HamburgerIcon className="side-drawer-menu" />
         <h2>All Habits Activity</h2>
       </div>
       <div className="all-habit-container">
@@ -146,7 +142,8 @@ function AllHabit(props) {
               ) {
                 allHabitDayWithCount.push({
                   date: dayjs(loopCurrentDay).format("YYYY-MM-DD"),
-                  count: habit.dates[dayjs(loopCurrentDay).format("YYYY-MM-DD")],
+                  count:
+                    habit.dates[dayjs(loopCurrentDay).format("YYYY-MM-DD")],
                 });
               } else {
                 allHabitDayWithCount.push({

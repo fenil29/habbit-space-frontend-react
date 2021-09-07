@@ -6,6 +6,11 @@
 .habit-main-top-title {
   display: flex;
   align-items: center;
+  .side-drawer-menu{
+    height: 22px;
+    width: 22px;
+    margin: 12px;
+  }
   h2{
     max-width: 550px;
     margin: auto;

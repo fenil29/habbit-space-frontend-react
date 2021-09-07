@@ -107,14 +107,11 @@ function HabitView(props) {
         </Stack>
       ) : (
         <>
-          <div className="habit-main-top-title">
-            <HamburgerIcon
-              onClick={props.onSideDrawerOpen}
-              ml={5}
-              width="22px"
-              height="22px"
-              className="side-drawer-menu"
-            />
+          <div
+            className="habit-main-top-title"
+            onClick={props.onSideDrawerOpen}
+          >
+            <HamburgerIcon className="side-drawer-menu" />
             <h2> {currentHabitData.habit_name}</h2>
           </div>
           <hr className="habit-bottom-ht" />
