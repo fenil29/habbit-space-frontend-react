@@ -73,7 +73,7 @@ function HomeContent() {
         <div className="left">
           <h3>Mobile Applications</h3>
           <p>
-          Android and IOS application in form of PWA will be available
+          Android and IOS applications will be available soon
           </p>
         </div>
         <div className="right">
