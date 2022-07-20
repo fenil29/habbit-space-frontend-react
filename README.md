@@ -1,7 +1,7 @@
 # Habbit Space
 Web Application
 A Minimal Habit Tracker- Completely Free and Open Source tracker to track your habit easily
-https://habbit.space/(https://habbit.space/).
+https://habbit.space/
 
 # Getting Started with Create React App
 
